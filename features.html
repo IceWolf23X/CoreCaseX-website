@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="CoreCaseX feature overview for Paper Minecraft servers.">
+    <title>CoreCaseX Features - Product Overview</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/corecasex-logo.svg">
+    <link rel="shortcut icon" type="image/svg+xml" href="./assets/corecasex-logo.svg">
+    <meta name="theme-color" content="#0b0808">
+    <script>(()=>{try{if(localStorage.getItem("corecasex-theme")==="light"){document.documentElement.dataset.theme="light";}}catch(_){}})();</script>
+    <link rel="stylesheet" href="./assets/styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <nav class="nav shell" aria-label="Main navigation">
+        <a class="brand" href="./index.html" aria-label="CoreCaseX home"><span class="brand-mark" aria-hidden="true"><img src="./assets/corecasex-logo.svg" alt="" width="40" height="40"></span><span class="brand-text">CoreCaseX</span></a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+        <div class="nav-links" id="nav-links"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./docs.html">Docs</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreCaseX-issues">GitHub</a></div>
+        <a class="nav-cta" href="./installation.html">Get Started</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="page-hero"><div class="shell"><div class="section-heading"><p class="eyebrow">Product overview</p><h1>A focused case system for player support and staff decisions.</h1><p>CoreCaseX turns common server support work into structured cases with guided submissions, ownership, conversation, evidence, and final outcomes.</p></div></div></section>
+      <section class="section doc-page">
+        <div class="shell doc-layout">
+          <aside class="doc-sidebar" aria-label="Feature sections">
+            <strong>On this page</strong>
+            <a href="#case-types">Case Types</a><a href="#dialog-ui">Dialog UI</a><a href="#staff-board">Staff Board</a><a href="#workflow">Workflow</a><a href="#evidence">Evidence</a><a href="#notifications">Notifications</a><a href="#storage">Storage</a><a href="#admin">Admin Experience</a>
+          </aside>
+          <article class="markdown-body">
+            <h2 id="case-types">Five Built-In Case Types</h2>
+            <p>CoreCaseX ships with support request, player report, bug report, lost items or death issue, and grief or theft flows. Each type can be enabled or disabled, can define a default priority, and can control location collection behavior.</p>
+            <h3>Case Type Details</h3>
+            <ul>
+              <li><strong>Support Request:</strong> general help with description, optional current location, and reporter snapshot evidence.</li>
+              <li><strong>Player Report:</strong> target player name, configured reason option, description, current location, reporter snapshot, and target snapshot when online.</li>
+              <li><strong>Bug Report:</strong> configured category option, description, optional current location, and reporter snapshot evidence.</li>
+              <li><strong>Lost Items / Death Issue:</strong> description, claimed lost items, latest recorded death location, cause, time, and reporter snapshot.</li>
+              <li><strong>Grief / Theft:</strong> description, current location, manual location text, reporter snapshot, and high default priority by default.</li>
+            </ul>
+            <h2 id="dialog-ui">Paper Dialog UI</h2>
+            <p>Players and staff use native Paper Dialog menus and forms for the normal workflow. The UI includes the main menu, case type selection, guided creation forms, review-before-submit screens, player lists, staff board filters, staff details, action menus, text forms, and option controls.</p>
+            <h2 id="staff-board">Staff Board</h2>
+            <p>The staff board is the central triage surface. Filters cover all open cases, unassigned cases, assigned-to-me cases, high and urgent cases, waiting player, waiting staff, recent closed, and archived cases.</p>
+            <h2 id="workflow">Actions and Conversation</h2>
+            <p>Staff can claim, assign, change priority, change status, add internal notes, reply to players, request more information, teleport to attached location evidence, resolve, reject, and archive. Closed cases block normal reply/action workflows, and archive is restricted to resolved or rejected cases.</p>
+            <h2 id="evidence">Evidence and Visibility</h2>
+            <p>Evidence can include reporter context, target context when available, selected reason or category, location details, claimed lost item text, death data, and manual location text. Visibility levels are player-visible, staff-only, and sensitive.</p>
+            <h2 id="notifications">Notifications</h2>
+            <p>CoreCaseX includes in-game staff notifications for new cases, player replies, and assigned-to-you events. Optional Discord webhooks can send configured case events and route by priority, case type, or default webhook.</p>
+            <h2 id="storage">SQLite Persistence</h2>
+            <p>SQLite stores cases, timeline events, replies, internal notes, resolutions, evidence, schema migrations, and indexes for common board and case queries. No separate database service is required for the current MVP.</p>
+            <h2 id="admin">Admin Experience</h2>
+            <p>Admin-focused behavior includes Maven Wrapper builds, shaded SQLite JDBC, ignored runtime artifacts, `/case reload`, `/case debug`, validation warnings, async storage boundaries, main-thread Bukkit API scheduling, and automated tests for important behavior.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="shell footer-grid"><div><a class="brand footer-brand" href="./index.html"><span class="brand-mark" aria-hidden="true"><img src="./assets/corecasex-logo.svg" alt="" width="40" height="40"></span><span class="brand-text">CoreCaseX</span></a><p>Structured staff case management for Paper Minecraft servers.</p></div><div class="footer-links"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./docs.html">Docs</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreCaseX-issues">GitHub</a></div></div><div class="shell footer-bottom"><span>Copyright 2026 CoreCaseX. All rights reserved.</span><span>Product overview for server owners.</span></div></footer>
+    <script src="./assets/site.js"></script>
+  </body>
+</html>

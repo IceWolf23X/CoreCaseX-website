@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="CoreCaseX configuration reference for Paper server owners.">
+    <title>CoreCaseX Configuration Reference</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/corecasex-logo.svg">
+    <link rel="shortcut icon" type="image/svg+xml" href="./assets/corecasex-logo.svg">
+    <meta name="theme-color" content="#0b0808">
+    <script>(()=>{try{if(localStorage.getItem("corecasex-theme")==="light"){document.documentElement.dataset.theme="light";}}catch(_){}})();</script>
+    <link rel="stylesheet" href="./assets/styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header"><nav class="nav shell" aria-label="Main navigation"><a class="brand" href="./index.html" aria-label="CoreCaseX home"><span class="brand-mark" aria-hidden="true"><img src="./assets/corecasex-logo.svg" alt="" width="40" height="40"></span><span class="brand-text">CoreCaseX</span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button><div class="nav-links" id="nav-links"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./docs.html">Docs</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreCaseX-issues">GitHub</a></div><a class="nav-cta" href="./installation.html">Get Started</a></nav></header>
+    <main id="main">
+      <section class="page-hero"><div class="shell"><div class="section-heading"><p class="eyebrow">Configuration reference</p><h1>Control CoreCaseX without guessing at behavior.</h1><p>CoreCaseX uses commented YAML files for global limits, case types, Discord routing, messages, and SQLite storage.</p></div></div></section>
+      <section class="section doc-page">
+        <div class="shell doc-layout">
+          <aside class="doc-sidebar" aria-label="Config sections"><strong>On this page</strong><a href="#files">Files</a><a href="#global">Global Settings</a><a href="#case-types">Case Types</a><a href="#discord">Discord</a><a href="#messages">Messages</a><a href="#permissions">Permissions</a><a href="#troubleshooting-quick-reference">Troubleshooting</a><a href="#production-validation-checklist">Production Checklist</a></aside>
+          <article class="markdown-body">
+            <h2 id="files">Config Files</h2>
+            <p>Runtime files live under <code>plugins/CoreCaseX/</code>: <code>config.yml</code>, <code>case-types.yml</code>, <code>discord.yml</code>, <code>messages.yml</code>, and <code>storage.yml</code>. Runtime case data lives under <code>data/corecasex.db</code> by default.</p>
+            <h2 id="global">Global Settings</h2>
+            <p><code>config.yml</code> controls language identity, displayed case ID format, maximum open cases per player, submission cooldown, and staff notification switches.</p>
+            <pre class="code-block"><code>case-id-format: "#{id}"
+max-open-cases-per-player: 5
+submission-cooldown-seconds: 60
+staff-notifications:
+  new-case: true
+  player-replied: true
+  assigned-to-you: true
+  player-replied-scope: assigned-only</code></pre>
+            <h2 id="case-types">Case Types</h2>
+            <p><code>case-types.yml</code> controls enabled state, default priority, location collection, player report reasons, and bug report categories for the five built-in case flows.</p>
+            <pre class="code-block"><code>grief-theft:
+  enabled: true
+  default-priority: HIGH
+  collect-location: true</code></pre>
+            <h2 id="discord">Discord Webhooks</h2>
+            <p>Discord is disabled by default. When enabled, events can route by priority webhook, case type webhook, default webhook, or legacy fallback webhook. Delivery is best-effort and cannot block case workflows.</p>
+            <pre class="code-block"><code>enabled: true
+webhooks:
+  default: "https://discord.com/api/webhooks/..."
+events:
+  case-created: true
+  player-replied: true
+  case-resolved: true</code></pre>
+            <h2 id="messages">Messages and Dialog Text</h2>
+            <p><code>messages.yml</code> controls command feedback, validation text, player notifications, staff notifications, Dialog titles, body lines, inputs, detail rows, buttons, and hover text. Server-controlled text can use MiniMessage; player-provided placeholders are escaped before rendering.</p>
+            <h2 id="permissions">Permissions and Commands</h2>
+            <p>Player permissions default to true; staff and admin permissions default to op. Key commands include <code>/case</code>, <code>/case list</code>, <code>/case view &lt;id&gt;</code>, <code>/case board</code>, <code>/case open &lt;id&gt;</code>, <code>/case claim &lt;id&gt;</code>, <code>/case assign &lt;id&gt; &lt;staff&gt;</code>, <code>/case priority</code>, <code>/case status</code>, <code>/case archive</code>, <code>/case reload</code>, and <code>/case debug</code>.</p>
+            <h2 id="troubleshooting-quick-reference">Troubleshooting Quick Reference</h2>
+            <ul><li>If the plugin disables itself, confirm Paper 1.21.11+.</li><li>If <code>/case</code> does not open, check Paper runtime, plugin enable state, and <code>corecasex.use</code>.</li><li>If players cannot create cases, check creation permission, case type enabled state, open case limit, and cooldown.</li><li>If staff cannot see tools, check <code>corecasex.staff.board</code> and <code>corecasex.staff.view</code>.</li><li>If assignment fails, the assignee must be online.</li><li>If archive fails, resolve or reject the case first.</li><li>If Discord does not send, check enabled state, URL validity, event switches, routing order, and console warnings.</li><li>If evidence is missing, check evidence collection and staff evidence permissions.</li></ul>
+            <h2 id="production-validation-checklist">Production Validation Checklist</h2>
+            <p>Boot on Paper 1.21.11+, open <code>/case</code>, create each case type, inspect player and staff views, claim, assign, change priority, change status, add note, send reply, request info, reply as reporter, resolve, reject, archive, test teleport on location evidence, test Discord success and failure, and reload after a harmless wording change.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="shell footer-grid"><div><a class="brand footer-brand" href="./index.html"><span class="brand-mark" aria-hidden="true"><img src="./assets/corecasex-logo.svg" alt="" width="40" height="40"></span><span class="brand-text">CoreCaseX</span></a><p>Structured staff case management for Paper Minecraft servers.</p></div><div class="footer-links"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./docs.html">Docs</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreCaseX-issues">GitHub</a></div></div><div class="shell footer-bottom"><span>Copyright 2026 CoreCaseX. All rights reserved.</span><span>Configuration reference for server owners.</span></div></footer>
+    <script src="./assets/site.js"></script>
+  </body>
+</html>

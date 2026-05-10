@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="CoreCaseX FAQ for Paper server owners.">
+    <title>CoreCaseX FAQ</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/corecasex-logo.svg">
+    <link rel="shortcut icon" type="image/svg+xml" href="./assets/corecasex-logo.svg">
+    <meta name="theme-color" content="#0b0808">
+    <script>(()=>{try{if(localStorage.getItem("corecasex-theme")==="light"){document.documentElement.dataset.theme="light";}}catch(_){}})();</script>
+    <link rel="stylesheet" href="./assets/styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header"><nav class="nav shell" aria-label="Main navigation"><a class="brand" href="./index.html" aria-label="CoreCaseX home"><span class="brand-mark" aria-hidden="true"><img src="./assets/corecasex-logo.svg" alt="" width="40" height="40"></span><span class="brand-text">CoreCaseX</span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button><div class="nav-links" id="nav-links"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./docs.html">Docs</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreCaseX-issues">GitHub</a></div><a class="nav-cta" href="./installation.html">Get Started</a></nav></header>
+    <main id="main">
+      <section class="page-hero"><div class="shell"><div class="section-heading"><p class="eyebrow">FAQ</p><h1>Answers for server owners before setup.</h1><p>Short, practical answers based on the current CoreCaseX MVP documentation.</p></div></div></section>
+      <section class="section">
+        <div class="shell faq-grid">
+          <div class="section-heading"><p class="eyebrow">Questions</p><h2>Common setup and operation notes.</h2><p>Use the configuration reference for exact keys, commands, permissions, and troubleshooting checks.</p></div>
+          <div class="faq-list" data-animated-details>
+            <details class="animated-details" open><summary>What is CoreCaseX?</summary><p>A structured staff case management plugin for Paper servers. It gives players guided case submission and gives staff an in-game workflow for triage, assignment, replies, notes, evidence, status changes, and final outcomes.</p></details>
+            <details class="animated-details"><summary>What server runtime does it support?</summary><p>The current MVP supports Paper 1.21.11 or newer with Java 21.</p></details>
+            <details class="animated-details"><summary>Does it need a separate database?</summary><p>No. CoreCaseX uses local SQLite storage in the current MVP.</p></details>
+            <details class="animated-details"><summary>Which case types are included?</summary><p>Support request, player report, bug report, lost items or death issue, and grief or theft.</p></details>
+            <details class="animated-details"><summary>Can case types be configured?</summary><p>Yes. Built-in case types can be enabled or disabled, given default priorities, and configured for location collection. Player report reasons and bug report categories are configurable.</p></details>
+            <details class="animated-details"><summary>Can players see their own cases?</summary><p>Yes. Players can list their own cases, inspect status and priority, read staff replies, and add replies while the case remains open.</p></details>
+            <details class="animated-details"><summary>Are internal staff notes visible to players?</summary><p>No. Internal notes are staff-only and separate from player-visible replies.</p></details>
+            <details class="animated-details"><summary>How does evidence visibility work?</summary><p>Evidence can be player-visible, staff-only, or sensitive. Staff-only and sensitive evidence require dedicated permissions.</p></details>
+            <details class="animated-details"><summary>Does Discord support block case workflows?</summary><p>No. Discord webhooks are optional and best-effort. Invalid URLs, send failures, and non-2xx responses are logged without failing case actions.</p></details>
+            <details class="animated-details"><summary>What can `/case reload` reload?</summary><p>It reloads config values into memory and logs validation warnings. Replacing the jar, changing Paper runtime, regenerating deleted defaults, or changing an already-open SQLite path requires restart or careful handling.</p></details>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="shell footer-grid"><div><a class="brand footer-brand" href="./index.html"><span class="brand-mark" aria-hidden="true"><img src="./assets/corecasex-logo.svg" alt="" width="40" height="40"></span><span class="brand-text">CoreCaseX</span></a><p>Structured staff case management for Paper Minecraft servers.</p></div><div class="footer-links"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./docs.html">Docs</a><a href="./configuration.html">Config</a><a href="https://github.com/IceWolf23X/CoreCaseX-issues">GitHub</a></div></div><div class="shell footer-bottom"><span>Copyright 2026 CoreCaseX. All rights reserved.</span><span>FAQ for server owners.</span></div></footer>
+    <script src="./assets/site.js"></script>
+  </body>
+</html>
