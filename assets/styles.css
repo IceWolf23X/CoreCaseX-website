@@ -227,6 +227,14 @@ code {
   color: var(--text);
 }
 
+.nav-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  min-width: max-content;
+}
+
 .theme-toggle {
   display: inline-flex;
   align-items: center;
@@ -282,6 +290,18 @@ code {
   background: rgba(255, 142, 76, 0.1);
   color: var(--text);
   padding: 0 16px;
+}
+
+.nav-download {
+  border-color: transparent;
+  background: linear-gradient(135deg, #ca3929, #ff8e4c 58%, #ffd06d);
+  color: #180806;
+  box-shadow: 0 12px 28px rgba(202, 57, 41, 0.24);
+}
+
+.nav-download:hover,
+.nav-download:focus-visible {
+  box-shadow: 0 16px 34px rgba(202, 57, 41, 0.32);
 }
 
 .nav-cta:hover,
@@ -1357,6 +1377,7 @@ details p {
 
 .markdown-body {
   min-width: 0;
+  overflow-x: hidden;
   border: 1px solid var(--line);
   border-radius: 24px;
   background: rgba(31, 15, 10, 0.76);
@@ -1480,6 +1501,14 @@ details p {
   padding: 0;
 }
 
+@media (max-width: 480px) {
+  .code-block,
+  .code-block code {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}
+
 :root[data-theme="light"] body {
   background:
     radial-gradient(circle at 12% 8%, rgba(202, 57, 41, 0.13), transparent 30rem),
@@ -1518,6 +1547,11 @@ details p {
 :root[data-theme="light"] .hero-facts li,
 :root[data-theme="light"] .compat-line span {
   background: rgba(202, 57, 41, 0.07);
+}
+
+:root[data-theme="light"] .nav-download {
+  background: linear-gradient(135deg, #ca3929, #ff8e4c 58%, #ffd06d);
+  color: #180806;
 }
 
 :root[data-theme="light"] .nav-toggle,
@@ -1700,8 +1734,12 @@ details p {
     justify-content: center;
   }
 
-  .nav-cta {
+  .nav-actions {
     justify-self: end;
+  }
+
+  .nav-actions .nav-cta:not(.nav-download) {
+    display: none;
   }
 
   .hero-grid,
@@ -1767,8 +1805,10 @@ details p {
     gap: 10px;
   }
 
-  .nav-cta {
-    display: none;
+  .nav-actions .nav-download {
+    min-height: 40px;
+    padding: 0 12px;
+    font-size: 0.86rem;
   }
 
   .hero {
@@ -1842,6 +1882,24 @@ details p {
 
   .footer-links {
     justify-content: flex-start;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-text {
+    display: none;
+  }
+
+  h1 {
+    font-size: clamp(2.25rem, 11.5vw, 2.6rem);
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 9vw, 2.2rem);
+  }
+
+  .markdown-body {
+    overflow-wrap: anywhere;
   }
 }
 
