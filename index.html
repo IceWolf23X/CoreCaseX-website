@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CoreCaseX is a structured staff case management plugin for Paper Minecraft servers.">
+  <title>CoreCaseX | Structured Case Management for Paper Servers</title>
+  <link rel="icon" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="14" fill="%23080a10"/%3E%3Cpath d="M18 32c0-9 6.4-15 15.4-15 5.9 0 10.4 2.6 12.7 7.1l-7 3.7c-1.2-2.1-3.1-3.3-5.6-3.3-4.2 0-7.2 3.1-7.2 7.5s3 7.5 7.2 7.5c2.5 0 4.4-1.1 5.6-3.3l7 3.7C43.8 44.4 39.3 47 33.4 47 24.4 47 18 41 18 32Z" fill="%2364d8ff"/%3E%3C/svg%3E'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="CoreCaseX home">
+        <span class="brand-mark" aria-hidden="true">C</span>
+        <span>CoreCaseX</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-controls="nav-menu" aria-expanded="false">
+        <span class="sr-only">Open navigation</span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="nav-menu" id="nav-menu">
+        <a href="#features">Features</a>
+        <a href="#servers">Real servers</a>
+        <a href="#configuration">Configuration</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#compatibility">Compatibility</a>
+        <a class="nav-cta" href="https://github.com/IceWolf23X/CoreCaseX-plugin">GitHub</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero section" id="top">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Paper staff case management</p>
+          <h1>Structured support cases for Minecraft servers.</h1>
+          <p class="hero-text">
+            CoreCaseX gives players a guided way to report issues, ask for help, add evidence,
+            and reply to staff while your team manages every case from a clean in-game workflow.
+          </p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <a class="button button-primary" href="https://github.com/IceWolf23X/CoreCaseX-plugin">View on GitHub</a>
+            <a class="button button-secondary" href="https://github.com/IceWolf23X/CoreCaseX-plugin/tree/main/docs">Read the docs</a>
+          </div>
+          <ul class="hero-points" aria-label="CoreCaseX platform facts">
+            <li>Paper 1.21.11+</li>
+            <li>Java 21</li>
+            <li>SQLite storage</li>
+            <li>Optional Discord webhooks</li>
+          </ul>
+        </div>
+
+        <div class="hero-panel" aria-label="CoreCaseX workflow preview">
+          <div class="panel-header">
+            <span class="status-dot"></span>
+            <span>Staff Board</span>
+            <span class="panel-id">#128</span>
+          </div>
+          <div class="case-preview">
+            <div>
+              <span class="case-type">Grief / Theft</span>
+              <h2>Claimed incident with location evidence</h2>
+            </div>
+            <span class="priority priority-high">High</span>
+          </div>
+          <div class="case-meta">
+            <span>Reporter</span>
+            <strong>Player visible details</strong>
+            <span>Status</span>
+            <strong>Waiting staff</strong>
+            <span>Assigned</span>
+            <strong>Moderator online</strong>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-row active">
+              <span></span>
+              <p>Case submitted from `/case` Dialog flow.</p>
+            </div>
+            <div class="timeline-row">
+              <span></span>
+              <p>Staff added an internal note and requested more information.</p>
+            </div>
+            <div class="timeline-row">
+              <span></span>
+              <p>Discord webhook mirrored the update without blocking the workflow.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section feature-section" id="features">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Core feature set</p>
+          <h2>One focused workflow for player issues and staff decisions.</h2>
+          <p>
+            CoreCaseX keeps submissions, board filters, evidence, conversation, and final case
+            outcomes connected inside one Paper plugin.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="icon">01</span>
+            <h3>Guided submissions</h3>
+            <p>Players open `/case` and use Paper Dialog forms instead of memorizing a large command tree.</p>
+          </article>
+          <article class="feature-card">
+            <span class="icon">02</span>
+            <h3>Five case types</h3>
+            <p>Support request, player report, bug report, lost items or death issue, and grief or theft flows.</p>
+          </article>
+          <article class="feature-card">
+            <span class="icon">03</span>
+            <h3>Paper Dialog UI</h3>
+            <p>Progressive menus, review screens, detail sections, option controls, hover text, and back actions.</p>
+          </article>
+          <article class="feature-card">
+            <span class="icon">04</span>
+            <h3>Staff board filters</h3>
+            <p>Staff can focus on open, unassigned, assigned, high priority, waiting, closed, or archived cases.</p>
+          </article>
+          <article class="feature-card">
+            <span class="icon">05</span>
+            <h3>Ownership workflow</h3>
+            <p>Claim cases, assign online staff, change priority or status, and keep ownership visible.</p>
+          </article>
+          <article class="feature-card">
+            <span class="icon">06</span>
+            <h3>Replies and info requests</h3>
+            <p>Staff replies, player replies, and request-more-info states keep the conversation structured.</p>
+          </article>
+          <article class="feature-card">
+            <span class="icon">07</span>
+            <h3>Internal notes</h3>
+            <p>Staff can record handoff context and observations without exposing internal discussion to players.</p>
+          </article>
+          <article class="feature-card">
+            <span class="icon">08</span>
+            <h3>Evidence visibility</h3>
+            <p>Evidence can be player-visible, staff-only, or sensitive, with dedicated permissions for access.</p>
+          </article>
+          <article class="feature-card">
+            <span class="icon">09</span>
+            <h3>Timeline history</h3>
+            <p>Creation, claims, assignments, replies, notes, status changes, resolutions, and archive actions are tracked.</p>
+          </article>
+          <article class="feature-card">
+            <span class="icon">10</span>
+            <h3>Discord webhooks</h3>
+            <p>Optional webhooks can mirror configured events with priority, case type, or default routing.</p>
+          </article>
+          <article class="feature-card">
+            <span class="icon">11</span>
+            <h3>SQLite persistence</h3>
+            <p>Cases, replies, evidence, notes, resolutions, migrations, and timeline events are stored locally.</p>
+          </article>
+          <article class="feature-card">
+            <span class="icon">12</span>
+            <h3>Granular permissions</h3>
+            <p>Separate player, staff, and admin permissions let owners shape real staff responsibilities.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section split-section" id="servers">
+      <div class="container split-grid">
+        <div class="section-heading compact">
+          <p class="eyebrow">Built for real servers</p>
+          <h2>Designed for follow-up, ownership, and clear outcomes.</h2>
+          <p>
+            CoreCaseX is built for communities where support cannot live in chat scrollback.
+            It gives staff a persistent view of what happened, who is responsible, and what needs action next.
+          </p>
+        </div>
+        <div class="proof-grid">
+          <div class="proof-item">
+            <h3>Operational limits</h3>
+            <p>Per-player open case limits and submission cooldowns help keep case creation controlled.</p>
+          </div>
+          <div class="proof-item">
+            <h3>Audit trail</h3>
+            <p>Timeline entries preserve meaningful case changes so staff can review the full path to a decision.</p>
+          </div>
+          <div class="proof-item">
+            <h3>Safe callbacks</h3>
+            <p>Dialog action tokens are owner-bound, permission-checked, one-use, and expire when stale.</p>
+          </div>
+          <div class="proof-item">
+            <h3>Best-effort Discord</h3>
+            <p>Webhook failures are logged while case workflows continue, and allowed mentions are disabled.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section config-section" id="configuration">
+      <div class="container config-grid">
+        <div class="section-heading compact">
+          <p class="eyebrow">Configuration</p>
+          <h2>Adjust the workflow without turning setup into a second project.</h2>
+          <p>
+            CoreCaseX ships commented YAML files for global settings, case types, Discord routing,
+            visible text, and SQLite storage. Safe changes can be reloaded with `/case reload`.
+          </p>
+          <div class="config-list" aria-label="Configurable areas">
+            <span>Case type enablement</span>
+            <span>Default priorities</span>
+            <span>Reason and category options</span>
+            <span>Location and death evidence behavior</span>
+            <span>Staff notification scope</span>
+            <span>Dialog and command text</span>
+          </div>
+        </div>
+
+        <div class="code-card" aria-label="Configuration example">
+          <div class="code-card-header">
+            <span>case-types.yml</span>
+            <span>documented defaults</span>
+          </div>
+          <pre><code>player-report:
+  enabled: true
+  default-priority: NORMAL
+  collect-location: true
+  reasons:
+    - Insults
+    - Spam
+    - Harassment
+    - Cheating
+    - Other
+
+grief-theft:
+  enabled: true
+  default-priority: HIGH
+  collect-location: true</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section workflow-section" id="workflow">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">How it works</p>
+          <h2>From player report to final decision.</h2>
+          <p>
+            The current MVP keeps the workflow inside Paper: players submit cases through Dialog UI,
+            staff triage them in-game, and SQLite stores the complete history.
+          </p>
+        </div>
+
+        <div class="steps" aria-label="CoreCaseX workflow">
+          <article class="step-card">
+            <span>1</span>
+            <h3>Configure the case types</h3>
+            <p>Enable the flows your server needs, set default priorities, and tune reason or category options.</p>
+          </article>
+          <article class="step-card">
+            <span>2</span>
+            <h3>Players open `/case`</h3>
+            <p>Guided forms collect descriptions, choices, locations, death context, or target player details.</p>
+          </article>
+          <article class="step-card">
+            <span>3</span>
+            <h3>Staff triage the board</h3>
+            <p>Use filters, claims, assignments, priority changes, notes, replies, and information requests.</p>
+          </article>
+          <article class="step-card">
+            <span>4</span>
+            <h3>Resolve, reject, or archive</h3>
+            <p>Close the case with a final outcome, keep the timeline available, and archive completed cases.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compatibility-section" id="compatibility">
+      <div class="container compatibility-grid">
+        <div class="section-heading compact">
+          <p class="eyebrow">Compatibility</p>
+          <h2>Focused on the current Paper MVP.</h2>
+          <p>
+            CoreCaseX targets a single-server Paper setup today. That narrow scope keeps installation
+            practical and avoids requiring extra services before your staff can start managing cases.
+          </p>
+        </div>
+        <div class="compat-cards">
+          <article>
+            <h3>Runtime</h3>
+            <p>Paper 1.21.11 or newer with Java 21.</p>
+          </article>
+          <article>
+            <h3>Storage</h3>
+            <p>Local SQLite database under the plugin data folder.</p>
+          </article>
+          <article>
+            <h3>Notifications</h3>
+            <p>In-game staff/player notifications and optional Discord webhook embeds.</p>
+          </article>
+          <article>
+            <h3>Administration</h3>
+            <p>Config reload, debug command, validation warnings, and commented default YAML files.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-cta">
+      <div class="container cta-panel">
+        <p class="eyebrow">Ready to organize server support?</p>
+        <h2>Bring player issues, staff actions, evidence, and outcomes into one case workflow.</h2>
+        <div class="hero-actions">
+          <a class="button button-primary" href="https://github.com/IceWolf23X/CoreCaseX-plugin">Open GitHub repository</a>
+          <a class="button button-secondary" href="https://github.com/IceWolf23X/CoreCaseX-plugin/tree/main/docs">Open documentation</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <a class="brand" href="#top" aria-label="CoreCaseX home">
+        <span class="brand-mark" aria-hidden="true">C</span>
+        <span>CoreCaseX</span>
+      </a>
+      <p>Structured case management for Paper Minecraft servers.</p>
+      <div class="footer-links">
+        <a href="#features">Features</a>
+        <a href="#configuration">Configuration</a>
+        <a href="https://github.com/IceWolf23X/CoreCaseX-plugin">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
