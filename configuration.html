@@ -462,7 +462,7 @@ rejected-notice: "&lt;red&gt;Your Case #{id} has been rejected.&lt;/red&gt;"</co
             <p><code>dialogs.inputs</code> controls labels and defaults for description, attach-location, attach-death, boolean yes/no, target player, reason, category, manual location, claimed lost items, priority, status, outcome, close reason, final message, reply, staff player name, question, and note inputs.</p>
             <p><code>dialogs.detail-lines</code> controls submit confirmation rows, player summaries, staff summaries, action summaries, overview rows, description rows, evidence rows, conversation rows, internal note rows, and resolution rows.</p>
             <p><code>dialogs.validation</code> controls required-field errors, invalid priority/status text, missing location/world text, expired Dialog action text, wrong-player action text, and online-assignee errors.</p>
-            <p><code>dialogs.buttons</code> controls every clickable row label and hover text, including main actions, case type rows, staff tools, review/submit buttons, back buttons, board filters, case list rows, section openers, player replies, staff replies, claim, assign, priority, status, teleport, resolve, reject, and archive.</p>
+            <p><code>dialogs.buttons</code> controls every clickable row label and hover text, including main actions, case type rows, staff tools, review/submit buttons, back buttons, board filters, case list rows, section openers, player replies, staff replies, claim, assign/reassign, priority, status, teleport, resolve, reject, and archive.</p>
             <h3>Complete Dialog Key Map</h3>
             <p>This map mirrors the current bundled <code>messages.yml</code> key structure without duplicating every value on the page.</p>
             <pre class="code-block"><code>dialogs.titles:
@@ -653,7 +653,7 @@ dialogs.buttons:
             <p>Archive is allowed only when a case is <code>RESOLVED</code> or <code>REJECTED</code>. Archive is rejected for <code>OPEN</code>, <code>CLAIMED</code>, <code>WAITING_PLAYER</code>, and <code>WAITING_STAFF</code>.</p>
             <h3>Claim and Assignment Rules</h3>
             <p>Claim assigns the case to the clicking staff member, fails if the case is already assigned, fails if the case is closed, and uses a conflict-safe database update.</p>
-            <p>Assign requires the target staff member to be online, sets or replaces the assignee, records previous and new assignee names in the timeline, and moves <code>OPEN</code> cases to <code>CLAIMED</code>.</p>
+            <p><code>/case assign</code> is the MVP assign/reassign command. It requires the target staff member to be online, sets or replaces the assignee, records previous and new assignee names in the timeline, moves <code>OPEN</code> cases to <code>CLAIMED</code>, and rejects <code>RESOLVED</code>, <code>REJECTED</code>, or <code>ARCHIVED</code> cases.</p>
 
             <h2 id="evidence-visibility">10. Evidence Visibility</h2>
             <p>Evidence levels are <code>PLAYER_VISIBLE</code>, <code>STAFF_ONLY</code>, and <code>SENSITIVE</code>.</p>
@@ -799,7 +799,7 @@ storage.yml</code></pre>
               <li>confirm the staff member is online as a player</li>
             </ul>
             <h3>Assignment fails</h3>
-            <p>Assignment and reassignment require the assignee to be online. Use the exact online player name.</p>
+            <p>Assignment and reassignment require the assignee to be online and fail for resolved, rejected, or archived cases. Use the exact online player name.</p>
             <h3>Claim fails</h3>
             <p>Claim fails when the case is already assigned or when the case is resolved, rejected, or archived.</p>
             <h3>Archive fails</h3>
@@ -837,7 +837,7 @@ storage.yml</code></pre>
               <li>inspect staff board filters</li>
               <li>test staff Open by ID Dialog input</li>
               <li>claim a case</li>
-              <li>assign a case to an online staff member</li>
+              <li>assign and reassign a case to an online staff member</li>
               <li>change priority</li>
               <li>change status</li>
               <li>add an internal note</li>
