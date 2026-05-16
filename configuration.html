@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Every current CoreCaseX config file, default, reload boundary, permission rule, and troubleshooting note.">
+    <meta name="description" content="CoreCaseX setup and configuration reference with first-run steps, defaults, permissions, reload rules, and troubleshooting notes.">
     <title>CoreCaseX Configuration Reference</title>
     <link rel="icon" type="image/svg+xml" href="./assets/corecasex-logo.svg">
     <link rel="shortcut icon" type="image/svg+xml" href="./assets/corecasex-logo.svg">
@@ -43,7 +43,7 @@
         <div class="shell section-heading">
           <p class="eyebrow">Complete Configuration Reference</p>
           <h1>Configuration Reference</h1>
-          <p>Every current CoreCaseX config file, default, reload boundary, permission rule, and troubleshooting note for the Paper MVP.</p>
+          <p>First-run guidance, current config files, defaults, reload boundaries, permission rules, and troubleshooting notes for the Paper MVP.</p>
         </div>
       </section>
 
@@ -52,6 +52,9 @@
           <aside class="doc-sidebar" aria-label="Page contents">
             <strong>Contents</strong>
             <a href="#before-you-configure">0. Before You Configure</a>
+            <a href="#starter-checklist">Starter Checklist</a>
+            <a href="#first-10-minutes">First 10 Minutes</a>
+            <a href="#what-to-configure-first">What To Configure First</a>
             <a href="#folder-layout">1. Folder Layout</a>
             <a href="#reload-vs-restart">2. Reload vs Restart</a>
             <a href="#runtime-guard">3. Runtime Guard</a>
@@ -62,7 +65,7 @@
             <a href="#messages-yml">8. messages.yml</a>
             <a href="#workflow-rules">9. Workflow Rules</a>
             <a href="#evidence-visibility">10. Evidence Visibility</a>
-            <a href="#dialog-ui-configuration">11. Dialog UI</a>
+            <a href="#dialog-ui-configuration">11. GUI And Dialog Input</a>
             <a href="#commands">12. Commands</a>
             <a href="#plugin-yml">13. plugin.yml</a>
             <a href="#permissions">14. Permissions</a>
@@ -78,12 +81,46 @@
             <h2 id="before-you-configure">0. Before You Configure</h2>
             <p>CoreCaseX is a Paper-only case management plugin. The current MVP expects Java 21, Paper 1.21.11 or newer, the CoreCaseX jar installed on a Paper server, and local SQLite storage bundled through the plugin jar.</p>
             <p>The plugin does not currently ship a proxy module, MySQL or MariaDB backend, web dashboard, Discord bot commands, Discord ticket channels, or Discord threads. Discord support is webhook-only and optional.</p>
+            <h3 id="starter-checklist">Starter Checklist</h3>
+            <ol>
+              <li>Stop the server before installing or replacing the jar.</li>
+              <li>Place the CoreCaseX jar in the Paper server <code>plugins</code> folder.</li>
+              <li>Start the server on Java 21 and Paper 1.21.11 or newer.</li>
+              <li>Confirm the console says CoreCaseX enabled without runtime guard errors.</li>
+              <li>Open <code>plugins/CoreCaseX/</code> and review the generated YAML files.</li>
+              <li>Keep the default SQLite path for the first test unless you already know why it must move.</li>
+              <li>Give players the basic player permissions and give staff the staff board permissions.</li>
+              <li>Run <code>/case</code> as a normal player and create one test support request.</li>
+              <li>Run <code>/case board</code> as staff and claim, reply to, resolve, and archive that test case.</li>
+              <li>Enable Discord only after the in-game workflow works.</li>
+            </ol>
+            <h3 id="first-10-minutes">First 10 Minutes</h3>
+            <p>For a clean first setup, do not edit every file immediately. Start with defaults, prove the player and staff flow, then adjust the settings that affect your server policy.</p>
+            <ul>
+              <li><code>config.yml</code>: set player case limits, cooldown, and staff notification behavior.</li>
+              <li><code>case-types.yml</code>: disable case types you do not want and tune priorities.</li>
+              <li><code>discord.yml</code>: add a default webhook only if staff want Discord mirrors.</li>
+              <li><code>messages.yml</code>: edit wording after the workflow is confirmed.</li>
+              <li><code>storage.yml</code>: leave SQLite at <code>data/corecasex.db</code> for the first launch.</li>
+            </ul>
+            <h3 id="what-to-configure-first">What To Configure First</h3>
+            <p>The highest-impact settings for new servers are usually:</p>
+            <ul>
+              <li><code>max-open-cases-per-player</code>: prevents spam and duplicate reports.</li>
+              <li><code>submission-cooldown-seconds</code>: controls how quickly one player can create new cases.</li>
+              <li><code>case-types.yml -&gt; enabled</code>: hides flows your server does not support.</li>
+              <li><code>case-types.yml -&gt; default-priority</code>: controls what staff see as urgent first.</li>
+              <li><code>staff-notifications.player-replied-scope</code>: decides whether replies notify only assigned staff or the broader team.</li>
+              <li><code>discord.yml -&gt; webhooks.default</code>: sends case activity to Discord when enabled.</li>
+            </ul>
+            <p>After YAML edits, use <code>/case reload</code> for normal config changes. Restart when replacing the jar, changing Paper version, or changing the SQLite database path.</p>
             <p>Core terminology:</p>
             <ul>
               <li><code>case</code> means one structured support or report record.</li>
               <li><code>reporter</code> means the player who opened the case.</li>
               <li><code>staff</code> means a player with staff permissions.</li>
-              <li><code>Dialog UI</code> means the native Paper Dialog menus and forms opened by <code>/case</code>.</li>
+              <li><code>inventory GUI</code> means the clickable in-game menus used for normal navigation and staff actions.</li>
+              <li><code>Dialog input</code> means native Paper Dialog forms used for typed values such as descriptions, notes, replies, and outcome text.</li>
               <li><code>reply</code> means player-visible conversation text.</li>
               <li><code>internal note</code> means staff-only case text.</li>
               <li><code>evidence</code> means structured context attached to a case.</li>
@@ -216,7 +253,7 @@ staff-notifications:
             <p>Current bundled default:</p>
             <pre class="code-block"><code># General support request flow for help that does not fit another case type.
 support-request:
-  # If false, this case type is hidden from the Dialog creation menu.
+  # If false, this case type is hidden from the inventory case type menu.
   enabled: true
   # Priority assigned to new support requests. Accepted: LOW, NORMAL, HIGH, URGENT.
   default-priority: LOW
@@ -665,24 +702,22 @@ dialogs.buttons:
             </ul>
             <p>Evidence can include reporter snapshot data, reporter location, online target player snapshot data, report reason, bug category, claimed lost items, last death context, and manual location text.</p>
 
-            <h2 id="dialog-ui-configuration">11. Dialog UI Configuration</h2>
+            <h2 id="dialog-ui-configuration">11. Inventory GUI And Dialog Input</h2>
             <p>Normal player entrypoint:</p>
             <pre class="code-block"><code>/case</code></pre>
-            <p>Dialog menus include:</p>
+            <p>Inventory menus include:</p>
             <ul>
               <li>main menu</li>
               <li>case type menu</li>
-              <li>guided case creation forms</li>
-              <li>review-before-submit screens</li>
               <li>player case list</li>
               <li>player case detail view</li>
               <li>staff tools menu</li>
               <li>staff board filters</li>
               <li>staff case detail view</li>
               <li>staff action menu</li>
-              <li>staff Open by ID input</li>
+              <li>assign/reassign, priority, and status selection menus</li>
             </ul>
-            <p>Dialog input types include free text for descriptions, notes, replies, outcomes, final messages, target players, and manual locations; option controls for reasons, categories, priority, and status; and boolean controls for attach-location and attach-death choices.</p>
+            <p>Paper Dialog input is used when a player or staff member must type something, including case descriptions, notes, replies, outcome messages, target player names, manual locations, and staff Open by ID.</p>
             <h3>Safe Dialog Actions</h3>
             <p>Clickable rows use short internal commands:</p>
             <pre class="code-block"><code>/case ui &lt;token&gt;</code></pre>
@@ -798,6 +833,47 @@ corecasex.staff.view-sensitive-evidence</code></pre>
             <pre class="code-block"><code>corecasex.admin.reload
 corecasex.admin.debug</code></pre>
             <p>Player permissions default to <code>true</code>. Staff and admin permissions default to <code>op</code>. A practical LuckPerms setup gives normal players use/create/list/view-own, helpers board/view/reply/request-info, moderators claim/note/priority/status/resolve/reject/teleport as appropriate, and senior staff archive plus sensitive evidence access only when needed.</p>
+            <h3>Recommended First Permission Split</h3>
+            <p>For a new server, start with a small permission model and expand only when staff need more actions.</p>
+            <pre class="code-block"><code>default players:
+  corecasex.use
+  corecasex.case.create
+  corecasex.case.list
+  corecasex.case.view-own
+
+helpers:
+  corecasex.staff.board
+  corecasex.staff.view
+  corecasex.staff.reply
+  corecasex.staff.request-info
+  corecasex.staff.view-evidence
+
+moderators:
+  corecasex.staff.claim
+  corecasex.staff.assign
+  corecasex.staff.note
+  corecasex.staff.priority
+  corecasex.staff.status
+  corecasex.staff.resolve
+  corecasex.staff.reject
+
+senior staff:
+  corecasex.staff.archive
+  corecasex.staff.teleport
+  corecasex.staff.view-sensitive-evidence
+
+admins:
+  corecasex.admin.reload
+  corecasex.admin.debug</code></pre>
+            <p>With LuckPerms, apply the same split to your own groups. Example starter commands:</p>
+            <pre class="code-block"><code>lp group default permission set corecasex.use true
+lp group default permission set corecasex.case.create true
+lp group default permission set corecasex.case.list true
+lp group default permission set corecasex.case.view-own true
+lp group staff permission set corecasex.staff.board true
+lp group staff permission set corecasex.staff.view true
+lp group admin permission set corecasex.admin.reload true</code></pre>
+            <p>Keep <code>corecasex.staff.teleport</code> and <code>corecasex.staff.view-sensitive-evidence</code> restricted. Those permissions expose stronger moderation tools and more private case context.</p>
 
             <h2 id="validation">15. Config Validation</h2>
             <p>CoreCaseX logs warnings on startup and <code>/case reload</code> for:</p>
@@ -912,6 +988,17 @@ storage.yml</code></pre>
 git diff --check</code></pre>
 
             <h2 id="quick-setup-examples">19. Quick Setup Examples</h2>
+            <h3>First Public Launch</h3>
+            <ul>
+              <li>keep SQLite on the default path.</li>
+              <li>keep all five case types enabled for the first staff test.</li>
+              <li>set a reasonable cooldown such as <code>60</code> seconds.</li>
+              <li>give normal players only the four player permissions.</li>
+              <li>give staff board, view, reply, request-info, claim, status, and priority before giving archive or sensitive evidence permissions.</li>
+              <li>create three test cases before launch: one support request, one player report, and one bug report.</li>
+              <li>confirm staff can claim, reply, request more information, resolve, reject, and archive.</li>
+              <li>turn on Discord webhooks last, then test one valid webhook and one intentionally invalid webhook.</li>
+            </ul>
             <h3>Small Survival Server</h3>
             <ul>
               <li>keep all five case types enabled.</li>
@@ -938,7 +1025,7 @@ git diff --check</code></pre>
 
             <h2 id="summary">20. Summary</h2>
             <p>CoreCaseX configuration controls player case creation, five built-in case types, case priorities, reason and category options, location and death evidence behavior, staff board workflow notifications, Discord webhook routing and events, SQLite file location, command and Dialog text, validation messages, and permissions through <code>plugin.yml</code>.</p>
-            <p>The intended operating model is straightforward: players use <code>/case</code>, staff use the Dialog board and actions, SQLite stores the full history, Discord mirrors important events when configured, and validation warnings guide admins without breaking normal case workflows.</p>
+            <p>The intended operating model is straightforward: players use <code>/case</code>, staff use the inventory board and actions, SQLite stores the full history, Discord mirrors important events when configured, and validation warnings guide admins without breaking normal case workflows.</p>
           </article>
         </div>
       </section>
