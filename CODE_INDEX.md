@@ -2,7 +2,7 @@
 
 ## Public pages
 
-- `index.html` — Landing page and public product summary.
+- `index.html` — Landing page, public product summary, and links to the other five CoreX plugins.
 - `features.html` — Player reports, staff board, evidence, notification, and storage overview.
 - `installation.html` — Paper requirements, installation, first startup, and setup checks.
 - `configuration.html` — Complete administrator configuration reference and public configuration contract.
