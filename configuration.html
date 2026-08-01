@@ -1,197 +1,176 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="CoreCaseX setup and configuration reference with first-run steps, defaults, permissions, reload rules, and troubleshooting notes.">
-    <title>CoreCaseX Configuration Reference</title>
-    <link rel="icon" type="image/svg+xml" href="./assets/corecasex-logo.svg">
-    <link rel="shortcut icon" type="image/svg+xml" href="./assets/corecasex-logo.svg">
-    <meta name="theme-color" content="#0b0808">
-    <script>
-      (() => {
-        try {
-          if (localStorage.getItem("corecasex-theme") === "light") {
-            document.documentElement.dataset.theme = "light";
-          }
-        } catch (_) {}
-      })();
-    </script>
-    <link rel="stylesheet" href="./assets/styles.css">
-  </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header">
-      <nav class="nav shell" aria-label="Main navigation">
-        <a class="brand" href="./index.html" aria-label="CoreCaseX home"><span class="brand-mark" aria-hidden="true"><img src="./assets/corecasex-logo.svg" alt="" width="40" height="40"></span><span class="brand-text">CoreCaseX</span></a>
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
-        <div class="nav-links" id="nav-links">
-          <a href="./features.html">Features</a>
-          <a href="./installation.html">Setup</a>
-          <a href="./docs.html">Docs</a>
-          <a href="./faq.html">FAQ</a>
-          <a href="https://github.com/IceWolf23X/CoreCaseX-issues">GitHub</a>
-        </div>
-        <div class="nav-actions">
-          <a class="nav-cta nav-download" href="https://modrinth.com/plugin/corecasex" aria-label="Download CoreCaseX on Modrinth (placeholder)" title="Placeholder for the future CoreCaseX Modrinth page">Download</a>
-          <a class="nav-cta" href="./installation.html">Get Started</a>
-        <a class="nav-cta" href="https://buymeacoffee.com/lcewolf23x">Buy Me a Coffee</a></div>
-      </nav>
-    </header>
-    <main id="main">
-      <section class="page-hero">
-        <div class="shell section-heading">
-          <p class="eyebrow">Complete Configuration Reference</p>
-          <h1>Configuration Reference</h1>
-          <p>First-run guidance, current config files, defaults, reload boundaries, permission rules, and troubleshooting notes for the Paper MVP.</p>
-        </div>
-      </section>
-
-      <section class="section doc-page">
-        <div class="shell doc-layout">
-          <aside class="doc-sidebar" aria-label="Page contents">
-            <strong>Contents</strong>
-            <a href="#before-you-configure">0. Before You Configure</a>
-            <a href="#starter-checklist">Starter Checklist</a>
-            <a href="#first-10-minutes">First 10 Minutes</a>
-            <a href="#what-to-configure-first">What To Configure First</a>
-            <a href="#folder-layout">1. Folder Layout</a>
-            <a href="#reload-vs-restart">2. Reload vs Restart</a>
-            <a href="#runtime-guard">3. Runtime Guard</a>
-            <a href="#config-yml">4. config.yml</a>
-            <a href="#case-types-yml">5. case-types.yml</a>
-            <a href="#discord-yml">6. discord.yml</a>
-            <a href="#storage-yml">7. storage.yml</a>
-            <a href="#messages-yml">8. messages.yml</a>
-            <a href="#workflow-rules">9. Workflow Rules</a>
-            <a href="#evidence-visibility">10. Evidence Visibility</a>
-            <a href="#dialog-ui-configuration">11. GUI And Dialog Input</a>
-            <a href="#commands">12. Commands</a>
-            <a href="#plugin-yml">13. plugin.yml</a>
-            <a href="#permissions">14. Permissions</a>
-            <a href="#validation">15. Config Validation</a>
-            <a href="#regenerating-defaults">16. Regenerating Defaults</a>
-            <a href="#troubleshooting-quick-reference">17. Troubleshooting</a>
-            <a href="#production-validation-checklist">18. Production Checklist</a>
-            <a href="#quick-setup-examples">19. Quick Setup Examples</a>
-            <a href="#summary">20. Summary</a>
-          </aside>
-
-          <article class="markdown-body">
-            <h2 id="before-you-configure">0. Before You Configure</h2>
-            <p>CoreCaseX is a Paper-only case management plugin. The current MVP expects Java 21, Paper 1.21.11 or newer, the CoreCaseX jar installed on a Paper server, and local SQLite storage bundled through the plugin jar.</p>
-            <p>The plugin does not currently ship a proxy module, MySQL or MariaDB backend, web dashboard, Discord bot commands, Discord ticket channels, or Discord threads. Discord support is webhook-only and optional.</p>
-            <h3 id="starter-checklist">Starter Checklist</h3>
-            <ol>
-              <li>Stop the server before installing or replacing the jar.</li>
-              <li>Place the CoreCaseX jar in the Paper server <code>plugins</code> folder.</li>
-              <li>Start the server on Java 21 and Paper 1.21.11 or newer.</li>
-              <li>Confirm the console says CoreCaseX enabled without runtime guard errors.</li>
-              <li>Open <code>plugins/CoreCaseX/</code> and review the generated YAML files.</li>
-              <li>Keep the default SQLite path for the first test unless you already know why it must move.</li>
-              <li>Give players the basic player permissions and give staff the staff board permissions.</li>
-              <li>Run <code>/case</code> as a normal player and create one test support request.</li>
-              <li>Run <code>/case board</code> as staff and claim, reply to, resolve, and archive that test case.</li>
-              <li>Enable Discord only after the in-game workflow works.</li>
-            </ol>
-            <h3 id="first-10-minutes">First 10 Minutes</h3>
-            <p>For a clean first setup, do not edit every file immediately. Start with defaults, prove the player and staff flow, then adjust the settings that affect your server policy.</p>
-            <ul>
-              <li><code>config.yml</code>: set player case limits, cooldown, and staff notification behavior.</li>
-              <li><code>case-types.yml</code>: disable case types you do not want and tune priorities.</li>
-              <li><code>discord.yml</code>: add a default webhook only if staff want Discord mirrors.</li>
-              <li><code>messages.yml</code>: edit wording after the workflow is confirmed.</li>
-              <li><code>storage.yml</code>: leave SQLite at <code>data/corecasex.db</code> for the first launch.</li>
-            </ul>
-            <h3 id="what-to-configure-first">What To Configure First</h3>
-            <p>The highest-impact settings for new servers are usually:</p>
-            <ul>
-              <li><code>max-open-cases-per-player</code>: prevents spam and duplicate reports.</li>
-              <li><code>submission-cooldown-seconds</code>: controls how quickly one player can create new cases.</li>
-              <li><code>case-types.yml -&gt; enabled</code>: hides flows your server does not support.</li>
-              <li><code>case-types.yml -&gt; default-priority</code>: controls what staff see as urgent first.</li>
-              <li><code>staff-notifications.player-replied-scope</code>: decides whether replies notify only assigned staff or the broader team.</li>
-              <li><code>discord.yml -&gt; webhooks.default</code>: sends case activity to Discord when enabled.</li>
-            </ul>
-            <p>After YAML edits, use <code>/case reload</code> for normal config changes. Restart when replacing the jar, changing Paper version, or changing the SQLite database path.</p>
-            <p>Core terminology:</p>
-            <ul>
-              <li><code>case</code> means one structured support or report record.</li>
-              <li><code>reporter</code> means the player who opened the case.</li>
-              <li><code>staff</code> means a player with staff permissions.</li>
-              <li><code>inventory GUI</code> means the clickable in-game menus used for normal navigation and staff actions.</li>
-              <li><code>Dialog input</code> means native Paper Dialog forms used for typed values such as descriptions, notes, replies, and outcome text.</li>
-              <li><code>reply</code> means player-visible conversation text.</li>
-              <li><code>internal note</code> means staff-only case text.</li>
-              <li><code>evidence</code> means structured context attached to a case.</li>
-              <li><code>timeline</code> means the audit history of case changes.</li>
-            </ul>
-            <p>Trust model:</p>
-            <ul>
-              <li>server-controlled config strings can use MiniMessage.</li>
-              <li>player-provided text is escaped before placeholder insertion.</li>
-              <li>Discord webhook delivery is best-effort and must never block case workflows.</li>
-            </ul>
-
-            <h2 id="folder-layout">1. Folder Layout</h2>
-            <p>Runtime folder:</p>
-            <pre class="code-block"><code>plugins/CoreCaseX/</code></pre>
-            <p>Bundled admin config files:</p>
-            <pre class="code-block"><code>config.yml
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="CoreCaseX setup and configuration reference with first-run steps, defaults, permissions, reload rules, and troubleshooting notes." name="description"/>
+<title>CoreCaseX Configuration Reference</title>
+<link href="./assets/corecasex-logo.svg" rel="icon" type="image/svg+xml"/>
+<link href="./assets/corecasex-logo.svg" rel="shortcut icon" type="image/svg+xml"/>
+<meta content="#2F3235" name="theme-color"/>
+<link href="./assets/vendor/framebasecss/framebase.min.css" rel="stylesheet"/><link href="./assets/vendor/framebasecss/framebase-highlight.min.css" rel="stylesheet"/><link href="./assets/styles.css" rel="stylesheet"/></head>
+<body>
+<a class="fb-skip-link" href="#main">Skip to content</a>
+<header class="fb-site-header fb-site-header--sticky">
+<div class="fb-container fb-container--wide fb-navbar">
+<a aria-label="CoreCaseX home" class="fb-brand corex-brand" href="./index.html">
+<img alt="" height="36" src="./assets/corecasex-logo.svg" width="36"/><span>CoreCaseX</span>
+</a>
+<button aria-controls="site-navigation" aria-expanded="false" class="fb-button fb-button--ghost fb-nav-toggle" data-nav-toggle="" type="button">Menu</button>
+<nav aria-label="Main navigation" class="fb-nav-panel fb-nav-region" data-nav-panel="" data-open="false" id="site-navigation">
+<ul class="fb-nav"><li><a href="./index.html">Overview</a></li><li><a href="./features.html">Features</a></li><li><a href="./installation.html">Setup</a></li><li><a href="./docs.html">Documentation</a></li><li><a href="./faq.html">FAQ</a></li><li><a href="https://github.com/IceWolf23X/CoreCaseX-issues" rel="noopener noreferrer" target="_blank">GitHub</a></li><li><a href="https://modrinth.com/plugin/corecasex" rel="noopener noreferrer" target="_blank">Download</a></li></ul>
+</nav>
+</div>
+</header>
+<main class="fb-main" id="main">
+<header class="fb-doc-header corex-page-hero">
+<div class="fb-container fb-container--wide">
+<p class="fb-eyebrow">Complete Configuration Reference</p>
+<h1>Configuration Reference</h1>
+<p>First-run guidance, current config files, defaults, reload boundaries, permission rules, and troubleshooting notes for the Paper MVP.</p>
+</div>
+</header>
+<section class="fb-section">
+<div class="fb-container fb-container--wide fb-doc-shell corex-doc-shell">
+<aside aria-label="Page contents" class="fb-doc-sidebar fb-doc-nav-panel corex-toc">
+<strong>Contents</strong>
+<a href="#before-you-configure">0. Before You Configure</a>
+<a href="#starter-checklist">Starter Checklist</a>
+<a href="#first-10-minutes">First 10 Minutes</a>
+<a href="#what-to-configure-first">What To Configure First</a>
+<a href="#folder-layout">1. Folder Layout</a>
+<a href="#reload-vs-restart">2. Reload vs Restart</a>
+<a href="#runtime-guard">3. Runtime Guard</a>
+<a href="#config-yml">4. config.yml</a>
+<a href="#case-types-yml">5. case-types.yml</a>
+<a href="#discord-yml">6. discord.yml</a>
+<a href="#storage-yml">7. storage.yml</a>
+<a href="#messages-yml">8. messages.yml</a>
+<a href="#workflow-rules">9. Workflow Rules</a>
+<a href="#evidence-visibility">10. Evidence Visibility</a>
+<a href="#dialog-ui-configuration">11. GUI And Dialog Input</a>
+<a href="#commands">12. Commands</a>
+<a href="#plugin-yml">13. plugin.yml</a>
+<a href="#permissions">14. Permissions</a>
+<a href="#validation">15. Config Validation</a>
+<a href="#regenerating-defaults">16. Regenerating Defaults</a>
+<a href="#troubleshooting-quick-reference">17. Troubleshooting</a>
+<a href="#production-validation-checklist">18. Production Checklist</a>
+<a href="#quick-setup-examples">19. Quick Setup Examples</a>
+<a href="#summary">20. Summary</a>
+</aside>
+<article class="fb-doc-main fb-doc-content">
+<h2 id="before-you-configure">0. Before You Configure</h2>
+<p>CoreCaseX is a Paper-only case management plugin. The current MVP expects Java 21, Paper 1.21.11 or newer, the CoreCaseX jar installed on a Paper server, and local SQLite storage bundled through the plugin jar.</p>
+<p>The plugin does not currently ship a proxy module, MySQL or MariaDB backend, web dashboard, Discord bot commands, Discord ticket channels, or Discord threads. Discord support is webhook-only and optional.</p>
+<h3 id="starter-checklist">Starter Checklist</h3>
+<ol>
+<li>Stop the server before installing or replacing the jar.</li>
+<li>Place the CoreCaseX jar in the Paper server <code>plugins</code> folder.</li>
+<li>Start the server on Java 21 and Paper 1.21.11 or newer.</li>
+<li>Confirm the console says CoreCaseX enabled without runtime guard errors.</li>
+<li>Open <code>plugins/CoreCaseX/</code> and review the generated YAML files.</li>
+<li>Keep the default SQLite path for the first test unless you already know why it must move.</li>
+<li>Give players the basic player permissions and give staff the staff board permissions.</li>
+<li>Run <code>/case</code> as a normal player and create one test support request.</li>
+<li>Run <code>/case board</code> as staff and claim, reply to, resolve, and archive that test case.</li>
+<li>Enable Discord only after the in-game workflow works.</li>
+</ol>
+<h3 id="first-10-minutes">First 10 Minutes</h3>
+<p>For a clean first setup, do not edit every file immediately. Start with defaults, prove the player and staff flow, then adjust the settings that affect your server policy.</p>
+<ul>
+<li><code>config.yml</code>: set player case limits, cooldown, and staff notification behavior.</li>
+<li><code>case-types.yml</code>: disable case types you do not want and tune priorities.</li>
+<li><code>discord.yml</code>: add a default webhook only if staff want Discord mirrors.</li>
+<li><code>messages.yml</code>: edit wording after the workflow is confirmed.</li>
+<li><code>storage.yml</code>: leave SQLite at <code>data/corecasex.db</code> for the first launch.</li>
+</ul>
+<h3 id="what-to-configure-first">What To Configure First</h3>
+<p>The highest-impact settings for new servers are usually:</p>
+<ul>
+<li><code>max-open-cases-per-player</code>: prevents spam and duplicate reports.</li>
+<li><code>submission-cooldown-seconds</code>: controls how quickly one player can create new cases.</li>
+<li><code>case-types.yml -&gt; enabled</code>: hides flows your server does not support.</li>
+<li><code>case-types.yml -&gt; default-priority</code>: controls what staff see as urgent first.</li>
+<li><code>staff-notifications.player-replied-scope</code>: decides whether replies notify only assigned staff or the broader team.</li>
+<li><code>discord.yml -&gt; webhooks.default</code>: sends case activity to Discord when enabled.</li>
+</ul>
+<p>After YAML edits, use <code>/case reload</code> for normal config changes. Restart when replacing the jar, changing Paper version, or changing the SQLite database path.</p>
+<p>Core terminology:</p>
+<ul>
+<li><code>case</code> means one structured support or report record.</li>
+<li><code>reporter</code> means the player who opened the case.</li>
+<li><code>staff</code> means a player with staff permissions.</li>
+<li><code>inventory GUI</code> means the clickable in-game menus used for normal navigation and staff actions.</li>
+<li><code>Dialog input</code> means native Paper Dialog forms used for typed values such as descriptions, notes, replies, and outcome text.</li>
+<li><code>reply</code> means player-visible conversation text.</li>
+<li><code>internal note</code> means staff-only case text.</li>
+<li><code>evidence</code> means structured context attached to a case.</li>
+<li><code>timeline</code> means the audit history of case changes.</li>
+</ul>
+<p>Trust model:</p>
+<ul>
+<li>server-controlled config strings can use MiniMessage.</li>
+<li>player-provided text is escaped before placeholder insertion.</li>
+<li>Discord webhook delivery is best-effort and must never block case workflows.</li>
+</ul>
+<h2 id="folder-layout">1. Folder Layout</h2>
+<p>Runtime folder:</p>
+<div class="fb-code-block"><pre><code class="language-yaml">plugins/CoreCaseX/</code></pre></div>
+<p>Bundled admin config files:</p>
+<div class="fb-code-block"><pre><code class="language-yaml">config.yml
 case-types.yml
 discord.yml
 messages.yml
-storage.yml</code></pre>
-            <p>Runtime data created by the plugin:</p>
-            <pre class="code-block"><code>data/corecasex.db</code></pre>
-            <p>If a bundled admin config file is deleted from <code>plugins/CoreCaseX/</code>, CoreCaseX recreates the bundled default on the next server start with inline comments restored.</p>
-            <p>Do not commit runtime or build artifacts from a development checkout:</p>
-            <pre class="code-block"><code>target/
+storage.yml</code></pre></div>
+<p>Runtime data created by the plugin:</p>
+<div class="fb-code-block"><pre><code class="language-yaml">data/corecasex.db</code></pre></div>
+<p>If a bundled admin config file is deleted from <code>plugins/CoreCaseX/</code>, CoreCaseX recreates the bundled default on the next server start with inline comments restored.</p>
+<p>Do not commit runtime or build artifacts from a development checkout:</p>
+<div class="fb-code-block"><pre><code class="language-yaml">target/
 plugin.zip
 *.jar
 *.zip
 *.log
 *.db
-local Paper server folders</code></pre>
-
-            <h2 id="reload-vs-restart">2. Reload vs Restart</h2>
-            <p>Safe with <code>/case reload</code>:</p>
-            <ul>
-              <li><code>config.yml</code></li>
-              <li><code>case-types.yml</code></li>
-              <li><code>discord.yml</code></li>
-              <li><code>messages.yml</code></li>
-              <li><code>storage.yml</code> values are reloaded into config memory</li>
-            </ul>
-            <p>Requires restart or careful operational handling:</p>
-            <ul>
-              <li>changing the SQLite file path after storage has already opened</li>
-              <li>changing server version or Paper runtime</li>
-              <li>replacing the plugin jar</li>
-              <li>regenerating deleted config files from defaults</li>
-            </ul>
-            <p><code>/case reload</code> reloads config and logs validation warnings. It does not migrate or move an already-open SQLite database connection to a new file path during the same runtime.</p>
-
-            <h2 id="runtime-guard">3. Runtime Guard</h2>
-            <p>CoreCaseX requires Paper 1.21.11 or newer because the plugin uses modern Paper Dialog APIs.</p>
-            <p>Startup behavior:</p>
-            <ul>
-              <li>on a supported Paper runtime, the plugin continues normal startup.</li>
-              <li>on an unsupported runtime, the plugin logs a clear error and disables itself gracefully.</li>
-            </ul>
-            <p>This protects the server from missing Dialog API failures such as runtime method or class errors.</p>
-
-            <h2 id="config-yml">4. <code>config.yml</code></h2>
-            <p>Purpose:</p>
-            <ul>
-              <li>global language/config identity</li>
-              <li>displayed case ID format</li>
-              <li>per-player open case limit</li>
-              <li>case submission cooldown</li>
-              <li>staff notification switches</li>
-            </ul>
-            <p>Current bundled default:</p>
-            <pre class="code-block"><code># Language tag reserved for future locale support. The current MVP reads visible text from messages.yml.
+local Paper server folders</code></pre></div>
+<h2 id="reload-vs-restart">2. Reload vs Restart</h2>
+<p>Safe with <code>/case reload</code>:</p>
+<ul>
+<li><code>config.yml</code></li>
+<li><code>case-types.yml</code></li>
+<li><code>discord.yml</code></li>
+<li><code>messages.yml</code></li>
+<li><code>storage.yml</code> values are reloaded into config memory</li>
+</ul>
+<p>Requires restart or careful operational handling:</p>
+<ul>
+<li>changing the SQLite file path after storage has already opened</li>
+<li>changing server version or Paper runtime</li>
+<li>replacing the plugin jar</li>
+<li>regenerating deleted config files from defaults</li>
+</ul>
+<p><code>/case reload</code> reloads config and logs validation warnings. It does not migrate or move an already-open SQLite database connection to a new file path during the same runtime.</p>
+<h2 id="runtime-guard">3. Runtime Guard</h2>
+<p>CoreCaseX requires Paper 1.21.11 or newer because the plugin uses modern Paper Dialog APIs.</p>
+<p>Startup behavior:</p>
+<ul>
+<li>on a supported Paper runtime, the plugin continues normal startup.</li>
+<li>on an unsupported runtime, the plugin logs a clear error and disables itself gracefully.</li>
+</ul>
+<p>This protects the server from missing Dialog API failures such as runtime method or class errors.</p>
+<h2 id="config-yml">4. <code>config.yml</code></h2>
+<p>Purpose:</p>
+<ul>
+<li>global language/config identity</li>
+<li>displayed case ID format</li>
+<li>per-player open case limit</li>
+<li>case submission cooldown</li>
+<li>staff notification switches</li>
+</ul>
+<p>Current bundled default:</p>
+<div class="fb-code-block"><pre><code class="language-yaml"># Language tag reserved for future locale support. The current MVP reads visible text from messages.yml.
 language: en
 
 # Display format for case IDs in messages. Supported placeholder: {id}.
@@ -215,57 +194,64 @@ staff-notifications:
   assigned-to-you: true
 
   # Recipient policy for player replies. Accepted: assigned-only, assigned-and-staff, all-staff.
-  player-replied-scope: assigned-only</code></pre>
-            <h3><code>language</code></h3>
-            <p>Reserved for future locale support. The current MVP reads active visible text from <code>messages.yml</code>.</p>
-            <h3><code>case-id-format</code></h3>
-            <p>Controls how case IDs are shown in configured messages. Supported placeholder: <code>{id}</code>. Example: <code>CASE-{id}</code>.</p>
-            <h3><code>max-open-cases-per-player</code></h3>
-            <p>Limits how many non-closed cases one reporter can have at the same time. Closed statuses are <code>RESOLVED</code>, <code>REJECTED</code>, and <code>ARCHIVED</code>. Values lower than 1 are clamped and warned about.</p>
-            <h3><code>submission-cooldown-seconds</code></h3>
-            <p>Controls the delay between new case submissions. Set to <code>0</code> to effectively disable the cooldown. Negative values are clamped and warned about.</p>
-            <h3><code>staff-notifications</code></h3>
-            <p>Controls in-game notifications for new cases, player replies, and assignment events. <code>player-replied-scope</code> accepts <code>assigned-only</code>, <code>assigned-and-staff</code>, and <code>all-staff</code>.</p>
-            <ul>
-              <li><code>assigned-only</code>: notify the assigned online staff member when possible; otherwise notify online case-view staff.</li>
-              <li><code>assigned-and-staff</code>: include the assigned staff member and staff viewers.</li>
-              <li><code>all-staff</code>: notify all online staff with <code>corecasex.staff.view</code>.</li>
-            </ul>
-
-            <h2 id="case-types-yml">5. <code>case-types.yml</code></h2>
-            <p>Purpose:</p>
-            <ul>
-              <li>enable or disable each built-in case type</li>
-              <li>set default priority per case type</li>
-              <li>control location collection defaults</li>
-              <li>configure player report reasons</li>
-              <li>configure bug report categories</li>
-            </ul>
-            <p>Supported case type keys:</p>
-            <ul>
-              <li><code>support-request</code></li>
-              <li><code>player-report</code></li>
-              <li><code>bug-report</code></li>
-              <li><code>lost-items</code></li>
-              <li><code>grief-theft</code></li>
-            </ul>
-            <p>Supported priorities: <code>LOW</code>, <code>NORMAL</code>, <code>HIGH</code>, <code>URGENT</code>. Invalid priority values fall back to the built-in default for that case type and produce a validation warning.</p>
-            <p>Current bundled default:</p>
-            <pre class="code-block"><code># General support request flow for help that does not fit another case type.
+  player-replied-scope: assigned-only</code></pre></div>
+<h3><code>language</code></h3>
+<p>Reserved for future locale support. The current MVP reads active visible text from <code>messages.yml</code>.</p>
+<h3><code>case-id-format</code></h3>
+<p>Controls how case IDs are shown in configured messages. Supported placeholder: <code>{id}</code>. Example: <code>CASE-{id}</code>.</p>
+<h3><code>max-open-cases-per-player</code></h3>
+<p>Limits how many non-closed cases one reporter can have at the same time. Closed statuses are <code>RESOLVED</code>, <code>REJECTED</code>, and <code>ARCHIVED</code>. Values lower than 1 are clamped and warned about.</p>
+<h3><code>submission-cooldown-seconds</code></h3>
+<p>Controls the delay between new case submissions. Set to <code>0</code> to effectively disable the cooldown. Negative values are clamped and warned about.</p>
+<h3><code>staff-notifications</code></h3>
+<p>Controls in-game notifications for new cases, player replies, and assignment events. <code>player-replied-scope</code> accepts <code>assigned-only</code>, <code>assigned-and-staff</code>, and <code>all-staff</code>.</p>
+<ul>
+<li><code>assigned-only</code>: notify the assigned online staff member when possible; otherwise notify online case-view staff.</li>
+<li><code>assigned-and-staff</code>: include the assigned staff member and staff viewers.</li>
+<li><code>all-staff</code>: notify all online staff with <code>corecasex.staff.view</code>.</li>
+</ul>
+<h2 id="case-types-yml">5. <code>case-types.yml</code></h2>
+<p>Purpose:</p>
+<ul>
+<li>enable or disable each built-in case type</li>
+<li>set default priority per case type</li>
+<li>control location collection defaults</li>
+<li>configure player report reasons</li>
+<li>configure bug report categories</li>
+</ul>
+<p>Supported case type keys:</p>
+<ul>
+<li><code>support-request</code></li>
+<li><code>player-report</code></li>
+<li><code>bug-report</code></li>
+<li><code>lost-items</code></li>
+<li><code>grief-theft</code></li>
+</ul>
+<p>Supported priorities: <code>LOW</code>, <code>NORMAL</code>, <code>HIGH</code>, <code>URGENT</code>. Invalid priority values fall back to the built-in default for that case type and produce a validation warning.</p>
+<p>Current bundled default:</p>
+<div class="fb-code-block"><pre><code class="language-yaml"># General support request flow for help that does not fit another case type.
 support-request:
   # If false, this case type is hidden from the inventory case type menu.
   enabled: true
+
   # Priority assigned to new support requests. Accepted: LOW, NORMAL, HIGH, URGENT.
   default-priority: LOW
+
   # Default location collection behavior for this case type.
   collect-location: true
 
 # Structured report flow for reporting another player.
 player-report:
+  # If false, this case type is hidden from the inventory case type menu.
   enabled: true
+
+  # Priority assigned to new player reports. Accepted: LOW, NORMAL, HIGH, URGENT.
   default-priority: NORMAL
+
+  # Default location collection behavior for this case type.
   collect-location: true
-  # Reason options shown in the Paper Dialog option control.
+
+  # Reason options used by the player report flow. Inventory menus are preferred for choices; Dialogs remain for typed input.
   reasons:
     - Insults
     - Spam
@@ -278,10 +264,16 @@ player-report:
 
 # Structured flow for technical or gameplay bugs.
 bug-report:
+  # If false, this case type is hidden from the inventory case type menu.
   enabled: true
+
+  # Priority assigned to new bug reports. Accepted: LOW, NORMAL, HIGH, URGENT.
   default-priority: NORMAL
+
+  # Default location collection behavior for this case type.
   collect-location: true
-  # Category options shown in the Paper Dialog option control.
+
+  # Category options used by the bug report flow. Inventory menus are preferred for choices; Dialogs remain for typed input.
   categories:
     - Command
     - GUI / Menu
@@ -293,36 +285,45 @@ bug-report:
 
 # Flow for missing items, death-related issues, and recovery requests.
 lost-items:
+  # If false, this case type is hidden from the inventory case type menu.
   enabled: true
+
+  # Priority assigned to new lost item cases. Accepted: LOW, NORMAL, HIGH, URGENT.
   default-priority: NORMAL
+
+  # Default location collection behavior for this case type.
   collect-location: true
 
 # Flow for griefing, theft, suspicious edits, and location-based incidents.
 grief-theft:
+  # If false, this case type is hidden from the inventory case type menu.
   enabled: true
-  default-priority: HIGH
-  collect-location: true</code></pre>
-            <h3>Support Request</h3>
-            <p>General help when no other case type fits. Dialog fields: description and attach current location. Evidence can include reporter snapshot and current location when attached.</p>
-            <h3>Player Report</h3>
-            <p>Structured report against another player. Dialog fields: target player name, configured reason option, and description. Evidence can include reporter snapshot, current location, target snapshot when the target is online, and selected reason. If <code>reasons</code> is empty, CoreCaseX warns and falls back to <code>Other</code>.</p>
-            <h3>Bug Report</h3>
-            <p>Technical or gameplay issue flow. Dialog fields: configured category option and description. Evidence can include reporter snapshot, current location when collected, and selected category. If <code>categories</code> is empty, CoreCaseX warns and falls back to <code>Other</code>.</p>
-            <h3>Lost Items / Death Issue</h3>
-            <p>Missing items, death issues, or recovery requests. Dialog fields: description, claimed lost items, and attach latest death. Evidence can include reporter snapshot, claimed item text, last death location, last death cause, and last death time. Last-death evidence is tracked while the server is running.</p>
-            <h3>Grief / Theft</h3>
-            <p>Griefing, theft, suspicious edits, or location-based incidents. Dialog fields: description, manual location text, and attach current location behavior. Evidence can include reporter snapshot, current location, and manual location text.</p>
 
-            <h2 id="discord-yml">6. <code>discord.yml</code></h2>
-            <p>Purpose:</p>
-            <ul>
-              <li>enable or disable Discord webhook output</li>
-              <li>configure default, type-specific, and priority-specific webhooks</li>
-              <li>control which case events send Discord embeds</li>
-              <li>configure embed colors</li>
-            </ul>
-            <p>Current bundled default:</p>
-            <pre class="code-block"><code># Master switch for Discord webhook notifications.
+  # Priority assigned to new grief/theft cases. Accepted: LOW, NORMAL, HIGH, URGENT.
+  default-priority: HIGH
+
+  # Default location collection behavior for this case type.
+  collect-location: true</code></pre></div>
+<h3>Support Request</h3>
+<p>General help when no other case type fits. Dialog fields: description and attach current location. Evidence can include reporter snapshot and current location when attached.</p>
+<h3>Player Report</h3>
+<p>Structured report against another player. Dialog fields: target player name, configured reason option, and description. Evidence can include reporter snapshot, current location, target snapshot when the target is online, and selected reason. If <code>reasons</code> is empty, CoreCaseX warns and falls back to <code>Other</code>.</p>
+<h3>Bug Report</h3>
+<p>Technical or gameplay issue flow. Dialog fields: configured category option and description. Evidence can include reporter snapshot, current location when collected, and selected category. If <code>categories</code> is empty, CoreCaseX warns and falls back to <code>Other</code>.</p>
+<h3>Lost Items / Death Issue</h3>
+<p>Missing items, death issues, or recovery requests. Dialog fields: description, claimed lost items, and attach latest death. Evidence can include reporter snapshot, claimed item text, last death location, last death cause, and last death time. Last-death evidence is tracked while the server is running.</p>
+<h3>Grief / Theft</h3>
+<p>Griefing, theft, suspicious edits, or location-based incidents. Dialog fields: description, manual location text, and attach current location behavior. Evidence can include reporter snapshot, current location, and manual location text.</p>
+<h2 id="discord-yml">6. <code>discord.yml</code></h2>
+<p>Purpose:</p>
+<ul>
+<li>enable or disable Discord webhook output</li>
+<li>configure default, type-specific, and priority-specific webhooks</li>
+<li>control which case events send Discord embeds</li>
+<li>configure embed colors</li>
+</ul>
+<p>Current bundled default:</p>
+<div class="fb-code-block"><pre><code class="language-yaml"># Master switch for Discord webhook notifications.
 enabled: false
 
 # Legacy fallback webhook URL. Prefer webhooks.default for new configs.
@@ -330,17 +331,38 @@ webhook-url: ""
 
 # Discord webhook routing. Priority routes win over type routes; type routes win over default.
 webhooks:
+  # Default webhook used when no priority or case-type route matches.
   default: ""
+
+  # Case-type-specific webhook routes.
   types:
+    # Webhook for support request cases.
     support-request: ""
+
+    # Webhook for player report cases.
     player-report: ""
+
+    # Webhook for bug report cases.
     bug-report: ""
+
+    # Webhook for lost item/death issue cases.
     lost-items: ""
+
+    # Webhook for grief/theft cases.
     grief-theft: ""
+
+  # Priority-specific webhook routes.
   priorities:
+    # Webhook for LOW priority cases.
     low: ""
+
+    # Webhook for NORMAL priority cases.
     normal: ""
+
+    # Webhook for HIGH priority cases.
     high: ""
+
+    # Webhook for URGENT priority cases.
     urgent: ""
 
 # Server name included in webhook username text.
@@ -348,85 +370,856 @@ server-name: "Minecraft Server"
 
 # Per-event Discord notification switches.
 events:
+  # Send when a normal case is created.
   case-created: true
+
+  # Send the extra urgent-created notification for urgent cases.
   urgent-created: true
+
+  # Send when a staff member claims a case.
   case-claimed: true
+
+  # Send when a staff member assigns a case.
   case-assigned: true
+
+  # Send when staff changes case status.
   status-changed: true
+
+  # Send when staff changes case priority.
   priority-changed: true
+
+  # Send when the reporter replies to a case.
   player-replied: true
+
+  # Send when staff requests more information from the reporter.
   info-requested: true
+
+  # Send when staff adds a player-visible reply.
   staff-replied: true
+
+  # Send when staff resolves a case.
   case-resolved: true
+
+  # Send when staff rejects a case.
   case-rejected: true
 
 # Decimal RGB embed colors for each Discord event family.
 embed-colors:
+  # Color for new case embeds.
   created: 5814783
-  urgent: 15548997
-  claimed: 16753920
-  assigned: 16753920
-  status: 5793266
-  priority: 16753920
-  reply: 3447003
-  info: 5793266
-  staff-reply: 5793266
-  resolved: 5763719
-  rejected: 15548997</code></pre>
-            <h3>Enabling Discord</h3>
-            <pre class="code-block"><code>enabled: true
-webhooks:
-  default: "https://discord.com/api/webhooks/..."</code></pre>
-            <p><code>webhooks.default</code> wins over legacy <code>webhook-url</code> when both are set.</p>
-            <h3>Webhook Routing</h3>
-            <p>Routing priority is:</p>
-            <ol>
-              <li>priority webhook</li>
-              <li>case type webhook</li>
-              <li>default webhook</li>
-              <li>legacy <code>webhook-url</code></li>
-            </ol>
-            <p>Use priority routes for urgent escalation and type routes when reports, bugs, or grief cases should go to different Discord channels.</p>
-            <h3>Webhook Safety</h3>
-            <ul>
-              <li>blank webhook URLs are disabled</li>
-              <li>malformed URLs are skipped</li>
-              <li>non-HTTP(S) URLs are skipped</li>
-              <li>request creation failures are logged</li>
-              <li>send failures are logged</li>
-              <li>non-2xx HTTP responses are logged</li>
-              <li>case workflows continue even if Discord fails</li>
-              <li>embeds disable allowed mentions with <code>{"allowed_mentions":{"parse":[]}}</code></li>
-            </ul>
 
-            <h2 id="storage-yml">7. <code>storage.yml</code></h2>
-            <p>Purpose: configure the SQLite database path. SQLite is the active storage backend for the current MVP.</p>
-            <p>Current bundled default:</p>
-            <pre class="code-block"><code># SQLite storage settings. SQLite is the active storage backend for the MVP.
+  # Color for urgent case embeds.
+  urgent: 15548997
+
+  # Color for claim embeds.
+  claimed: 16753920
+
+  # Color for assignment embeds.
+  assigned: 16753920
+
+  # Color for status change embeds.
+  status: 5793266
+
+  # Color for priority change embeds.
+  priority: 16753920
+
+  # Color for player reply embeds.
+  reply: 3447003
+
+  # Color for info requested embeds.
+  info: 5793266
+
+  # Color for staff reply embeds.
+  staff-reply: 5793266
+
+  # Color for resolved case embeds.
+  resolved: 5763719
+
+  # Color for rejected case embeds.
+  rejected: 15548997</code></pre></div>
+<h3>Enabling Discord</h3>
+<div class="fb-code-block"><pre><code class="language-yaml">enabled: true
+webhooks:
+  default: "https://discord.com/api/webhooks/..."</code></pre></div>
+<p><code>webhooks.default</code> wins over legacy <code>webhook-url</code> when both are set.</p>
+<h3>Webhook Routing</h3>
+<p>Routing priority is:</p>
+<ol>
+<li>priority webhook</li>
+<li>case type webhook</li>
+<li>default webhook</li>
+<li>legacy <code>webhook-url</code></li>
+</ol>
+<p>Use priority routes for urgent escalation and type routes when reports, bugs, or grief cases should go to different Discord channels.</p>
+<h3>Webhook Safety</h3>
+<ul>
+<li>blank webhook URLs are disabled</li>
+<li>malformed URLs are skipped</li>
+<li>non-HTTP(S) URLs are skipped</li>
+<li>request creation failures are logged</li>
+<li>send failures are logged</li>
+<li>non-2xx HTTP responses are logged</li>
+<li>case workflows continue even if Discord fails</li>
+<li>embeds disable allowed mentions with <code>{"allowed_mentions":{"parse":[]}}</code></li>
+</ul>
+<h2 id="storage-yml">7. <code>storage.yml</code></h2>
+<p>Purpose: configure the SQLite database path. SQLite is the active storage backend for the current MVP.</p>
+<p>Current bundled default:</p>
+<div class="fb-code-block"><pre><code class="language-yaml"># SQLite storage settings. SQLite is the active storage backend for the MVP.
 sqlite:
   # Database path relative to plugins/CoreCaseX/. Changing this after startup requires a restart.
-  path: "data/corecasex.db"</code></pre>
-            <p>The path is resolved relative to the plugin data folder. Default full runtime path:</p>
-            <pre class="code-block"><code>plugins/CoreCaseX/data/corecasex.db</code></pre>
-            <p>Stored data includes cases, timeline events, replies, internal notes, resolutions, evidence, and schema migration markers. CoreCaseX creates tables and indexes automatically, and existing SQLite files are migrated idempotently.</p>
-            <p>Changing this path after startup requires restart to open the new file cleanly. Unsafe or blank paths fall back to <code>data/corecasex.db</code> and produce a validation warning.</p>
+  path: "data/corecasex.db"</code></pre></div>
+<p>The path is resolved relative to the plugin data folder. Default full runtime path:</p>
+<div class="fb-code-block"><pre><code class="language-yaml">plugins/CoreCaseX/data/corecasex.db</code></pre></div>
+<p>Stored data includes cases, timeline events, replies, internal notes, resolutions, evidence, and schema migration markers. CoreCaseX creates tables and indexes automatically, and existing SQLite files are migrated idempotently.</p>
+<p>Changing this path after startup requires restart to open the new file cleanly. Unsafe or blank paths fall back to <code>data/corecasex.db</code> and produce a validation warning.</p>
+<h2 id="messages-yml">8. <code>messages.yml</code></h2>
+<p>Purpose:</p>
+<ul>
+<li>command feedback</li>
+<li>validation text</li>
+<li>player notifications</li>
+<li>staff notifications</li>
+<li>Dialog titles</li>
+<li>Dialog body lines</li>
+<li>Dialog input labels and defaults</li>
+<li>detail lines</li>
+<li>button labels and hover text</li>
+</ul>
+<p>The bundled <code>messages.yml</code> is heavily commented. It controls almost every visible line in the current command and Dialog experience.</p><details><summary>Current bundled <code>messages.yml</code></summary><div class="fb-details-body"><div class="fb-code-block"><pre><code class="language-yaml"># Prefix prepended by MessageService.message(...) to most command feedback messages.
+prefix: "&lt;dark_gray&gt;[&lt;gold&gt;CoreCaseX&lt;/gold&gt;]&lt;/dark_gray&gt; "
 
-            <h2 id="messages-yml">8. <code>messages.yml</code></h2>
-            <p>Purpose:</p>
-            <ul>
-              <li>command feedback</li>
-              <li>validation text</li>
-              <li>player notifications</li>
-              <li>staff notifications</li>
-              <li>Dialog titles</li>
-              <li>Dialog body lines</li>
-              <li>Dialog input labels and defaults</li>
-              <li>detail lines</li>
-              <li>button labels and hover text</li>
-            </ul>
-            <p>The bundled <code>messages.yml</code> is heavily commented. It controls almost every visible line in the current command and Dialog experience.</p>
-            <h3>Top-Level Message Keys</h3>
-            <pre class="code-block"><code>prefix
+# Sent when a console or command block uses a player-only command.
+only-players: "&lt;red&gt;Only players can use this command.&lt;/red&gt;"
+
+# Sent when a player lacks the required permission.
+no-permission: "&lt;red&gt;You do not have permission.&lt;/red&gt;"
+
+# Sent to the reporter after a case is created successfully.
+case-created: "&lt;green&gt;Case &lt;white&gt;#{id}&lt;/white&gt; created successfully. Staff has been notified.&lt;/green&gt;"
+
+# Sent after a staff member claims a case.
+case-claimed: "&lt;yellow&gt;Case &lt;white&gt;#{id}&lt;/white&gt; has been claimed by &lt;white&gt;{staff}&lt;/white&gt;.&lt;/yellow&gt;"
+
+# Sent when a case ID does not exist.
+case-not-found: "&lt;red&gt;Case #{id} was not found.&lt;/red&gt;"
+
+# Generic success message for case updates.
+case-updated: "&lt;green&gt;Case #{id} updated.&lt;/green&gt;"
+
+# Sent after a case is resolved or rejected.
+case-closed: "&lt;green&gt;Case #{id} has been closed.&lt;/green&gt;"
+
+# Sent after a resolved or rejected case is archived.
+case-archived: "&lt;green&gt;Case #{id} archived.&lt;/green&gt;"
+
+# Sent when a typed case ID is not a positive number.
+invalid-case-id: "&lt;red&gt;Invalid case id.&lt;/red&gt;"
+
+# Sent when a priority argument is not LOW, NORMAL, HIGH, or URGENT.
+invalid-priority: "&lt;red&gt;Invalid priority. Use LOW, NORMAL, HIGH, or URGENT.&lt;/red&gt;"
+
+# Sent when a status argument is not an allowed non-closed workflow status.
+invalid-status: "&lt;red&gt;Invalid status. Use OPEN, CLAIMED, WAITING_PLAYER, or WAITING_STAFF.&lt;/red&gt;"
+
+# Sent when /case assign targets a player who is not currently online.
+assignee-online-required: "&lt;red&gt;Assignee must be online.&lt;/red&gt;"
+
+# Sent after /case reload completes.
+reload-complete: "&lt;green&gt;CoreCaseX configuration reloaded.&lt;/green&gt;"
+
+# Root usage text for /case.
+usage-case-root: "&lt;yellow&gt;Usage: /case [list|view|board|open|claim|assign|priority|status|archive|reload|debug]&lt;/yellow&gt;"
+
+# Usage text for /case view.
+usage-case-view: "&lt;yellow&gt;Usage: /case view &lt;id&gt;&lt;/yellow&gt;"
+
+# Usage text for /case open.
+usage-case-open: "&lt;yellow&gt;Usage: /case open &lt;id&gt;&lt;/yellow&gt;"
+
+# Usage text for /case claim.
+usage-case-claim: "&lt;yellow&gt;Usage: /case claim &lt;id&gt;&lt;/yellow&gt;"
+
+# Usage text for /case assign. The assignee must be online.
+usage-case-assign: "&lt;yellow&gt;Usage: /case assign &lt;id&gt; &lt;online-staff&gt;&lt;/yellow&gt;"
+
+# Usage text for /case priority.
+usage-case-priority: "&lt;yellow&gt;Usage: /case priority &lt;id&gt; &lt;LOW|NORMAL|HIGH|URGENT&gt; [reason]&lt;/yellow&gt;"
+
+# Usage text for /case status. Closed statuses use resolve/reject/archive actions instead.
+usage-case-status: "&lt;yellow&gt;Usage: /case status &lt;id&gt; &lt;OPEN|CLAIMED|WAITING_PLAYER|WAITING_STAFF&gt; [reason]&lt;/yellow&gt;"
+
+# Usage text for /case archive.
+usage-case-archive: "&lt;yellow&gt;Usage: /case archive &lt;id&gt;&lt;/yellow&gt;"
+
+# In-game notification sent to staff when a new case is created.
+staff-new-case: "&lt;gold&gt;New Case #{id}&lt;/gold&gt; &lt;gray&gt;-&lt;/gray&gt; &lt;white&gt;{type}&lt;/white&gt; by &lt;white&gt;{reporter}&lt;/white&gt;"
+
+# In-game notification sent to staff when a reporter replies.
+staff-player-replied: "&lt;gold&gt;Case #{id}&lt;/gold&gt; &lt;gray&gt;-&lt;/gray&gt; &lt;yellow&gt;{reporter}&lt;/yellow&gt; replied."
+
+# In-game notification sent to a staff member when a case is assigned to them.
+staff-assigned-to-you: "&lt;gold&gt;Case #{id}&lt;/gold&gt; &lt;gray&gt;-&lt;/gray&gt; assigned to you."
+
+# Sent to a reporter after they add a reply.
+player-reply-added: "&lt;green&gt;Your reply was added to Case #{id}.&lt;/green&gt;"
+
+# Sent to an online reporter when staff adds a player-visible reply.
+staff-reply-received: "&lt;yellow&gt;Staff replied to Case #{id}.&lt;/yellow&gt;"
+
+# Sent to an online reporter when staff requests more information.
+info-requested: "&lt;yellow&gt;Staff requested more information for Case #{id}.&lt;/yellow&gt;"
+
+# Sent to an online reporter when their case is resolved.
+resolved-notice: "&lt;green&gt;Your Case #{id} has been resolved.&lt;/green&gt;"
+
+# Sent to an online reporter when their case is rejected.
+rejected-notice: "&lt;red&gt;Your Case #{id} has been rejected.&lt;/red&gt;"
+
+# Inventory GUI text used by the primary in-game UI. Dialogs remain for typed input.
+menus:
+  # Inventory window title templates.
+  titles:
+    # Main /case inventory title.
+    main: "&lt;gold&gt;CoreCaseX&lt;/gold&gt;"
+    # Case type selection inventory title.
+    case-types: "&lt;gold&gt;Create Case&lt;/gold&gt;"
+    # Player case list inventory title.
+    my-cases: "&lt;gold&gt;My Cases&lt;/gold&gt;"
+    # Player case detail inventory title.
+    case-detail: "&lt;gold&gt;Case Detail&lt;/gold&gt;"
+    # Staff board filter inventory title.
+    staff-board: "&lt;aqua&gt;Staff Case Board&lt;/aqua&gt;"
+    # Staff case list inventory title.
+    staff-case-list: "&lt;aqua&gt;Staff Cases&lt;/aqua&gt;"
+    # Staff case detail inventory title.
+    staff-case-detail: "&lt;gold&gt;Staff Case Detail&lt;/gold&gt;"
+    # Staff action inventory title.
+    staff-actions: "&lt;gold&gt;Staff Actions&lt;/gold&gt;"
+    # Staff assign/reassign inventory title.
+    assign: "&lt;gold&gt;Assign / Reassign&lt;/gold&gt;"
+    # Priority selection inventory title.
+    priority: "&lt;gold&gt;Change Priority&lt;/gold&gt;"
+    # Status selection inventory title.
+    status: "&lt;gold&gt;Change Status&lt;/gold&gt;"
+  # Configurable inventory items. Lore uses \n for multiple lines.
+  items:
+    # Main menu create case item.
+    create-case:
+      material: WRITABLE_BOOK
+      name: "&lt;green&gt;Create Case&lt;/green&gt;"
+      lore: "&lt;gray&gt;Open a new staff support case.&lt;/gray&gt;\n&lt;yellow&gt;Click to choose a case type.&lt;/yellow&gt;"
+    # Main menu player cases item.
+    my-cases:
+      material: BOOK
+      name: "&lt;yellow&gt;My Cases&lt;/yellow&gt;"
+      lore: "&lt;gray&gt;View your submitted cases.&lt;/gray&gt;"
+    # Main menu staff board item.
+    staff-board:
+      material: COMPASS
+      name: "&lt;aqua&gt;Staff Board&lt;/aqua&gt;"
+      lore: "&lt;gray&gt;Browse and triage staff cases.&lt;/gray&gt;"
+    # Main menu direct staff lookup item.
+    open-by-id:
+      material: NAME_TAG
+      name: "&lt;aqua&gt;Open by ID&lt;/aqua&gt;"
+      lore: "&lt;gray&gt;Open a case by numeric ID.&lt;/gray&gt;"
+    # Generic back navigation item.
+    back:
+      material: ARROW
+      name: "&lt;gray&gt;Back&lt;/gray&gt;"
+      lore: "&lt;gray&gt;Return to the previous menu.&lt;/gray&gt;"
+    # Generic close inventory item.
+    close:
+      material: BARRIER
+      name: "&lt;red&gt;Close&lt;/red&gt;"
+      lore: "&lt;gray&gt;Close this menu.&lt;/gray&gt;"
+  # Reserved for future shared lore fragments.
+  lore: {}
+  # Reserved for future navigation labels.
+  navigation: {}
+  # Reserved for future status/priority text overrides.
+  status: {}
+
+# Paper Dialog input text. Dialogs are now used for typed input and compact forms, not as the primary navigation UI.
+dialogs:
+  # Dialog title templates.
+  titles:
+    # Title for the main CoreCaseX menu.
+    corecasex: "&lt;gold&gt;CoreCaseX&lt;/gold&gt;"
+    # Title for the case type selection menu.
+    open-a-case: "&lt;gold&gt;Open a Case&lt;/gold&gt;"
+    # Title for staff tools.
+    staff-tools: "&lt;aqua&gt;Staff Tools&lt;/aqua&gt;"
+    # Title for the support request form.
+    support-request: "&lt;gold&gt;Support Request&lt;/gold&gt;"
+    # Title for the player report form.
+    report-a-player: "&lt;gold&gt;Report a Player&lt;/gold&gt;"
+    # Title for the bug report form.
+    bug-report: "&lt;gold&gt;Bug Report&lt;/gold&gt;"
+    # Title for the lost item/death issue form.
+    lost-items-death-issue: "&lt;gold&gt;Lost Items / Death Issue&lt;/gold&gt;"
+    # Title for the grief/theft form.
+    grief-theft: "&lt;gold&gt;Grief / Theft&lt;/gold&gt;"
+    # Title for review-before-submit dialogs.
+    confirm-case-submission: "&lt;gold&gt;Confirm Case Submission&lt;/gold&gt;"
+    # Title for the player case list.
+    your-cases: "&lt;gold&gt;Your Cases&lt;/gold&gt;"
+    # Title for player case details.
+    case-detail: "&lt;gold&gt;Case &lt;white&gt;#{case_id}&lt;/white&gt;&lt;/gold&gt;"
+    # Title for the staff board filter menu.
+    staff-case-board: "&lt;aqua&gt;Staff Case Board&lt;/aqua&gt;"
+    # Title for a staff board opened with one filter.
+    staff-board-filter: "&lt;aqua&gt;Staff Case Board&lt;/aqua&gt; &lt;gray&gt;-&lt;/gray&gt; &lt;white&gt;{filter}&lt;/white&gt;"
+    # Title for staff case details.
+    staff-case-detail: "&lt;gold&gt;Case &lt;white&gt;#{case_id}&lt;/white&gt;&lt;/gold&gt; &lt;gray&gt;-&lt;/gray&gt; &lt;aqua&gt;Staff&lt;/aqua&gt;"
+    # Title for the staff actions dialog.
+    staff-case-actions: "&lt;gold&gt;Case &lt;white&gt;#{case_id}&lt;/white&gt;&lt;/gold&gt; &lt;gray&gt;-&lt;/gray&gt; &lt;yellow&gt;Actions&lt;/yellow&gt;"
+    # Title for the assign/reassign case input.
+    assign-case: "&lt;gold&gt;Assign / Reassign Case&lt;/gold&gt;"
+    # Title for the priority change input.
+    change-priority: "&lt;gold&gt;Change Priority&lt;/gold&gt;"
+    # Title for the status change input.
+    change-status: "&lt;gold&gt;Change Status&lt;/gold&gt;"
+    # Title for the player reply input.
+    reply-to-case-case: "&lt;gold&gt;Reply to Case &lt;white&gt;#{case_id}&lt;/white&gt;&lt;/gold&gt;"
+    # Title for the staff reply input.
+    reply-to-player: "&lt;gold&gt;Reply to Player&lt;/gold&gt;"
+    # Title for the request-info input.
+    request-info: "&lt;gold&gt;Request Info&lt;/gold&gt;"
+    # Title for the internal note input.
+    internal-note: "&lt;gold&gt;Internal Note&lt;/gold&gt;"
+    # Title for the resolve case dialog.
+    resolve-case: "&lt;green&gt;Resolve Case&lt;/green&gt;"
+    # Title for the reject case dialog.
+    reject-case: "&lt;red&gt;Reject Case&lt;/red&gt;"
+    # Title for categorized case information sections.
+    case-info-section: "&lt;gold&gt;Case &lt;white&gt;#{case_id}&lt;/white&gt;&lt;/gold&gt; &lt;gray&gt;-&lt;/gray&gt; &lt;aqua&gt;{section}&lt;/aqua&gt;"
+
+  # Short body text used in dialogs.
+  body:
+    # Main menu instruction.
+    main: "&lt;gray&gt;Select a workflow.&lt;/gray&gt;"
+    # Case type menu instruction.
+    case-type-menu: "&lt;gray&gt;Choose the type that best matches the issue.&lt;/gray&gt;"
+    # Staff tools instruction.
+    staff-tools: "&lt;gray&gt;Open a board or use a direct case lookup.&lt;/gray&gt;"
+    # Support request form instruction.
+    support-request: "&lt;gray&gt;Describe the issue. Attach location only when it helps staff understand the problem.&lt;/gray&gt;"
+    # Player report reason summary.
+    player-report-reasons: "&lt;dark_gray&gt;Reasons:&lt;/dark_gray&gt; &lt;white&gt;{reasons}&lt;/white&gt;"
+    # Bug report category summary.
+    bug-report-categories: "&lt;dark_gray&gt;Categories:&lt;/dark_gray&gt; &lt;white&gt;{categories}&lt;/white&gt;"
+    # Latest death summary in the lost item form.
+    lost-items-death-summary: "&lt;gray&gt;{death_summary}&lt;/gray&gt;"
+    # Grief/theft form instruction.
+    grief-theft: "&lt;gray&gt;Attach your current location or write a manual location, then describe what happened.&lt;/gray&gt;"
+    # Empty player case list text.
+    your-cases-empty: "&lt;gray&gt;You have not opened any cases yet.&lt;/gray&gt;"
+    # Player case list instruction.
+    your-cases-select: "&lt;gray&gt;Select a case to inspect.&lt;/gray&gt;"
+    # Staff board filter menu instruction.
+    staff-board-filter-select: "&lt;gray&gt;Choose a staff board filter.&lt;/gray&gt;"
+    # Empty staff board text.
+    staff-board-empty: "&lt;gray&gt;No cases match this filter.&lt;/gray&gt;"
+    # Staff board case selection instruction.
+    staff-board-select-case: "&lt;gray&gt;Select a case to inspect.&lt;/gray&gt;"
+
+  # Input labels and default values used by Dialog forms.
+  inputs:
+    # Generic description input.
+    description:
+      # Label shown above the description text input.
+      label: "Description"
+      # Default text for the description input.
+      default: ""
+    # Boolean input for attaching current location.
+    attach-location:
+      # Label shown for the attach-location control.
+      label: "Attach current location"
+      # Default text placeholder for attach-location.
+      default: ""
+    # Boolean input for attaching latest death evidence.
+    attach-death:
+      # Label shown for the attach-death control.
+      label: "Attach latest death"
+      # Default text placeholder for attach-death.
+      default: ""
+    # Label/default text for yes values in boolean controls.
+    bool-yes:
+      # Text shown for the yes option.
+      label: "yes"
+      # Default yes text.
+      default: "yes"
+    # Label/default text for no values in boolean controls.
+    bool-no:
+      # Text shown for the no option.
+      label: "no"
+      # Default no text.
+      default: "no"
+    # Target player input for player reports.
+    target-player:
+      # Label shown above the target player input.
+      label: "Target player"
+      # Default text for the target player input.
+      default: ""
+    # Legacy player report reason input text. The primary reason choice is now an inventory menu.
+    reason:
+      # Label shown if a Dialog reason input is used by a legacy/custom flow.
+      label: "Reason"
+      # Default selected reason. {default} is filled from case-types.yml.
+      default: "{default}"
+    # Legacy bug report category input text. The primary category choice is now an inventory menu.
+    category:
+      # Label shown if a Dialog category input is used by a legacy/custom flow.
+      label: "Category"
+      # Default selected category. {default} is filled from case-types.yml.
+      default: "{default}"
+    # Manual location text input for grief/theft cases.
+    manual-location:
+      # Label shown above the manual location input.
+      label: "Manual location if needed"
+      # Default text for the manual location input.
+      default: ""
+    # Claimed lost item text input.
+    claimed-lost-items:
+      # Label shown above the claimed items input.
+      label: "Claimed lost items"
+      # Default text for the claimed items input.
+      default: ""
+    # Staff priority selector.
+    priority:
+      # Label shown for the priority selector.
+      label: "Priority"
+      # Default selected priority. {default} is filled by the dialog.
+      default: "{default}"
+    # Staff status selector.
+    status:
+      # Label shown for the status selector.
+      label: "Status"
+      # Default selected status. {default} is filled by the dialog.
+      default: "{default}"
+    # Resolve outcome input.
+    outcome:
+      # Label shown above the resolve outcome input.
+      label: "Outcome"
+      # Default resolve outcome. {default} is filled by the dialog.
+      default: "{default}"
+    # Reject reason input.
+    close-reason:
+      # Label shown above the close/reject reason input.
+      label: "Reason"
+      # Default close/reject reason. {default} is filled by the dialog.
+      default: "{default}"
+    # Final message sent when resolving or rejecting.
+    final-message:
+      # Label shown above the final message input.
+      label: "Final message"
+      # Default final message text.
+      default: ""
+    # Player or staff reply input.
+    reply:
+      # Label shown above the reply input.
+      label: "Reply"
+      # Default reply text.
+      default: ""
+    # Online staff player name input for assignment.
+    staff-player-name:
+      # Label shown above the staff player name input.
+      label: "Staff player name"
+      # Default staff player name text.
+      default: ""
+    # Request-info question input.
+    question:
+      # Label shown above the question input.
+      label: "Question"
+      # Default question text.
+      default: ""
+    # Internal staff note input.
+    note:
+      # Label shown above the note input.
+      label: "Note"
+      # Default note text.
+      default: ""
+
+  # Plain detail rows used in confirmation screens and case detail sections.
+  detail-lines:
+    # Case type row in submit confirmation.
+    confirm-type: "Type: {type}"
+    # Target player row in player report confirmation.
+    confirm-target: "Target: {target}"
+    # Reason row in player report confirmation.
+    confirm-reason: "Reason: {reason}"
+    # Category row in bug report confirmation.
+    confirm-category: "Category: {category}"
+    # Description row in submit confirmation.
+    confirm-description: "Description: {description}"
+    # Location row in submit confirmation.
+    confirm-location: "Location: {location}"
+    # Claimed item row in lost items confirmation.
+    confirm-items: "Claimed items: {items}"
+    # Latest death row in lost items confirmation.
+    confirm-last-death: "Last death: {last_death}"
+    # Manual location row in grief/theft confirmation.
+    confirm-manual-location: "Manual location: {manual_location}"
+    # Player detail summary status/priority row.
+    player-summary-status: "&lt;dark_gray&gt;Status&lt;/dark_gray&gt; &lt;green&gt;{status}&lt;/green&gt; &lt;dark_gray&gt;| Priority&lt;/dark_gray&gt; &lt;yellow&gt;{priority}&lt;/yellow&gt;"
+    # Player detail summary case type row.
+    player-summary-type: "&lt;dark_gray&gt;Type&lt;/dark_gray&gt; &lt;white&gt;{type}&lt;/white&gt;"
+    # Player detail summary updated time row.
+    player-summary-updated: "&lt;dark_gray&gt;Updated&lt;/dark_gray&gt; &lt;dark_aqua&gt;{updated}&lt;/dark_aqua&gt;"
+    # Player detail summary description row.
+    player-summary-description: "&lt;dark_gray&gt;Summary&lt;/dark_gray&gt; &lt;white&gt;{description}&lt;/white&gt;"
+    # Player detail helper row.
+    player-summary-help: "&lt;gray&gt;Use the action rows below to inspect each section.&lt;/gray&gt;"
+    # Staff detail summary status/priority row.
+    staff-summary-status: "&lt;dark_gray&gt;Status&lt;/dark_gray&gt; &lt;green&gt;{status}&lt;/green&gt; &lt;dark_gray&gt;| Priority&lt;/dark_gray&gt; &lt;yellow&gt;{priority}&lt;/yellow&gt;"
+    # Staff detail reporter row.
+    staff-summary-reporter: "&lt;dark_gray&gt;Reporter&lt;/dark_gray&gt; &lt;yellow&gt;{reporter}&lt;/yellow&gt;"
+    # Staff detail assignee row.
+    staff-summary-assigned: "&lt;dark_gray&gt;Assigned&lt;/dark_gray&gt; &lt;yellow&gt;{assigned}&lt;/yellow&gt;"
+    # Staff detail updated time row.
+    staff-summary-updated: "&lt;dark_gray&gt;Updated&lt;/dark_gray&gt; &lt;dark_aqua&gt;{updated}&lt;/dark_aqua&gt;"
+    # Staff detail counts row.
+    staff-summary-counts: "&lt;dark_gray&gt;Replies&lt;/dark_gray&gt; &lt;white&gt;{reply_count}&lt;/white&gt; &lt;dark_gray&gt;| Notes&lt;/dark_gray&gt; &lt;white&gt;{note_count}&lt;/white&gt; &lt;dark_gray&gt;| Evidence&lt;/dark_gray&gt; &lt;white&gt;{evidence_count}&lt;/white&gt;"
+    # Compact staff detail reporter/assignee row.
+    staff-summary-people: "&lt;dark_gray&gt;Reporter&lt;/dark_gray&gt; &lt;yellow&gt;{reporter}&lt;/yellow&gt; &lt;dark_gray&gt;| Assigned&lt;/dark_gray&gt; &lt;yellow&gt;{assigned}&lt;/yellow&gt;"
+    # Compact staff detail activity/counts row.
+    staff-summary-activity: "&lt;dark_gray&gt;Updated&lt;/dark_gray&gt; &lt;dark_aqua&gt;{updated}&lt;/dark_aqua&gt; &lt;dark_gray&gt;| Replies&lt;/dark_gray&gt; &lt;white&gt;{reply_count}&lt;/white&gt; &lt;dark_gray&gt;| Notes&lt;/dark_gray&gt; &lt;white&gt;{note_count}&lt;/white&gt; &lt;dark_gray&gt;| Evidence&lt;/dark_gray&gt; &lt;white&gt;{evidence_count}&lt;/white&gt;"
+    # Staff action menu status row.
+    action-status: "&lt;dark_gray&gt;Status&lt;/dark_gray&gt; &lt;green&gt;{status}&lt;/green&gt;"
+    # Staff action menu priority row.
+    action-priority: "&lt;dark_gray&gt;Priority&lt;/dark_gray&gt; &lt;yellow&gt;{priority}&lt;/yellow&gt;"
+    # Staff action menu assignee row.
+    action-assigned: "&lt;dark_gray&gt;Assigned&lt;/dark_gray&gt; &lt;yellow&gt;{assigned}&lt;/yellow&gt;"
+    # Compact staff action menu summary row.
+    action-summary: "&lt;dark_gray&gt;Status&lt;/dark_gray&gt; &lt;green&gt;{status}&lt;/green&gt; &lt;dark_gray&gt;| Priority&lt;/dark_gray&gt; &lt;yellow&gt;{priority}&lt;/yellow&gt; &lt;dark_gray&gt;| Assigned&lt;/dark_gray&gt; &lt;yellow&gt;{assigned}&lt;/yellow&gt;"
+    # Overview section type row.
+    overview-type: "Type: {type}"
+    # Overview section status row.
+    overview-status: "Status: {status}"
+    # Overview section priority row.
+    overview-priority: "Priority: {priority}"
+    # Overview section reporter row.
+    overview-reporter: "Reporter: {reporter}"
+    # Overview section assignee row.
+    overview-assigned: "Assigned: {assigned}"
+    # Overview section created time row.
+    overview-created: "Created: {created}"
+    # Overview section updated time row.
+    overview-updated: "Updated: {updated}"
+    # Overview section location row.
+    overview-location: "Location: {location}"
+    # Description section text row.
+    description-text: "Description: {description}"
+    # Description section location row.
+    description-location: "Location: {location}"
+    # Evidence section empty text.
+    evidence-empty: "No visible evidence."
+    # Evidence section category header.
+    evidence-category: "[{category}]"
+    # Evidence section entry row.
+    evidence-entry: "{key}: {value}"
+    # Conversation section empty text.
+    conversation-empty: "No replies yet."
+    # Conversation section header.
+    conversation-header: "Replies:"
+    # Conversation reply metadata row.
+    conversation-reply-meta: "{author_type} - {author} - {created}"
+    # Conversation reply message row.
+    conversation-message: "Message: {message}"
+    # Staff-only internal note count row.
+    conversation-note-count: "Internal notes: {note_count}"
+    # Staff-only internal note metadata row.
+    conversation-note-meta: "Note - {author} - {created}"
+    # Staff-only internal note message row.
+    conversation-note-message: "Message: {message}"
+    # Resolution section empty text.
+    resolution-empty: "No resolution yet."
+    # Resolution section outcome row.
+    resolution-outcome: "Outcome: {resolution_outcome}"
+    # Resolution section final message row.
+    resolution-message: "Final message: {resolution_message}"
+    # Resolution section closed time row.
+    resolution-closed: "Closed: {closed}"
+
+  # Dialog validation and error text.
+  validation:
+    # Legacy helper text for direct ID lookup.
+    open-by-id-help: "&lt;yellow&gt;Use /case open ID to open a case directly.&lt;/yellow&gt;"
+    # Sent when a required description is missing.
+    description-required: "&lt;red&gt;Description is required.&lt;/red&gt;"
+    # Sent when a player report target is missing.
+    target-required: "&lt;red&gt;Target player is required.&lt;/red&gt;"
+    # Sent when a player report reason is missing.
+    reason-required: "&lt;red&gt;Reason is required.&lt;/red&gt;"
+    # Sent when a bug report category is missing.
+    category-required: "&lt;red&gt;Category is required.&lt;/red&gt;"
+    # Sent when claimed lost items text is missing.
+    items-required: "&lt;red&gt;Claimed lost items are required.&lt;/red&gt;"
+    # Sent when a Dialog priority selection cannot be parsed.
+    invalid-priority: "&lt;red&gt;Invalid priority.&lt;/red&gt;"
+    # Sent when staff tries to set a closed status through the generic status flow.
+    closed-status-command: "&lt;red&gt;Use Resolve, Reject, or Archive for closed statuses.&lt;/red&gt;"
+    # Sent when a Dialog status selection cannot be parsed.
+    invalid-status: "&lt;red&gt;Invalid status.&lt;/red&gt;"
+    # Sent when staff tries to teleport to a case without location data.
+    no-location: "&lt;red&gt;No location is attached.&lt;/red&gt;"
+    # Sent when a case location points to a world that is not loaded.
+    world-not-loaded: "&lt;red&gt;World is not loaded.&lt;/red&gt;"
+    # Sent when a required text input is blank.
+    text-required: "&lt;red&gt;Text is required.&lt;/red&gt;"
+    # Sent when a clickable Dialog action token has expired or no longer exists.
+    expired-action: "&lt;red&gt;This dialog action expired. Reopen the dialog.&lt;/red&gt;"
+    # Sent when a player tries to use another player's Dialog action token.
+    wrong-player-action: "&lt;red&gt;This dialog action belongs to another player.&lt;/red&gt;"
+    # Sent when a Dialog assignment target is not online.
+    assignee-online-required: "&lt;red&gt;Assignee must be online.&lt;/red&gt;"
+
+  # Clickable Dialog row labels and hover text.
+  buttons:
+    # Main menu action for opening the case type menu.
+    open-a-case:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;yellow&gt;Open a Case&lt;/yellow&gt;"
+      # Hover text for the row.
+      hover: "&lt;gold&gt;&lt;bold&gt;OPEN A CASE&lt;/bold&gt;&lt;/gold&gt;\n&lt;gray&gt;Start a new player-facing case workflow.&lt;/gray&gt;"
+    # Main menu action for viewing player-owned cases.
+    your-cases:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;white&gt;Your Cases&lt;/white&gt;"
+      # Hover text for the row.
+      hover: "&lt;gold&gt;&lt;bold&gt;YOUR CASES&lt;/bold&gt;&lt;/gold&gt;\n&lt;gray&gt;View the cases you created.&lt;/gray&gt;"
+    # Main menu action for staff tools.
+    staff-tools:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;aqua&gt;Staff Tools&lt;/aqua&gt;"
+      # Hover text for the row.
+      hover: "&lt;aqua&gt;&lt;bold&gt;STAFF TOOLS&lt;/bold&gt;&lt;/aqua&gt;\n&lt;gray&gt;Open staff case management.&lt;/gray&gt;"
+    # Case type row for player reports.
+    report-a-player:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;yellow&gt;Report a Player&lt;/yellow&gt;"
+      # Hover text for the row.
+      hover: "&lt;gold&gt;&lt;bold&gt;PLAYER REPORT&lt;/bold&gt;&lt;/gold&gt;\n&lt;gray&gt;Report another player with a target, reason and description.&lt;/gray&gt;"
+    # Case type row for bug reports.
+    report-a-bug:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;yellow&gt;Report a Bug&lt;/yellow&gt;"
+      # Hover text for the row.
+      hover: "&lt;gold&gt;&lt;bold&gt;BUG REPORT&lt;/bold&gt;&lt;/gold&gt;\n&lt;gray&gt;Report a broken feature or technical issue.&lt;/gray&gt;"
+    # Case type row for lost items.
+    lost-items:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;yellow&gt;Lost Items&lt;/yellow&gt;"
+      # Hover text for the row.
+      hover: "&lt;gold&gt;&lt;bold&gt;LOST ITEMS&lt;/bold&gt;&lt;/gold&gt;\n&lt;gray&gt;Report missing items, optionally attaching your latest death.&lt;/gray&gt;"
+    # Case type row for grief/theft.
+    grief-theft:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;yellow&gt;Grief / Theft&lt;/yellow&gt;"
+      # Hover text for the row.
+      hover: "&lt;gold&gt;&lt;bold&gt;GRIEF / THEFT&lt;/bold&gt;&lt;/gold&gt;\n&lt;gray&gt;Report grief, theft or suspicious changes at a location.&lt;/gray&gt;"
+    # Case type row for support requests.
+    support-request:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;yellow&gt;Support Request&lt;/yellow&gt;"
+      # Hover text for the row.
+      hover: "&lt;gold&gt;&lt;bold&gt;SUPPORT REQUEST&lt;/bold&gt;&lt;/gold&gt;\n&lt;gray&gt;Open a general request for staff help.&lt;/gray&gt;"
+    # Staff tools row for the staff board.
+    case-board:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;aqua&gt;Case Board&lt;/aqua&gt;"
+      # Hover text for the row.
+      hover: "&lt;aqua&gt;&lt;bold&gt;CASE BOARD&lt;/bold&gt;&lt;/aqua&gt;\n&lt;gray&gt;Browse cases by filter.&lt;/gray&gt;"
+    # Staff tools row for Dialog direct lookup by case ID.
+    open-by-id:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;aqua&gt;Open by ID&lt;/aqua&gt;"
+      # Hover text for the row.
+      hover: "&lt;aqua&gt;&lt;bold&gt;DIRECT LOOKUP&lt;/bold&gt;&lt;/aqua&gt;\n&lt;gray&gt;Use &lt;white&gt;/case open ID&lt;/white&gt; for direct lookup.&lt;/gray&gt;"
+    # Form button for reviewing a submission before creating it.
+    review:
+      # Visible button label.
+      label: "&lt;green&gt;&lt;bold&gt;Review&lt;/bold&gt;&lt;/green&gt;"
+      # Hover text for the button.
+      hover: "&lt;dark_green&gt;Review before submitting.&lt;/dark_green&gt;"
+    # Final button for creating a case.
+    submit-case:
+      # Visible button label.
+      label: "&lt;green&gt;&lt;bold&gt;Submit Case&lt;/bold&gt;&lt;/green&gt;"
+      # Hover text for the button.
+      hover: "&lt;dark_green&gt;Create this case.&lt;/dark_green&gt;"
+    # Generic text submit button.
+    submit:
+      # Visible button label.
+      label: "&lt;green&gt;&lt;bold&gt;Submit&lt;/bold&gt;&lt;/green&gt;"
+      # Hover text for the button.
+      hover: "&lt;dark_green&gt;Submit this text.&lt;/dark_green&gt;"
+    # Generic change/apply button.
+    change:
+      # Visible button label.
+      label: "&lt;green&gt;&lt;bold&gt;Change&lt;/bold&gt;&lt;/green&gt;"
+      # Hover text for the button.
+      hover: "&lt;dark_green&gt;Apply this change.&lt;/dark_green&gt;"
+    # Player reply submit button.
+    add-reply:
+      # Visible button label.
+      label: "&lt;green&gt;&lt;bold&gt;Add Reply&lt;/bold&gt;&lt;/green&gt;"
+      # Hover text for the button.
+      hover: "&lt;dark_green&gt;Add this reply to Case &lt;white&gt;#{case_id}&lt;/white&gt;.&lt;/dark_green&gt;"
+    # Generic back button.
+    back:
+      # Visible button label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;«&lt;/italic&gt;&lt;/dark_gray&gt; &lt;gray&gt;Back&lt;/gray&gt;"
+      # Hover text for the button.
+      hover: "&lt;dark_gray&gt;Return to the previous screen.&lt;/dark_gray&gt;"
+    # Confirmation screen button for returning to edit.
+    go-back:
+      # Visible button label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;«&lt;/italic&gt;&lt;/dark_gray&gt; &lt;gray&gt;Go Back&lt;/gray&gt;"
+      # Hover text for the button.
+      hover: "&lt;dark_gray&gt;Edit the case.&lt;/dark_gray&gt;"
+    # Back button returning to case type selection.
+    case-types:
+      # Visible button label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;«&lt;/italic&gt;&lt;/dark_gray&gt; &lt;gray&gt;Case Types&lt;/gray&gt;"
+      # Hover text for the button.
+      hover: "&lt;dark_gray&gt;Choose another case type.&lt;/dark_gray&gt;"
+    # Empty player case list action for opening a support request.
+    open-support-request:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;yellow&gt;Open Support Request&lt;/yellow&gt;"
+      # Hover text for the row.
+      hover: "&lt;gold&gt;&lt;bold&gt;SUPPORT REQUEST&lt;/bold&gt;&lt;/gold&gt;\n&lt;gray&gt;Create a new support request.&lt;/gray&gt;"
+    # Row template for one player-owned case.
+    player-case-list-item:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;white&gt;#{case_id}&lt;/white&gt; &lt;dark_gray&gt;|&lt;/dark_gray&gt; &lt;green&gt;{status}&lt;/green&gt; &lt;dark_gray&gt;|&lt;/dark_gray&gt; &lt;yellow&gt;{priority}&lt;/yellow&gt;"
+      # Hover text for the row.
+      hover: "&lt;gold&gt;&lt;bold&gt;YOUR CASE #{case_id}&lt;/bold&gt;&lt;/gold&gt;\n&lt;gray&gt;Type:&lt;/gray&gt; &lt;white&gt;{type}&lt;/white&gt;\n&lt;gray&gt;Status:&lt;/gray&gt; &lt;green&gt;{status}&lt;/green&gt;\n&lt;gray&gt;Priority:&lt;/gray&gt; &lt;yellow&gt;{priority}&lt;/yellow&gt;\n&lt;gray&gt;Updated:&lt;/gray&gt; &lt;dark_aqua&gt;{updated}&lt;/dark_aqua&gt;"
+    # Staff board filter row template.
+    staff-board-filter:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;aqua&gt;{filter_label}&lt;/aqua&gt;"
+      # Hover text for the row.
+      hover: "&lt;aqua&gt;&lt;bold&gt;{filter}&lt;/bold&gt;&lt;/aqua&gt;\n&lt;gray&gt;Open matching staff cases.&lt;/gray&gt;"
+    # Staff board case row template.
+    staff-board-case-item:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;white&gt;#{case_id}&lt;/white&gt; &lt;dark_gray&gt;|&lt;/dark_gray&gt; &lt;yellow&gt;{priority}&lt;/yellow&gt; &lt;dark_gray&gt;|&lt;/dark_gray&gt; &lt;green&gt;{status}&lt;/green&gt;"
+      # Hover text for the row.
+      hover: "&lt;gold&gt;&lt;bold&gt;STAFF CASE #{case_id}&lt;/bold&gt;&lt;/gold&gt;\n&lt;gray&gt;Type:&lt;/gray&gt; &lt;white&gt;{type}&lt;/white&gt;\n&lt;gray&gt;Status:&lt;/gray&gt; &lt;green&gt;{status}&lt;/green&gt;\n&lt;gray&gt;Reporter:&lt;/gray&gt; &lt;yellow&gt;{reporter}&lt;/yellow&gt;\n&lt;gray&gt;Assigned:&lt;/gray&gt; &lt;yellow&gt;{assigned}&lt;/yellow&gt;\n&lt;gray&gt;Updated:&lt;/gray&gt; &lt;dark_aqua&gt;{updated}&lt;/dark_aqua&gt;"
+    # Case info button for overview.
+    overview:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;aqua&gt;Overview&lt;/aqua&gt;"
+      # Hover text for the row.
+      hover: "&lt;aqua&gt;&lt;bold&gt;OVERVIEW&lt;/bold&gt;&lt;/aqua&gt;\n&lt;gray&gt;Type:&lt;/gray&gt; &lt;white&gt;{type}&lt;/white&gt;\n&lt;gray&gt;Status:&lt;/gray&gt; &lt;green&gt;{status}&lt;/green&gt;\n&lt;gray&gt;Priority:&lt;/gray&gt; &lt;yellow&gt;{priority}&lt;/yellow&gt;\n&lt;gray&gt;Reporter:&lt;/gray&gt; &lt;yellow&gt;{reporter}&lt;/yellow&gt;\n&lt;gray&gt;Assigned:&lt;/gray&gt; &lt;yellow&gt;{assigned}&lt;/yellow&gt;\n&lt;gray&gt;Created:&lt;/gray&gt; &lt;dark_aqua&gt;{created}&lt;/dark_aqua&gt;\n&lt;gray&gt;Updated:&lt;/gray&gt; &lt;dark_aqua&gt;{updated}&lt;/dark_aqua&gt;\n&lt;gray&gt;Location:&lt;/gray&gt; &lt;light_purple&gt;{location}&lt;/light_purple&gt;"
+    # Case info button for description.
+    description:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;aqua&gt;Description&lt;/aqua&gt;"
+      # Hover text for the row.
+      hover: "&lt;aqua&gt;&lt;bold&gt;DESCRIPTION&lt;/bold&gt;&lt;/aqua&gt;\n&lt;gray&gt;Summary:&lt;/gray&gt; &lt;white&gt;{description}&lt;/white&gt;\n&lt;gray&gt;Location:&lt;/gray&gt; &lt;light_purple&gt;{location}&lt;/light_purple&gt;"
+    # Case info button for evidence.
+    evidence:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;aqua&gt;Evidence&lt;/aqua&gt;"
+      # Hover text for the row.
+      hover: "&lt;aqua&gt;&lt;bold&gt;EVIDENCE&lt;/bold&gt;&lt;/aqua&gt;\n&lt;gray&gt;Visible entries:&lt;/gray&gt; &lt;white&gt;{evidence_count}&lt;/white&gt;\n&lt;dark_gray&gt;Open for the full evidence list.&lt;/dark_gray&gt;"
+    # Case info button for conversation.
+    conversation:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;aqua&gt;Conversation&lt;/aqua&gt;"
+      # Hover text for the row.
+      hover: "&lt;aqua&gt;&lt;bold&gt;CONVERSATION&lt;/bold&gt;&lt;/aqua&gt;\n&lt;gray&gt;Replies:&lt;/gray&gt; &lt;white&gt;{reply_count}&lt;/white&gt;\n&lt;gray&gt;Internal notes:&lt;/gray&gt; &lt;white&gt;{note_count}&lt;/white&gt;\n&lt;dark_gray&gt;Open for messages and notes.&lt;/dark_gray&gt;"
+    # Case info button for resolution.
+    resolution:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;aqua&gt;Resolution&lt;/aqua&gt;"
+      # Hover text for the row.
+      hover: "&lt;aqua&gt;&lt;bold&gt;RESOLUTION&lt;/bold&gt;&lt;/aqua&gt;\n&lt;gray&gt;Outcome:&lt;/gray&gt; &lt;green&gt;{resolution_outcome}&lt;/green&gt;\n&lt;gray&gt;Message:&lt;/gray&gt; &lt;white&gt;{resolution_message}&lt;/white&gt;\n&lt;gray&gt;Closed:&lt;/gray&gt; &lt;dark_aqua&gt;{closed}&lt;/dark_aqua&gt;"
+    # Staff-only case action menu button.
+    actions:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;gold&gt;&lt;bold&gt;Actions&lt;/bold&gt;&lt;/gold&gt;"
+      # Hover text for the row.
+      hover: "&lt;gold&gt;&lt;bold&gt;STAFF ACTIONS #{case_id}&lt;/bold&gt;&lt;/gold&gt;\n&lt;gray&gt;Status:&lt;/gray&gt; &lt;green&gt;{status}&lt;/green&gt;\n&lt;gray&gt;Priority:&lt;/gray&gt; &lt;yellow&gt;{priority}&lt;/yellow&gt;"
+    # Player-facing reply button.
+    player-reply:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;green&gt;&lt;bold&gt;Reply&lt;/bold&gt;&lt;/green&gt;"
+      # Hover text for the row.
+      hover: "&lt;dark_green&gt;Add more information to Case &lt;white&gt;#{case_id}&lt;/white&gt;.&lt;/dark_green&gt;"
+    # Staff player-visible reply button.
+    staff-reply:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;green&gt;&lt;bold&gt;Reply&lt;/bold&gt;&lt;/green&gt;"
+      # Hover text for the row.
+      hover: "&lt;dark_green&gt;Send a player-visible reply to Case &lt;white&gt;#{case_id}&lt;/white&gt;.&lt;/dark_green&gt;"
+    # Staff request-info button.
+    request-info:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;aqua&gt;Request Info&lt;/aqua&gt;"
+      # Hover text for the row.
+      hover: "&lt;dark_aqua&gt;Ask the player for more information on Case &lt;white&gt;#{case_id}&lt;/white&gt;.&lt;/dark_aqua&gt;"
+    # Staff internal note button.
+    internal-note:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;aqua&gt;Internal Note&lt;/aqua&gt;"
+      # Hover text for the row.
+      hover: "&lt;dark_aqua&gt;Add a staff-only note to Case &lt;white&gt;#{case_id}&lt;/white&gt;.&lt;/dark_aqua&gt;"
+    # Staff claim button.
+    claim:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;gold&gt;&lt;bold&gt;Claim&lt;/bold&gt;&lt;/gold&gt;"
+      # Hover text for the row.
+      hover: "&lt;yellow&gt;Assign Case &lt;white&gt;#{case_id}&lt;/white&gt; to yourself.&lt;/yellow&gt;"
+    # Staff assign/reassign button.
+    assign:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;green&gt;&lt;bold&gt;Assign / Reassign&lt;/bold&gt;&lt;/green&gt;"
+      # Hover text for the row.
+      hover: "&lt;dark_green&gt;Assign or reassign Case &lt;white&gt;#{case_id}&lt;/white&gt; to an online staff member.&lt;/dark_green&gt;"
+    # Staff priority change button.
+    priority:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;aqua&gt;Priority&lt;/aqua&gt;"
+      # Hover text for the row.
+      hover: "&lt;dark_aqua&gt;Change priority for Case &lt;white&gt;#{case_id}&lt;/white&gt;.&lt;/dark_aqua&gt;\n&lt;gray&gt;Current:&lt;/gray&gt; &lt;yellow&gt;{priority}&lt;/yellow&gt;"
+    # Staff status change button.
+    status:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;aqua&gt;Status&lt;/aqua&gt;"
+      # Hover text for the row.
+      hover: "&lt;dark_aqua&gt;Change status for Case &lt;white&gt;#{case_id}&lt;/white&gt;.&lt;/dark_aqua&gt;\n&lt;gray&gt;Current:&lt;/gray&gt; &lt;green&gt;{status}&lt;/green&gt;"
+    # Staff teleport button.
+    teleport:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;aqua&gt;Teleport&lt;/aqua&gt;"
+      # Hover text for the row.
+      hover: "&lt;dark_aqua&gt;Teleport to case location.&lt;/dark_aqua&gt;\n&lt;gray&gt;Location:&lt;/gray&gt; &lt;light_purple&gt;{location}&lt;/light_purple&gt;"
+    # Staff resolve button.
+    resolve:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;gold&gt;&lt;bold&gt;Resolve&lt;/bold&gt;&lt;/gold&gt;"
+      # Hover text for the row.
+      hover: "&lt;yellow&gt;Resolve Case &lt;white&gt;#{case_id}&lt;/white&gt;.&lt;/yellow&gt;"
+    # Staff reject button.
+    reject:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;red&gt;&lt;bold&gt;Reject&lt;/bold&gt;&lt;/red&gt;"
+      # Hover text for the row.
+      hover: "&lt;dark_red&gt;Reject Case &lt;white&gt;#{case_id}&lt;/white&gt;.&lt;/dark_red&gt;"
+    # Staff archive button.
+    archive:
+      # Visible row label.
+      label: "&lt;dark_gray&gt;&lt;italic&gt;»&lt;/italic&gt;&lt;/dark_gray&gt; &lt;red&gt;&lt;bold&gt;Archive&lt;/bold&gt;&lt;/red&gt;"
+      # Hover text for the row.
+      hover: "&lt;dark_red&gt;Move Case &lt;white&gt;#{case_id}&lt;/white&gt; to the archive.&lt;/dark_red&gt;"</code></pre></div></div></details>
+<h3>Top-Level Message Keys</h3>
+<div class="fb-code-block"><pre><code class="language-yaml">prefix
 only-players
 no-permission
 case-created
@@ -456,54 +1249,54 @@ staff-reply-received
 info-requested
 resolved-notice
 rejected-notice
-dialogs</code></pre>
-            <h3>Common Placeholders</h3>
-            <ul>
-              <li><code>{id}</code> and <code>{case_id}</code>: case ID</li>
-              <li><code>{staff}</code>: staff player name</li>
-              <li><code>{reporter}</code>: reporter player name</li>
-              <li><code>{type}</code>, <code>{status}</code>, and <code>{priority}</code>: case metadata</li>
-              <li><code>{assigned}</code>: assigned staff name or fallback text</li>
-              <li><code>{updated}</code>, <code>{created}</code>, and <code>{closed}</code>: formatted times</li>
-              <li><code>{location}</code>, <code>{description}</code>, <code>{reply_count}</code>, <code>{note_count}</code>, and <code>{evidence_count}</code>: detail data</li>
-              <li><code>{resolution_outcome}</code> and <code>{resolution_message}</code>: closure data</li>
-            </ul>
-            <p>MiniMessage is supported in server-controlled messages. Player-provided placeholder values are escaped before rendering.</p>
-            <h3>Command Usage Messages</h3>
-            <pre class="code-block"><code>usage-case-root: "&lt;yellow&gt;Usage: /case [list|view|board|open|claim|assign|priority|status|archive|reload|debug]&lt;/yellow&gt;"
+dialogs</code></pre></div>
+<h3>Common Placeholders</h3>
+<ul>
+<li><code>{id}</code> and <code>{case_id}</code>: case ID</li>
+<li><code>{staff}</code>: staff player name</li>
+<li><code>{reporter}</code>: reporter player name</li>
+<li><code>{type}</code>, <code>{status}</code>, and <code>{priority}</code>: case metadata</li>
+<li><code>{assigned}</code>: assigned staff name or fallback text</li>
+<li><code>{updated}</code>, <code>{created}</code>, and <code>{closed}</code>: formatted times</li>
+<li><code>{location}</code>, <code>{description}</code>, <code>{reply_count}</code>, <code>{note_count}</code>, and <code>{evidence_count}</code>: detail data</li>
+<li><code>{resolution_outcome}</code> and <code>{resolution_message}</code>: closure data</li>
+</ul>
+<p>MiniMessage is supported in server-controlled messages. Player-provided placeholder values are escaped before rendering.</p>
+<h3>Command Usage Messages</h3>
+<div class="fb-code-block"><pre><code class="language-yaml">usage-case-root: "&lt;yellow&gt;Usage: /case [list|view|board|open|claim|assign|priority|status|archive|reload|debug]&lt;/yellow&gt;"
 usage-case-view: "&lt;yellow&gt;Usage: /case view &lt;id&gt;&lt;/yellow&gt;"
 usage-case-open: "&lt;yellow&gt;Usage: /case open &lt;id&gt;&lt;/yellow&gt;"
 usage-case-claim: "&lt;yellow&gt;Usage: /case claim &lt;id&gt;&lt;/yellow&gt;"
 usage-case-assign: "&lt;yellow&gt;Usage: /case assign &lt;id&gt; &lt;online-staff&gt;&lt;/yellow&gt;"
 usage-case-priority: "&lt;yellow&gt;Usage: /case priority &lt;id&gt; &lt;LOW|NORMAL|HIGH|URGENT&gt; [reason]&lt;/yellow&gt;"
 usage-case-status: "&lt;yellow&gt;Usage: /case status &lt;id&gt; &lt;OPEN|CLAIMED|WAITING_PLAYER|WAITING_STAFF&gt; [reason]&lt;/yellow&gt;"
-usage-case-archive: "&lt;yellow&gt;Usage: /case archive &lt;id&gt;&lt;/yellow&gt;"</code></pre>
-            <h3>Staff and Player Notification Messages</h3>
-            <pre class="code-block"><code>staff-new-case: "&lt;gold&gt;New Case #{id}&lt;/gold&gt; &lt;gray&gt;-&lt;/gray&gt; &lt;white&gt;{type}&lt;/white&gt; by &lt;white&gt;{reporter}&lt;/white&gt;"
+usage-case-archive: "&lt;yellow&gt;Usage: /case archive &lt;id&gt;&lt;/yellow&gt;"</code></pre></div>
+<h3>Staff and Player Notification Messages</h3>
+<div class="fb-code-block"><pre><code class="language-yaml">staff-new-case: "&lt;gold&gt;New Case #{id}&lt;/gold&gt; &lt;gray&gt;-&lt;/gray&gt; &lt;white&gt;{type}&lt;/white&gt; by &lt;white&gt;{reporter}&lt;/white&gt;"
 staff-player-replied: "&lt;gold&gt;Case #{id}&lt;/gold&gt; &lt;gray&gt;-&lt;/gray&gt; &lt;yellow&gt;{reporter}&lt;/yellow&gt; replied."
 staff-assigned-to-you: "&lt;gold&gt;Case #{id}&lt;/gold&gt; &lt;gray&gt;-&lt;/gray&gt; assigned to you."
 player-reply-added: "&lt;green&gt;Your reply was added to Case #{id}.&lt;/green&gt;"
 staff-reply-received: "&lt;yellow&gt;Staff replied to Case #{id}.&lt;/yellow&gt;"
 info-requested: "&lt;yellow&gt;Staff requested more information for Case #{id}.&lt;/yellow&gt;"
 resolved-notice: "&lt;green&gt;Your Case #{id} has been resolved.&lt;/green&gt;"
-rejected-notice: "&lt;red&gt;Your Case #{id} has been rejected.&lt;/red&gt;"</code></pre>
-            <h3>Dialog Text Structure</h3>
-            <pre class="code-block"><code>dialogs:
+rejected-notice: "&lt;red&gt;Your Case #{id} has been rejected.&lt;/red&gt;"</code></pre></div>
+<h3>Dialog Text Structure</h3>
+<div class="fb-code-block"><pre><code class="language-yaml">dialogs:
   titles: {}
   body: {}
   inputs: {}
   detail-lines: {}
   validation: {}
-  buttons: {}</code></pre>
-            <p><code>dialogs.titles</code> controls window titles such as main menu, case type menu, case forms, player cases, staff board, staff details, action dialogs, reply forms, resolve/reject dialogs, and case info sections.</p>
-            <p><code>dialogs.body</code> controls short helper lines for the main menu, case type menu, staff tools, case forms, empty lists, and board filters.</p>
-            <p><code>dialogs.inputs</code> controls labels and defaults for description, attach-location, attach-death, boolean yes/no, target player, reason, category, manual location, claimed lost items, priority, status, outcome, close reason, final message, reply, staff player name, question, and note inputs.</p>
-            <p><code>dialogs.detail-lines</code> controls submit confirmation rows, player summaries, staff summaries, action summaries, overview rows, description rows, evidence rows, conversation rows, internal note rows, and resolution rows.</p>
-            <p><code>dialogs.validation</code> controls required-field errors, invalid priority/status text, missing location/world text, expired Dialog action text, wrong-player action text, and online-assignee errors.</p>
-            <p><code>dialogs.buttons</code> controls every clickable row label and hover text, including main actions, case type rows, staff tools, review/submit buttons, back buttons, board filters, case list rows, section openers, player replies, staff replies, claim, assign/reassign, priority, status, teleport, resolve, reject, and archive.</p>
-            <h3>Complete Dialog Key Map</h3>
-            <p>This map mirrors the current bundled <code>messages.yml</code> key structure without duplicating every value on the page.</p>
-            <pre class="code-block"><code>dialogs.titles:
+  buttons: {}</code></pre></div>
+<p><code>dialogs.titles</code> controls window titles such as main menu, case type menu, case forms, player cases, staff board, staff details, action dialogs, reply forms, resolve/reject dialogs, and case info sections.</p>
+<p><code>dialogs.body</code> controls short helper lines for the main menu, case type menu, staff tools, case forms, empty lists, and board filters.</p>
+<p><code>dialogs.inputs</code> controls labels and defaults for description, attach-location, attach-death, boolean yes/no, target player, reason, category, manual location, claimed lost items, priority, status, outcome, close reason, final message, reply, staff player name, question, and note inputs.</p>
+<p><code>dialogs.detail-lines</code> controls submit confirmation rows, player summaries, staff summaries, action summaries, overview rows, description rows, evidence rows, conversation rows, internal note rows, and resolution rows.</p>
+<p><code>dialogs.validation</code> controls required-field errors, invalid priority/status text, missing location/world text, expired Dialog action text, wrong-player action text, and online-assignee errors.</p>
+<p><code>dialogs.buttons</code> controls every clickable row label and hover text, including main actions, case type rows, staff tools, review/submit buttons, back buttons, board filters, case list rows, section openers, player replies, staff replies, claim, assign/reassign, priority, status, teleport, resolve, reject, and archive.</p>
+<h3>Complete Dialog Key Map</h3>
+<p>This map mirrors the current bundled <code>messages.yml</code> key structure without duplicating every value on the page.</p>
+<div class="fb-code-block"><pre><code class="language-yaml">dialogs.titles:
   corecasex
   open-a-case
   staff-tools
@@ -671,89 +1464,82 @@ dialogs.buttons:
   teleport
   resolve
   reject
-  archive</code></pre>
-            <h3>Button Entry Shape</h3>
-            <pre class="code-block"><code>dialogs:
+  archive</code></pre></div>
+<h3>Button Entry Shape</h3>
+<div class="fb-code-block"><pre><code class="language-yaml">dialogs:
   buttons:
     example:
       label: "&lt;yellow&gt;Example&lt;/yellow&gt;"
-      hover: "&lt;gray&gt;Hover text.&lt;/gray&gt;"</code></pre>
-            <p>Hover text may include <code>\n</code> line breaks.</p>
-
-            <h2 id="workflow-rules">9. Workflow Rules</h2>
-            <h3>Statuses</h3>
-            <p>Supported statuses are <code>OPEN</code>, <code>CLAIMED</code>, <code>WAITING_PLAYER</code>, <code>WAITING_STAFF</code>, <code>RESOLVED</code>, <code>REJECTED</code>, and <code>ARCHIVED</code>. Direct <code>/case status</code> accepts only non-closed workflow statuses: <code>OPEN</code>, <code>CLAIMED</code>, <code>WAITING_PLAYER</code>, and <code>WAITING_STAFF</code>.</p>
-            <h3>Priorities</h3>
-            <p>Supported priorities are <code>LOW</code>, <code>NORMAL</code>, <code>HIGH</code>, and <code>URGENT</code>. Priority affects staff board ordering, high/urgent board filters, Discord priority routing, and the urgent-created Discord notification.</p>
-            <h3>Board Filters</h3>
-            <p>Staff board filters include all open cases, unassigned, assigned to me, high and urgent, waiting player, waiting staff, recent closed, and archive.</p>
-            <h3>Archive Rules</h3>
-            <p>Archive is allowed only when a case is <code>RESOLVED</code> or <code>REJECTED</code>. Archive is rejected for <code>OPEN</code>, <code>CLAIMED</code>, <code>WAITING_PLAYER</code>, and <code>WAITING_STAFF</code>.</p>
-            <h3>Claim and Assignment Rules</h3>
-            <p>Claim assigns the case to the clicking staff member, fails if the case is already assigned, fails if the case is closed, and uses a conflict-safe database update.</p>
-            <p><code>/case assign</code> is the MVP assign/reassign command. It requires the target staff member to be online, sets or replaces the assignee, records previous and new assignee names in the timeline, moves <code>OPEN</code> cases to <code>CLAIMED</code>, and rejects <code>RESOLVED</code>, <code>REJECTED</code>, or <code>ARCHIVED</code> cases.</p>
-
-            <h2 id="evidence-visibility">10. Evidence Visibility</h2>
-            <p>Evidence levels are <code>PLAYER_VISIBLE</code>, <code>STAFF_ONLY</code>, and <code>SENSITIVE</code>.</p>
-            <ul>
-              <li>players can see <code>PLAYER_VISIBLE</code> evidence.</li>
-              <li>staff with <code>corecasex.staff.view-evidence</code> can see <code>STAFF_ONLY</code> evidence.</li>
-              <li>staff with <code>corecasex.staff.view-sensitive-evidence</code> can see <code>SENSITIVE</code> evidence.</li>
-            </ul>
-            <p>Evidence can include reporter snapshot data, reporter location, online target player snapshot data, report reason, bug category, claimed lost items, last death context, and manual location text.</p>
-
-            <h2 id="dialog-ui-configuration">11. Inventory GUI And Dialog Input</h2>
-            <p>Normal player entrypoint:</p>
-            <pre class="code-block"><code>/case</code></pre>
-            <p>Inventory menus include:</p>
-            <ul>
-              <li>main menu</li>
-              <li>case type menu</li>
-              <li>player case list</li>
-              <li>player case detail view</li>
-              <li>staff tools menu</li>
-              <li>staff board filters</li>
-              <li>staff case detail view</li>
-              <li>staff action menu</li>
-              <li>assign/reassign, priority, and status selection menus</li>
-            </ul>
-            <p>Paper Dialog input is used when a player or staff member must type something, including case descriptions, notes, replies, outcome messages, target player names, manual locations, and staff Open by ID.</p>
-            <h3>Safe Dialog Actions</h3>
-            <p>Clickable rows use short internal commands:</p>
-            <pre class="code-block"><code>/case ui &lt;token&gt;</code></pre>
-            <ul>
-              <li>tokens are owner-bound</li>
-              <li>tokens are permission-checked at click time</li>
-              <li>successful callbacks are one-use</li>
-              <li>expired tokens are rejected</li>
-              <li>wrong-player token use is rejected</li>
-            </ul>
-
-            <h2 id="commands">12. Commands</h2>
-            <h3>Player Commands</h3>
-            <pre class="code-block"><code>/case
+      hover: "&lt;gray&gt;Hover text.&lt;/gray&gt;"</code></pre></div>
+<p>Hover text may include <code>\n</code> line breaks.</p>
+<h2 id="workflow-rules">9. Workflow Rules</h2>
+<h3>Statuses</h3>
+<p>Supported statuses are <code>OPEN</code>, <code>CLAIMED</code>, <code>WAITING_PLAYER</code>, <code>WAITING_STAFF</code>, <code>RESOLVED</code>, <code>REJECTED</code>, and <code>ARCHIVED</code>. Direct <code>/case status</code> accepts only non-closed workflow statuses: <code>OPEN</code>, <code>CLAIMED</code>, <code>WAITING_PLAYER</code>, and <code>WAITING_STAFF</code>.</p>
+<h3>Priorities</h3>
+<p>Supported priorities are <code>LOW</code>, <code>NORMAL</code>, <code>HIGH</code>, and <code>URGENT</code>. Priority affects staff board ordering, high/urgent board filters, Discord priority routing, and the urgent-created Discord notification.</p>
+<h3>Board Filters</h3>
+<p>Staff board filters include all open cases, unassigned, assigned to me, high and urgent, waiting player, waiting staff, recent closed, and archive.</p>
+<h3>Archive Rules</h3>
+<p>Archive is allowed only when a case is <code>RESOLVED</code> or <code>REJECTED</code>. Archive is rejected for <code>OPEN</code>, <code>CLAIMED</code>, <code>WAITING_PLAYER</code>, and <code>WAITING_STAFF</code>.</p>
+<h3>Claim and Assignment Rules</h3>
+<p>Claim assigns the case to the clicking staff member, fails if the case is already assigned, fails if the case is closed, and uses a conflict-safe database update.</p>
+<p><code>/case assign</code> is the MVP assign/reassign command. It requires the target staff member to be online, sets or replaces the assignee, records previous and new assignee names in the timeline, moves <code>OPEN</code> cases to <code>CLAIMED</code>, and rejects <code>RESOLVED</code>, <code>REJECTED</code>, or <code>ARCHIVED</code> cases.</p>
+<h2 id="evidence-visibility">10. Evidence Visibility</h2>
+<p>Evidence levels are <code>PLAYER_VISIBLE</code>, <code>STAFF_ONLY</code>, and <code>SENSITIVE</code>.</p>
+<ul>
+<li>players can see <code>PLAYER_VISIBLE</code> evidence.</li>
+<li>staff with <code>corecasex.staff.view-evidence</code> can see <code>STAFF_ONLY</code> evidence.</li>
+<li>staff with <code>corecasex.staff.view-sensitive-evidence</code> can see <code>SENSITIVE</code> evidence.</li>
+</ul>
+<p>Evidence can include reporter snapshot data, reporter location, online target player snapshot data, report reason, bug category, claimed lost items, last death context, and manual location text.</p>
+<h2 id="dialog-ui-configuration">11. Inventory GUI And Dialog Input</h2>
+<p>Normal player entrypoint:</p>
+<div class="fb-code-block"><pre><code class="language-yaml">/case</code></pre></div>
+<p>Inventory menus include:</p>
+<ul>
+<li>main menu</li>
+<li>case type menu</li>
+<li>player case list</li>
+<li>player case detail view</li>
+<li>staff tools menu</li>
+<li>staff board filters</li>
+<li>staff case detail view</li>
+<li>staff action menu</li>
+<li>assign/reassign, priority, and status selection menus</li>
+</ul>
+<p>Paper Dialog input is used when a player or staff member must type something, including case descriptions, notes, replies, outcome messages, target player names, manual locations, and staff Open by ID.</p>
+<h3>Safe Dialog Actions</h3>
+<p>Clickable rows use short internal commands:</p>
+<div class="fb-code-block"><pre><code class="language-yaml">/case ui &lt;token&gt;</code></pre></div>
+<ul>
+<li>tokens are owner-bound</li>
+<li>tokens are permission-checked at click time</li>
+<li>successful callbacks are one-use</li>
+<li>expired tokens are rejected</li>
+<li>wrong-player token use is rejected</li>
+</ul>
+<h2 id="commands">12. Commands</h2>
+<h3>Player Commands</h3>
+<div class="fb-code-block"><pre><code class="language-yaml">/case
 /case list
-/case view &lt;id&gt;</code></pre>
-            <h3>Staff Commands</h3>
-            <pre class="code-block"><code>/case board
+/case view &lt;id&gt;</code></pre></div>
+<h3>Staff Commands</h3>
+<div class="fb-code-block"><pre><code class="language-yaml">/case board
 /case open &lt;id&gt;
 /case claim &lt;id&gt;
 /case assign &lt;id&gt; &lt;staff&gt;
 /case priority &lt;id&gt; &lt;LOW|NORMAL|HIGH|URGENT&gt; [reason]
 /case status &lt;id&gt; &lt;OPEN|CLAIMED|WAITING_PLAYER|WAITING_STAFF&gt; [reason]
-/case archive &lt;id&gt;</code></pre>
-            <h3>Admin Commands</h3>
-            <pre class="code-block"><code>/case reload
-/case debug</code></pre>
-            <h3>Internal Dialog Command</h3>
-            <pre class="code-block"><code>/case ui &lt;token&gt;</code></pre>
-            <p>The internal command is generated by clickable Dialog rows. Players should not need to type it manually.</p>
-
-
-
-            <h2 id="plugin-yml">13. <code>plugin.yml</code></h2>
-            <p>Complete bundled plugin descriptor. Maven resolves <code>${project.version}</code> when the release jar is built.</p>
-            <pre class="code-block"><code>name: CoreCaseX
+/case archive &lt;id&gt;</code></pre></div>
+<h3>Admin Commands</h3>
+<div class="fb-code-block"><pre><code class="language-yaml">/case reload
+/case debug</code></pre></div>
+<h3>Internal Dialog Command</h3>
+<div class="fb-code-block"><pre><code class="language-yaml">/case ui &lt;token&gt;</code></pre></div>
+<p>The internal command is generated by clickable Dialog rows. Players should not need to type it manually.</p>
+<h2 id="plugin-yml">13. <code>plugin.yml</code></h2>
+<p>Complete bundled plugin descriptor. Maven resolves <code>${project.version}</code> when the release jar is built.</p>
+<div class="fb-code-block"><pre><code class="language-yaml">name: CoreCaseX
 version: ${project.version}
 main: com.corecasex.CoreCaseXPlugin
 api-version: '1.21'
@@ -805,16 +1591,15 @@ permissions:
   corecasex.admin.reload:
     default: op
   corecasex.admin.debug:
-    default: op</code></pre>
-
-            <h2 id="permissions">14. Permissions</h2>
-            <h3>Player Permissions</h3>
-            <pre class="code-block"><code>corecasex.use
+    default: op</code></pre></div>
+<h2 id="permissions">14. Permissions</h2>
+<h3>Player Permissions</h3>
+<div class="fb-code-block"><pre><code class="language-yaml">corecasex.use
 corecasex.case.create
 corecasex.case.list
-corecasex.case.view-own</code></pre>
-            <h3>Staff Permissions</h3>
-            <pre class="code-block"><code>corecasex.staff.board
+corecasex.case.view-own</code></pre></div>
+<h3>Staff Permissions</h3>
+<div class="fb-code-block"><pre><code class="language-yaml">corecasex.staff.board
 corecasex.staff.view
 corecasex.staff.claim
 corecasex.staff.assign
@@ -828,14 +1613,14 @@ corecasex.staff.reject
 corecasex.staff.archive
 corecasex.staff.teleport
 corecasex.staff.view-evidence
-corecasex.staff.view-sensitive-evidence</code></pre>
-            <h3>Admin Permissions</h3>
-            <pre class="code-block"><code>corecasex.admin.reload
-corecasex.admin.debug</code></pre>
-            <p>Player permissions default to <code>true</code>. Staff and admin permissions default to <code>op</code>. A practical LuckPerms setup gives normal players use/create/list/view-own, helpers board/view/reply/request-info, moderators claim/note/priority/status/resolve/reject/teleport as appropriate, and senior staff archive plus sensitive evidence access only when needed.</p>
-            <h3>Recommended First Permission Split</h3>
-            <p>For a new server, start with a small permission model and expand only when staff need more actions.</p>
-            <pre class="code-block"><code>default players:
+corecasex.staff.view-sensitive-evidence</code></pre></div>
+<h3>Admin Permissions</h3>
+<div class="fb-code-block"><pre><code class="language-yaml">corecasex.admin.reload
+corecasex.admin.debug</code></pre></div>
+<p>Player permissions default to <code>true</code>. Staff and admin permissions default to <code>op</code>. A practical LuckPerms setup gives normal players use/create/list/view-own, helpers board/view/reply/request-info, moderators claim/note/priority/status/resolve/reject/teleport as appropriate, and senior staff archive plus sensitive evidence access only when needed.</p>
+<h3>Recommended First Permission Split</h3>
+<p>For a new server, start with a small permission model and expand only when staff need more actions.</p>
+<div class="fb-code-block"><pre><code class="language-yaml">default players:
   corecasex.use
   corecasex.case.create
   corecasex.case.list
@@ -864,179 +1649,183 @@ senior staff:
 
 admins:
   corecasex.admin.reload
-  corecasex.admin.debug</code></pre>
-            <p>With LuckPerms, apply the same split to your own groups. Example starter commands:</p>
-            <pre class="code-block"><code>lp group default permission set corecasex.use true
+  corecasex.admin.debug</code></pre></div>
+<p>With LuckPerms, apply the same split to your own groups. Example starter commands:</p>
+<div class="fb-code-block"><pre><code class="language-yaml">lp group default permission set corecasex.use true
 lp group default permission set corecasex.case.create true
 lp group default permission set corecasex.case.list true
 lp group default permission set corecasex.case.view-own true
 lp group staff permission set corecasex.staff.board true
 lp group staff permission set corecasex.staff.view true
-lp group admin permission set corecasex.admin.reload true</code></pre>
-            <p>Keep <code>corecasex.staff.teleport</code> and <code>corecasex.staff.view-sensitive-evidence</code> restricted. Those permissions expose stronger moderation tools and more private case context.</p>
-
-            <h2 id="validation">15. Config Validation</h2>
-            <p>CoreCaseX logs warnings on startup and <code>/case reload</code> for:</p>
-            <ul>
-              <li>invalid Discord webhook URLs</li>
-              <li>invalid case type default priorities</li>
-              <li>empty <code>player-report.reasons</code></li>
-              <li>empty <code>bug-report.categories</code></li>
-              <li>invalid <code>staff-notifications.player-replied-scope</code></li>
-              <li><code>max-open-cases-per-player &lt; 1</code></li>
-              <li><code>submission-cooldown-seconds &lt; 0</code></li>
-              <li>unsafe or blank <code>storage.yml -&gt; sqlite.path</code></li>
-            </ul>
-            <p>These warnings do not normally disable the plugin. They identify settings that were ignored, defaulted, or degraded. Numeric values are clamped safely, and unsafe SQLite paths fall back to <code>data/corecasex.db</code>. Hard-fail behavior is reserved for unsafe runtime conditions such as unsupported Paper version.</p>
-
-            <h2 id="regenerating-defaults">16. Regenerating Defaults</h2>
-            <ol>
-              <li>Stop the server.</li>
-              <li>Back up <code>plugins/CoreCaseX/</code>.</li>
-              <li>Delete the config file you want to regenerate.</li>
-              <li>Start the server.</li>
-              <li>Reapply only the settings you still need.</li>
-            </ol>
-            <p>Common files to regenerate:</p>
-            <pre class="code-block"><code>config.yml
+lp group admin permission set corecasex.admin.reload true</code></pre></div>
+<p>Keep <code>corecasex.staff.teleport</code> and <code>corecasex.staff.view-sensitive-evidence</code> restricted. Those permissions expose stronger moderation tools and more private case context.</p>
+<h2 id="validation">15. Config Validation</h2>
+<p>CoreCaseX logs warnings on startup and <code>/case reload</code> for:</p>
+<ul>
+<li>invalid Discord webhook URLs</li>
+<li>invalid case type default priorities</li>
+<li>empty <code>player-report.reasons</code></li>
+<li>empty <code>bug-report.categories</code></li>
+<li>invalid <code>staff-notifications.player-replied-scope</code></li>
+<li><code>max-open-cases-per-player &lt; 1</code></li>
+<li><code>submission-cooldown-seconds &lt; 0</code></li>
+<li>unsafe or blank <code>storage.yml -&gt; sqlite.path</code></li>
+</ul>
+<p>These warnings do not normally disable the plugin. They identify settings that were ignored, defaulted, or degraded. Numeric values are clamped safely, and unsafe SQLite paths fall back to <code>data/corecasex.db</code>. Hard-fail behavior is reserved for unsafe runtime conditions such as unsupported Paper version.</p>
+<h2 id="regenerating-defaults">16. Regenerating Defaults</h2>
+<ol>
+<li>Stop the server.</li>
+<li>Back up <code>plugins/CoreCaseX/</code>.</li>
+<li>Delete the config file you want to regenerate.</li>
+<li>Start the server.</li>
+<li>Reapply only the settings you still need.</li>
+</ol>
+<p>Common files to regenerate:</p>
+<div class="fb-code-block"><pre><code class="language-yaml">config.yml
 case-types.yml
 discord.yml
 messages.yml
-storage.yml</code></pre>
-            <p>Do not delete <code>data/corecasex.db</code> unless you intentionally want to remove all cases and history.</p>
-
-            <h2 id="troubleshooting-quick-reference">17. Troubleshooting Quick Reference</h2>
-            <h3>Plugin disables itself on startup</h3>
-            <p>Check the server version. CoreCaseX requires Paper 1.21.11+.</p>
-            <h3><code>/case</code> does not open</h3>
-            <ul>
-              <li>check <code>corecasex.use</code></li>
-              <li>confirm the server is Paper, not Spigot</li>
-              <li>confirm the plugin enabled successfully</li>
-              <li>confirm the server version supports Paper Dialog APIs</li>
-            </ul>
-            <h3>A player cannot create cases</h3>
-            <ul>
-              <li>check <code>corecasex.case.create</code></li>
-              <li>check that the case type is enabled in <code>case-types.yml</code></li>
-              <li>check <code>max-open-cases-per-player</code></li>
-              <li>check <code>submission-cooldown-seconds</code></li>
-            </ul>
-            <h3>A staff member cannot see staff tools</h3>
-            <ul>
-              <li>check <code>corecasex.staff.board</code></li>
-              <li>check <code>corecasex.staff.view</code></li>
-              <li>confirm the staff member is online as a player</li>
-            </ul>
-            <h3>Assignment fails</h3>
-            <p>Assignment and reassignment require the assignee to be online and fail for resolved, rejected, or archived cases. Use the exact online player name.</p>
-            <h3>Claim fails</h3>
-            <p>Claim fails when the case is already assigned or when the case is resolved, rejected, or archived.</p>
-            <h3>Archive fails</h3>
-            <p>Archive only works after a case is resolved or rejected.</p>
-            <h3>Discord does not send</h3>
-            <ul>
-              <li>check <code>discord.yml -&gt; enabled: true</code></li>
-              <li>check for a valid <code>https://</code> webhook URL</li>
-              <li>check the event key under <code>events</code></li>
-              <li>check route order: priority, then type, then default</li>
-              <li>check server console warnings for invalid URL, send failure, or non-2xx response</li>
-            </ul>
-            <h3>Discord pings roles or users</h3>
-            <p>CoreCaseX disables allowed mentions in webhook payloads. If Discord still pings, check external automations or manually edited webhook content outside CoreCaseX.</p>
-            <h3>Evidence is missing in staff view</h3>
-            <ul>
-              <li>check <code>corecasex.staff.view-evidence</code> for staff-only evidence</li>
-              <li>check <code>corecasex.staff.view-sensitive-evidence</code> for sensitive evidence</li>
-              <li>confirm the evidence was actually collected for that case type</li>
-            </ul>
-            <h3>Config changes do not appear</h3>
-            <p>Run <code>/case reload</code>. If the change is the SQLite path or plugin jar, restart the server instead.</p>
-
-            <h2 id="production-validation-checklist">18. Production Validation Checklist</h2>
-            <ul>
-              <li>boot on Paper 1.21.11+</li>
-              <li>confirm CoreCaseX enables without runtime guard errors</li>
-              <li>run <code>/case</code></li>
-              <li>create one support request</li>
-              <li>create one player report</li>
-              <li>create one bug report</li>
-              <li>create one lost items case</li>
-              <li>create one grief/theft case</li>
-              <li>inspect player case list and details</li>
-              <li>inspect staff board filters</li>
-              <li>test staff Open by ID Dialog input</li>
-              <li>claim a case</li>
-              <li>assign and reassign a case to an online staff member</li>
-              <li>change priority</li>
-              <li>change status</li>
-              <li>add an internal note</li>
-              <li>send a staff reply</li>
-              <li>request more info</li>
-              <li>reply as the reporter</li>
-              <li>resolve a case</li>
-              <li>reject a case</li>
-              <li>archive a resolved or rejected case</li>
-              <li>test teleport on a case with location evidence</li>
-              <li>test Discord with a valid webhook</li>
-              <li>test Discord with a malformed webhook and confirm case workflows still succeed</li>
-              <li>run <code>/case reload</code> after a harmless wording change</li>
-            </ul>
-            <p>For source builds, useful checks are:</p>
-            <pre class="code-block"><code>.\mvnw.cmd clean test
+storage.yml</code></pre></div>
+<p>Do not delete <code>data/corecasex.db</code> unless you intentionally want to remove all cases and history.</p>
+<h2 id="troubleshooting-quick-reference">17. Troubleshooting Quick Reference</h2>
+<h3>Plugin disables itself on startup</h3>
+<p>Check the server version. CoreCaseX requires Paper 1.21.11+.</p>
+<h3><code>/case</code> does not open</h3>
+<ul>
+<li>check <code>corecasex.use</code></li>
+<li>confirm the server is Paper, not Spigot</li>
+<li>confirm the plugin enabled successfully</li>
+<li>confirm the server version supports Paper Dialog APIs</li>
+</ul>
+<h3>A player cannot create cases</h3>
+<ul>
+<li>check <code>corecasex.case.create</code></li>
+<li>check that the case type is enabled in <code>case-types.yml</code></li>
+<li>check <code>max-open-cases-per-player</code></li>
+<li>check <code>submission-cooldown-seconds</code></li>
+</ul>
+<h3>A staff member cannot see staff tools</h3>
+<ul>
+<li>check <code>corecasex.staff.board</code></li>
+<li>check <code>corecasex.staff.view</code></li>
+<li>confirm the staff member is online as a player</li>
+</ul>
+<h3>Assignment fails</h3>
+<p>Assignment and reassignment require the assignee to be online and fail for resolved, rejected, or archived cases. Use the exact online player name.</p>
+<h3>Claim fails</h3>
+<p>Claim fails when the case is already assigned or when the case is resolved, rejected, or archived.</p>
+<h3>Archive fails</h3>
+<p>Archive only works after a case is resolved or rejected.</p>
+<h3>Discord does not send</h3>
+<ul>
+<li>check <code>discord.yml -&gt; enabled: true</code></li>
+<li>check for a valid <code>https://</code> webhook URL</li>
+<li>check the event key under <code>events</code></li>
+<li>check route order: priority, then type, then default</li>
+<li>check server console warnings for invalid URL, send failure, or non-2xx response</li>
+</ul>
+<h3>Discord pings roles or users</h3>
+<p>CoreCaseX disables allowed mentions in webhook payloads. If Discord still pings, check external automations or manually edited webhook content outside CoreCaseX.</p>
+<h3>Evidence is missing in staff view</h3>
+<ul>
+<li>check <code>corecasex.staff.view-evidence</code> for staff-only evidence</li>
+<li>check <code>corecasex.staff.view-sensitive-evidence</code> for sensitive evidence</li>
+<li>confirm the evidence was actually collected for that case type</li>
+</ul>
+<h3>Config changes do not appear</h3>
+<p>Run <code>/case reload</code>. If the change is the SQLite path or plugin jar, restart the server instead.</p>
+<h2 id="production-validation-checklist">18. Production Validation Checklist</h2>
+<ul>
+<li>boot on Paper 1.21.11+</li>
+<li>confirm CoreCaseX enables without runtime guard errors</li>
+<li>run <code>/case</code></li>
+<li>create one support request</li>
+<li>create one player report</li>
+<li>create one bug report</li>
+<li>create one lost items case</li>
+<li>create one grief/theft case</li>
+<li>inspect player case list and details</li>
+<li>inspect staff board filters</li>
+<li>test staff Open by ID Dialog input</li>
+<li>claim a case</li>
+<li>assign and reassign a case to an online staff member</li>
+<li>change priority</li>
+<li>change status</li>
+<li>add an internal note</li>
+<li>send a staff reply</li>
+<li>request more info</li>
+<li>reply as the reporter</li>
+<li>resolve a case</li>
+<li>reject a case</li>
+<li>archive a resolved or rejected case</li>
+<li>test teleport on a case with location evidence</li>
+<li>test Discord with a valid webhook</li>
+<li>test Discord with a malformed webhook and confirm case workflows still succeed</li>
+<li>run <code>/case reload</code> after a harmless wording change</li>
+</ul>
+<p>For source builds, useful checks are:</p>
+<div class="fb-code-block"><pre><code class="language-yaml">.\mvnw.cmd clean test
 .\mvnw.cmd clean package
-git diff --check</code></pre>
-
-            <h2 id="quick-setup-examples">19. Quick Setup Examples</h2>
-            <h3>First Public Launch</h3>
-            <ul>
-              <li>keep SQLite on the default path.</li>
-              <li>keep all five case types enabled for the first staff test.</li>
-              <li>set a reasonable cooldown such as <code>60</code> seconds.</li>
-              <li>give normal players only the four player permissions.</li>
-              <li>give staff board, view, reply, request-info, claim, status, and priority before giving archive or sensitive evidence permissions.</li>
-              <li>create three test cases before launch: one support request, one player report, and one bug report.</li>
-              <li>confirm staff can claim, reply, request more information, resolve, reject, and archive.</li>
-              <li>turn on Discord webhooks last, then test one valid webhook and one intentionally invalid webhook.</li>
-            </ul>
-            <h3>Small Survival Server</h3>
-            <ul>
-              <li>keep all five case types enabled.</li>
-              <li>keep grief/theft default priority as <code>HIGH</code>.</li>
-              <li>enable a Discord default webhook for staff visibility if Discord mirroring is wanted.</li>
-              <li>keep <code>player-replied-scope: assigned-only</code>.</li>
-              <li>grant sensitive evidence only to senior staff.</li>
-            </ul>
-            <h3>Minigame Server</h3>
-            <ul>
-              <li>keep bug reports and support requests enabled.</li>
-              <li>optionally disable grief/theft when it does not apply.</li>
-              <li>route urgent priority cases to a separate Discord webhook.</li>
-              <li>use bug categories that match your game modes.</li>
-            </ul>
-            <h3>Strict Staff Workflow</h3>
-            <ul>
-              <li>give helpers view, reply, and request-info permissions only.</li>
-              <li>give moderators claim, status, and priority permissions.</li>
-              <li>give senior staff resolve, reject, archive, and sensitive evidence permissions where appropriate.</li>
-              <li>keep archive restricted to resolved or rejected cases.</li>
-              <li>use internal notes for staff handoff.</li>
-            </ul>
-
-            <h2 id="summary">20. Summary</h2>
-            <p>CoreCaseX configuration controls player case creation, five built-in case types, case priorities, reason and category options, location and death evidence behavior, staff board workflow notifications, Discord webhook routing and events, SQLite file location, command and Dialog text, validation messages, and permissions through <code>plugin.yml</code>.</p>
-            <p>The intended operating model is straightforward: players use <code>/case</code>, staff use the inventory board and actions, SQLite stores the full history, Discord mirrors important events when configured, and validation warnings guide admins without breaking normal case workflows.</p>
-          </article>
-        </div>
-      </section>
-    </main>
-    <footer class="site-footer">
-      <div class="shell footer-grid">
-        <div><a class="brand footer-brand" href="./index.html"><span class="brand-mark" aria-hidden="true"><img src="./assets/corecasex-logo.svg" alt="" width="40" height="40"></span><span class="brand-text">CoreCaseX</span></a><p>Structured staff case management for Paper Minecraft servers.</p></div>
-        <div class="footer-links"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./docs.html">Docs</a><a href="./faq.html">FAQ</a><a href="./support-policy.html">Support Policy</a><a href="https://buymeacoffee.com/lcewolf23x">Buy Me a Coffee</a><a href="https://github.com/IceWolf23X/CoreCaseX-issues">GitHub</a></div>
-      </div>
-      <div class="shell footer-bottom"><span>Copyright 2026 CoreCaseX. All rights reserved.</span><span>Configuration reference for server owners.</span></div>
-    </footer>
-    <script src="./assets/site.js"></script>
-  </body>
+git diff --check</code></pre></div>
+<h2 id="quick-setup-examples">19. Quick Setup Examples</h2>
+<h3>First Public Launch</h3>
+<ul>
+<li>keep SQLite on the default path.</li>
+<li>keep all five case types enabled for the first staff test.</li>
+<li>set a reasonable cooldown such as <code>60</code> seconds.</li>
+<li>give normal players only the four player permissions.</li>
+<li>give staff board, view, reply, request-info, claim, status, and priority before giving archive or sensitive evidence permissions.</li>
+<li>create three test cases before launch: one support request, one player report, and one bug report.</li>
+<li>confirm staff can claim, reply, request more information, resolve, reject, and archive.</li>
+<li>turn on Discord webhooks last, then test one valid webhook and one intentionally invalid webhook.</li>
+</ul>
+<h3>Small Survival Server</h3>
+<ul>
+<li>keep all five case types enabled.</li>
+<li>keep grief/theft default priority as <code>HIGH</code>.</li>
+<li>enable a Discord default webhook for staff visibility if Discord mirroring is wanted.</li>
+<li>keep <code>player-replied-scope: assigned-only</code>.</li>
+<li>grant sensitive evidence only to senior staff.</li>
+</ul>
+<h3>Minigame Server</h3>
+<ul>
+<li>keep bug reports and support requests enabled.</li>
+<li>optionally disable grief/theft when it does not apply.</li>
+<li>route urgent priority cases to a separate Discord webhook.</li>
+<li>use bug categories that match your game modes.</li>
+</ul>
+<h3>Strict Staff Workflow</h3>
+<ul>
+<li>give helpers view, reply, and request-info permissions only.</li>
+<li>give moderators claim, status, and priority permissions.</li>
+<li>give senior staff resolve, reject, archive, and sensitive evidence permissions where appropriate.</li>
+<li>keep archive restricted to resolved or rejected cases.</li>
+<li>use internal notes for staff handoff.</li>
+</ul>
+<h2 id="summary">20. Summary</h2>
+<p>CoreCaseX configuration controls player case creation, five built-in case types, case priorities, reason and category options, location and death evidence behavior, staff board workflow notifications, Discord webhook routing and events, SQLite file location, command and Dialog text, validation messages, and permissions through <code>plugin.yml</code>.</p>
+<p>The intended operating model is straightforward: players use <code>/case</code>, staff use the inventory board and actions, SQLite stores the full history, Discord mirrors important events when configured, and validation warnings guide admins without breaking normal case workflows.</p>
+</article>
+</div>
+</section>
+</main>
+<footer class="fb-site-footer">
+<div class="fb-container fb-container--wide fb-stack">
+<div class="fb-grid fb-grid--2">
+<div class="fb-flow">
+<a class="fb-brand corex-brand" href="./index.html">
+<img alt="" height="36" src="./assets/corecasex-logo.svg" width="36"/><span>CoreCaseX</span>
+</a>
+<p>Structured staff case management for Paper servers.</p>
+</div>
+<nav aria-label="Footer navigation" class="fb-cluster"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./configuration.html">Configuration</a><a href="./docs.html">Documentation</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreCaseX-issues" rel="noopener noreferrer" target="_blank">GitHub</a><a href="https://modrinth.com/plugin/corecasex" rel="noopener noreferrer" target="_blank">Download</a></nav>
+</div>
+<div class="fb-cluster corex-footer-meta">
+<span>Copyright 2026 CoreCaseX.</span>
+<span>Java 21+ · Paper 1.21.11+ · SQLite</span>
+<a href="https://github.com/IceWolf23X/FrameBaseCSS" rel="noopener noreferrer" target="_blank">Built with FrameBaseCSS</a>
+</div>
+</div>
+</footer>
+<script src="./assets/vendor/highlightjs/highlight.min.js"></script><script src="./assets/vendor/highlightjs/languages/properties.min.js"></script><script src="./assets/site.js"></script></body>
 </html>

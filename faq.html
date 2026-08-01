@@ -1,41 +1,66 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="CoreCaseX FAQ for Paper server owners.">
-    <title>CoreCaseX FAQ</title>
-    <link rel="icon" type="image/svg+xml" href="./assets/corecasex-logo.svg">
-    <link rel="shortcut icon" type="image/svg+xml" href="./assets/corecasex-logo.svg">
-    <meta name="theme-color" content="#0b0808">
-    <script>(()=>{try{if(localStorage.getItem("corecasex-theme")==="light"){document.documentElement.dataset.theme="light";}}catch(_){}})();</script>
-    <link rel="stylesheet" href="./assets/styles.css">
-  </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header"><nav class="nav shell" aria-label="Main navigation"><a class="brand" href="./index.html" aria-label="CoreCaseX home"><span class="brand-mark" aria-hidden="true"><img src="./assets/corecasex-logo.svg" alt="" width="40" height="40"></span><span class="brand-text">CoreCaseX</span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button><div class="nav-links" id="nav-links"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./docs.html">Docs</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreCaseX-issues">GitHub</a></div><div class="nav-actions"><a class="nav-cta nav-download" href="https://modrinth.com/plugin/corecasex" aria-label="Download CoreCaseX on Modrinth (placeholder)" title="Placeholder for the future CoreCaseX Modrinth page">Download</a><a class="nav-cta" href="./installation.html">Get Started</a><a class="nav-cta" href="https://buymeacoffee.com/lcewolf23x">Buy Me a Coffee</a></div></nav></header>
-    <main id="main">
-      <section class="page-hero"><div class="shell"><div class="section-heading"><p class="eyebrow">FAQ</p><h1>Answers for server owners before setup.</h1><p>Short, practical answers based on the current CoreCaseX MVP documentation.</p></div></div></section>
-      <section class="section">
-        <div class="shell faq-grid">
-          <div class="section-heading"><p class="eyebrow">Questions</p><h2>Common setup and operation notes.</h2><p>Use the configuration reference for exact keys, commands, permissions, and troubleshooting checks.</p></div>
-          <div class="faq-list" data-animated-details>
-            <details class="animated-details" open><summary>What is CoreCaseX?</summary><p>A structured staff case management plugin for Paper servers. It gives players guided case submission and gives staff an in-game workflow for triage, assignment changes, replies, notes, evidence, status changes, and final outcomes.</p></details>
-            <details class="animated-details"><summary>What server runtime does it support?</summary><p>The current MVP supports Paper 1.21.11 or newer with Java 21.</p></details>
-            <details class="animated-details"><summary>Does it need a separate database?</summary><p>No. CoreCaseX uses local SQLite storage in the current MVP.</p></details>
-            <details class="animated-details"><summary>Which case types are included?</summary><p>Support request, player report, bug report, lost items or death issue, and grief or theft.</p></details>
-            <details class="animated-details"><summary>Can case types be configured?</summary><p>Yes. Built-in case types can be enabled or disabled, given default priorities, and configured for location collection. Player report reasons and bug report categories are configurable.</p></details>
-            <details class="animated-details"><summary>Can players see their own cases?</summary><p>Yes. Players can list their own cases, inspect status and priority, read staff replies, and add replies while the case remains open.</p></details>
-            <details class="animated-details"><summary>Can staff reassign cases?</summary><p>Yes. The MVP uses <code>/case assign</code> for assign and reassign. The target staff member must be online, assignment changes are written to the timeline, and resolved, rejected, or archived cases reject assignment.</p></details>
-            <details class="animated-details"><summary>Are internal staff notes visible to players?</summary><p>No. Internal notes are staff-only and separate from player-visible replies.</p></details>
-            <details class="animated-details"><summary>How does evidence visibility work?</summary><p>Evidence can be player-visible, staff-only, or sensitive. Staff-only and sensitive evidence require dedicated permissions.</p></details>
-            <details class="animated-details"><summary>Does Discord support block case workflows?</summary><p>No. Discord webhooks are optional and best-effort. Invalid URLs, send failures, and non-2xx responses are logged without failing case actions.</p></details>
-            <details class="animated-details"><summary>What can `/case reload` reload?</summary><p>It reloads config values into memory and logs validation warnings. Replacing the jar, changing Paper runtime, regenerating deleted defaults, or changing an already-open SQLite path requires restart or careful handling.</p></details>
-          </div>
-        </div>
-      </section>
-    </main>
-    <footer class="site-footer"><div class="shell footer-grid"><div><a class="brand footer-brand" href="./index.html"><span class="brand-mark" aria-hidden="true"><img src="./assets/corecasex-logo.svg" alt="" width="40" height="40"></span><span class="brand-text">CoreCaseX</span></a><p>Structured staff case management for Paper Minecraft servers.</p></div><div class="footer-links"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./docs.html">Docs</a><a href="./configuration.html">Config</a><a href="./support-policy.html">Support Policy</a><a href="https://buymeacoffee.com/lcewolf23x">Buy Me a Coffee</a><a href="https://github.com/IceWolf23X/CoreCaseX-issues">GitHub</a></div></div><div class="shell footer-bottom"><span>Copyright 2026 CoreCaseX. All rights reserved.</span><span>FAQ for server owners.</span></div></footer>
-    <script src="./assets/site.js"></script>
-  </body>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="CoreCaseX FAQ for Paper server owners." name="description"/>
+<title>CoreCaseX FAQ</title>
+<link href="./assets/corecasex-logo.svg" rel="icon" type="image/svg+xml"/>
+<link href="./assets/corecasex-logo.svg" rel="shortcut icon" type="image/svg+xml"/>
+<meta content="#2F3235" name="theme-color"/>
+<link href="./assets/vendor/framebasecss/framebase.min.css" rel="stylesheet"/><link href="./assets/vendor/framebasecss/framebase-highlight.min.css" rel="stylesheet"/><link href="./assets/styles.css" rel="stylesheet"/></head>
+<body>
+<a class="fb-skip-link" href="#main">Skip to content</a>
+<header class="fb-site-header fb-site-header--sticky">
+<div class="fb-container fb-container--wide fb-navbar">
+<a aria-label="CoreCaseX home" class="fb-brand corex-brand" href="./index.html">
+<img alt="" height="36" src="./assets/corecasex-logo.svg" width="36"/><span>CoreCaseX</span>
+</a>
+<button aria-controls="site-navigation" aria-expanded="false" class="fb-button fb-button--ghost fb-nav-toggle" data-nav-toggle="" type="button">Menu</button>
+<nav aria-label="Main navigation" class="fb-nav-panel fb-nav-region" data-nav-panel="" data-open="false" id="site-navigation">
+<ul class="fb-nav"><li><a href="./index.html">Overview</a></li><li><a href="./features.html">Features</a></li><li><a href="./installation.html">Setup</a></li><li><a href="./docs.html">Documentation</a></li><li><a aria-current="page" href="./faq.html">FAQ</a></li><li><a href="https://github.com/IceWolf23X/CoreCaseX-issues" rel="noopener noreferrer" target="_blank">GitHub</a></li><li><a href="https://modrinth.com/plugin/corecasex" rel="noopener noreferrer" target="_blank">Download</a></li></ul>
+</nav>
+</div>
+</header>
+<main class="fb-main" id="main">
+<header class="fb-doc-header corex-page-hero"><div class="fb-container fb-container--wide"><div class="fb-section-header"><p class="fb-eyebrow">FAQ</p><h1>Answers for server owners before setup.</h1><p>Short, practical answers based on the current CoreCaseX MVP documentation.</p></div></div></header>
+<section class="fb-section">
+<div class="fb-container fb-container--wide">
+<div class="fb-section-header"><p class="fb-eyebrow">Questions</p><h2>Common setup and operation notes.</h2><p>Use the configuration reference for exact keys, commands, permissions, and troubleshooting checks.</p></div>
+<div class="fb-stack corex-faq" data-animated-details="">
+<details open=""><summary>What is CoreCaseX?</summary><div class="fb-details-body"><p>A structured staff case management plugin for Paper servers. It gives players guided case submission and gives staff an in-game workflow for triage, assignment changes, replies, notes, evidence, status changes, and final outcomes.</p></div></details>
+<details><summary>What server runtime does it support?</summary><div class="fb-details-body"><p>The current MVP supports Paper 1.21.11 or newer with Java 21.</p></div></details>
+<details><summary>Does it need a separate database?</summary><div class="fb-details-body"><p>No. CoreCaseX uses local SQLite storage in the current MVP.</p></div></details>
+<details><summary>Which case types are included?</summary><div class="fb-details-body"><p>Support request, player report, bug report, lost items or death issue, and grief or theft.</p></div></details>
+<details><summary>Can case types be configured?</summary><div class="fb-details-body"><p>Yes. Built-in case types can be enabled or disabled, given default priorities, and configured for location collection. Player report reasons and bug report categories are configurable.</p></div></details>
+<details><summary>Can players see their own cases?</summary><div class="fb-details-body"><p>Yes. Players can list their own cases, inspect status and priority, read staff replies, and add replies while the case remains open.</p></div></details>
+<details><summary>Can staff reassign cases?</summary><div class="fb-details-body"><p>Yes. The MVP uses <code>/case assign</code> for assign and reassign. The target staff member must be online, assignment changes are written to the timeline, and resolved, rejected, or archived cases reject assignment.</p></div></details>
+<details><summary>Are internal staff notes visible to players?</summary><div class="fb-details-body"><p>No. Internal notes are staff-only and separate from player-visible replies.</p></div></details>
+<details><summary>How does evidence visibility work?</summary><div class="fb-details-body"><p>Evidence can be player-visible, staff-only, or sensitive. Staff-only and sensitive evidence require dedicated permissions.</p></div></details>
+<details><summary>Does Discord support block case workflows?</summary><div class="fb-details-body"><p>No. Discord webhooks are optional and best-effort. Invalid URLs, send failures, and non-2xx responses are logged without failing case actions.</p></div></details>
+<details><summary>What can `/case reload` reload?</summary><div class="fb-details-body"><p>It reloads config values into memory and logs validation warnings. Replacing the jar, changing Paper runtime, regenerating deleted defaults, or changing an already-open SQLite path requires restart or careful handling.</p></div></details>
+</div>
+</div>
+</section>
+</main>
+<footer class="fb-site-footer">
+<div class="fb-container fb-container--wide fb-stack">
+<div class="fb-grid fb-grid--2">
+<div class="fb-flow">
+<a class="fb-brand corex-brand" href="./index.html">
+<img alt="" height="36" src="./assets/corecasex-logo.svg" width="36"/><span>CoreCaseX</span>
+</a>
+<p>Structured staff case management for Paper servers.</p>
+</div>
+<nav aria-label="Footer navigation" class="fb-cluster"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./configuration.html">Configuration</a><a href="./docs.html">Documentation</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreCaseX-issues" rel="noopener noreferrer" target="_blank">GitHub</a><a href="https://modrinth.com/plugin/corecasex" rel="noopener noreferrer" target="_blank">Download</a></nav>
+</div>
+<div class="fb-cluster corex-footer-meta">
+<span>Copyright 2026 CoreCaseX.</span>
+<span>Java 21+ · Paper 1.21.11+ · SQLite</span>
+<a href="https://github.com/IceWolf23X/FrameBaseCSS" rel="noopener noreferrer" target="_blank">Built with FrameBaseCSS</a>
+</div>
+</div>
+</footer>
+<script src="./assets/vendor/highlightjs/highlight.min.js"></script><script src="./assets/vendor/highlightjs/languages/properties.min.js"></script><script src="./assets/site.js"></script></body>
 </html>
