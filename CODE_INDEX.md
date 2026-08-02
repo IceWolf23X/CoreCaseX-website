@@ -13,7 +13,6 @@
 ## Shared assets
 
 - `assets/corecasex-logo.svg` — Header, footer, and favicon logo.
-- `assets/corecasex-logo.png` — Raster logo.
 - `assets/vendor/framebasecss/` — FrameBaseCSS distribution and license.
 - `assets/vendor/highlightjs/` — Highlight.js distribution and license.
 - `assets/styles.css` — CoreCaseX layouts, bStats presentation, and responsive adjustments.
