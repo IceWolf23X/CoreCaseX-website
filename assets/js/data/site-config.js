@@ -60,13 +60,13 @@ window.COREX_SITE = {
       onAccent: '#ffffff',
       page: '#fcfcfb',
       surface: '#ffffff',
-      surfaceAlt: '#f6f4f1',
-      surfaceHover: '#efebe6',
-      ink: '#29241f',
-      muted: '#6b625a',
-      quiet: '#7a6f65',
-      line: '#e9e3dd',
-      lineStrong: '#d7cec5'
+      surfaceAlt: '#f5f5f3',
+      surfaceHover: '#eeedeb',
+      ink: '#24232a',
+      muted: '#65636f',
+      quiet: '#726d7a',
+      line: '#e7e5e9',
+      lineStrong: '#d4d1da'
     },
     dark: {
       accent: '#fdba74',
@@ -74,15 +74,15 @@ window.COREX_SITE = {
       accentSoft: '#32251c',
       accentLine: '#704220',
       onAccent: '#2a1608',
-      page: '#181716',
-      surface: '#201e1c',
-      surfaceAlt: '#272421',
-      surfaceHover: '#302b27',
-      ink: '#f2eeea',
-      muted: '#b6aaa0',
-      quiet: '#95887d',
-      line: '#37322e',
-      lineStrong: '#4b433c'
+      page: '#17171a',
+      surface: '#1d1d21',
+      surfaceAlt: '#232327',
+      surfaceHover: '#2b2a30',
+      ink: '#eeedf1',
+      muted: '#aaa7b3',
+      quiet: '#8c8797',
+      line: '#313037',
+      lineStrong: '#45424e'
     }
   }
 };
