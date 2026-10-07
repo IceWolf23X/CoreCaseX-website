@@ -1,0 +1,114 @@
+# Master switch for Discord webhook notifications.
+enabled: false
+
+# Legacy fallback webhook URL. Prefer webhooks.default for new configs.
+webhook-url: ""
+
+# Discord webhook routing. Priority routes win over type routes; type routes win over default.
+webhooks:
+  # Default webhook used when no priority or case-type route matches.
+  default: ""
+
+  # Case-type-specific webhook routes.
+  types:
+    # Webhook for support request cases.
+    support-request: ""
+
+    # Webhook for player report cases.
+    player-report: ""
+
+    # Webhook for bug report cases.
+    bug-report: ""
+
+    # Webhook for lost item/death issue cases.
+    lost-items: ""
+
+    # Webhook for grief/theft cases.
+    grief-theft: ""
+
+  # Priority-specific webhook routes.
+  priorities:
+    # Webhook for LOW priority cases.
+    low: ""
+
+    # Webhook for NORMAL priority cases.
+    normal: ""
+
+    # Webhook for HIGH priority cases.
+    high: ""
+
+    # Webhook for URGENT priority cases.
+    urgent: ""
+
+# Server name included in webhook username text.
+server-name: "Minecraft Server"
+
+# Per-event Discord notification switches.
+events:
+  # Send when a normal case is created.
+  case-created: true
+
+  # Send the extra urgent-created notification for urgent cases.
+  urgent-created: true
+
+  # Send when a staff member claims a case.
+  case-claimed: true
+
+  # Send when a staff member assigns a case.
+  case-assigned: true
+
+  # Send when staff changes case status.
+  status-changed: true
+
+  # Send when staff changes case priority.
+  priority-changed: true
+
+  # Send when the reporter replies to a case.
+  player-replied: true
+
+  # Send when staff requests more information from the reporter.
+  info-requested: true
+
+  # Send when staff adds a player-visible reply.
+  staff-replied: true
+
+  # Send when staff resolves a case.
+  case-resolved: true
+
+  # Send when staff rejects a case.
+  case-rejected: true
+
+# Decimal RGB embed colors for each Discord event family.
+embed-colors:
+  # Color for new case embeds.
+  created: 5814783
+
+  # Color for urgent case embeds.
+  urgent: 15548997
+
+  # Color for claim embeds.
+  claimed: 16753920
+
+  # Color for assignment embeds.
+  assigned: 16753920
+
+  # Color for status change embeds.
+  status: 5793266
+
+  # Color for priority change embeds.
+  priority: 16753920
+
+  # Color for player reply embeds.
+  reply: 3447003
+
+  # Color for info requested embeds.
+  info: 5793266
+
+  # Color for staff reply embeds.
+  staff-reply: 5793266
+
+  # Color for resolved case embeds.
+  resolved: 5763719
+
+  # Color for rejected case embeds.
+  rejected: 15548997

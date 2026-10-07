@@ -1,0 +1,18 @@
+<h2 id="production-validation-checklist">Production validation checklist</h2>
+<ul>
+<li>Boot Java 21 and Paper 1.21.11+ without runtime-guard or storage errors.</li>
+<li>Run <code>/case</code> and verify the inventory-first main menu.</li>
+<li>Create all five case types and inspect the resulting location/evidence behavior.</li>
+<li>Verify open-case limit and cooldown with a non-op player.</li>
+<li>Inspect the reporter's list/details and reject access to another reporter's ID.</li>
+<li>Exercise every staff board filter.</li>
+<li>Claim, assign and reassign to an online player; confirm timeline values.</li>
+<li>Change priority and each non-closed status.</li>
+<li>Add an internal note, staff reply and information request; reply as the reporter.</li>
+<li>Test evidence permissions and teleport on an attached location.</li>
+<li>Resolve one case, reject another and archive both; confirm closed cases reject normal actions.</li>
+<li>Back up and separately verify the SQLite file.</li>
+<li>Test one valid and one intentionally invalid webhook; case actions must succeed in both cases.</li>
+<li>Change harmless wording, run <code>/case reload</code> and confirm the new text.</li>
+</ul>
+<p>Manual Paper runtime testing remains necessary for inventory click routing and Dialog input on the exact server build used in production.</p>

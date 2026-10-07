@@ -1,0 +1,9 @@
+<h2 id="purpose">Purpose</h2>
+<p><code>storage.yml</code> selects the SQLite file. SQLite is the only active backend in 2026.1.1.</p>
+<h2 id="current-bundled-default">Current bundled default</h2>
+<div class="config-file-mount" data-config-file="paper/storage.yml"></div>
+<h2 id="sqlite-path"><code>sqlite.path</code></h2>
+<p>The path is resolved relative to <code>plugins/CoreCaseX/</code>. The default <code>data/corecasex.db</code> becomes <code>plugins/CoreCaseX/data/corecasex.db</code>.</p>
+<p>Blank paths, absolute paths and normalized paths beginning with <code>..</code> are rejected, warn and fall back to the default. A changed path requires restart because <code>/case reload</code> does not reopen the initialized storage backend.</p>
+<h2 id="backup">Backup</h2>
+<p>Stop the server before copying the database for the safest consistent backup. Back up the complete plugin data folder before changing the path or regenerating configuration. CoreCaseX has no online-backup command.</p>

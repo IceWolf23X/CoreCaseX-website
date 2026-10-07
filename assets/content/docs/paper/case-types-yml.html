@@ -1,0 +1,25 @@
+<h2 id="purpose">Purpose</h2>
+<p><code>case-types.yml</code> controls which built-in flows are available, their initial priority and the option lists used during guided creation.</p>
+<h2 id="current-bundled-default">Current bundled default</h2>
+<div class="config-file-mount" data-config-file="paper/case-types.yml"></div>
+<h2 id="shared-schema">Shared schema</h2>
+<p>For each of <code>support-request</code>, <code>player-report</code>, <code>bug-report</code>, <code>lost-items</code> and <code>grief-theft</code>:</p>
+<ul>
+<li><code>&lt;type&gt;.enabled</code>: show or hide that creation flow.</li>
+<li><code>&lt;type&gt;.default-priority</code>: <code>LOW</code>, <code>NORMAL</code>, <code>HIGH</code> or <code>URGENT</code>. Invalid text warns and falls back to LOW for support, HIGH for grief/theft and NORMAL for the other types.</li>
+<li><code>&lt;type&gt;.collect-location</code>: intended location-choice default, with the actual per-flow limits below.</li>
+</ul>
+<h2 id="option-lists">Option lists</h2>
+<ul>
+<li><code>player-report.reasons</code>: inventory choices before the target/description Dialog. An empty list warns and falls back to <code>Other</code>.</li>
+<li><code>bug-report.categories</code>: inventory choices before the description Dialog. An empty list warns and falls back to <code>Other</code>.</li>
+</ul>
+<h2 id="location-behavior">Actual location behavior in 2026.1.1</h2>
+<div class="table-scroll" role="region" tabindex="0"><table><thead><tr><th>Type</th><th>Behavior</th></tr></thead><tbody>
+<tr><td>Support request</td><td><code>collect-location</code> becomes the default value of a Yes/No inventory choice.</td></tr>
+<tr><td>Player report</td><td><code>player-report.collect-location</code> is currently not read. The reporter's current location is always attached.</td></tr>
+<tr><td>Bug report</td><td><code>collect-location</code> becomes the default value of a Yes/No inventory choice.</td></tr>
+<tr><td>Lost items</td><td><code>lost-items.collect-location</code> is currently not read. An explicit latest-death choice controls death location/evidence.</td></tr>
+<tr><td>Grief/theft</td><td><code>collect-location</code> becomes the default value of a Yes/No inventory choice; manual location text remains available.</td></tr>
+</tbody></table></div>
+<p>These limitations are documented rather than hidden. Do not rely on the two currently unused keys for privacy or evidence policy.</p>

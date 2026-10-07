@@ -1,0 +1,732 @@
+# Prefix prepended by MessageService.message(...) to most command feedback messages.
+prefix: "<dark_gray>[<gold>CoreCaseX</gold>]</dark_gray> "
+
+# Sent when a console or command block uses a player-only command.
+only-players: "<red>Only players can use this command.</red>"
+
+# Sent when a player lacks the required permission.
+no-permission: "<red>You do not have permission.</red>"
+
+# Sent to the reporter after a case is created successfully.
+case-created: "<green>Case <white>#{id}</white> created successfully. Staff has been notified.</green>"
+
+# Sent after a staff member claims a case.
+case-claimed: "<yellow>Case <white>#{id}</white> has been claimed by <white>{staff}</white>.</yellow>"
+
+# Sent when a case ID does not exist.
+case-not-found: "<red>Case #{id} was not found.</red>"
+
+# Generic success message for case updates.
+case-updated: "<green>Case #{id} updated.</green>"
+
+# Sent after a case is resolved or rejected.
+case-closed: "<green>Case #{id} has been closed.</green>"
+
+# Sent after a resolved or rejected case is archived.
+case-archived: "<green>Case #{id} archived.</green>"
+
+# Sent when a typed case ID is not a positive number.
+invalid-case-id: "<red>Invalid case id.</red>"
+
+# Sent when a priority argument is not LOW, NORMAL, HIGH, or URGENT.
+invalid-priority: "<red>Invalid priority. Use LOW, NORMAL, HIGH, or URGENT.</red>"
+
+# Sent when a status argument is not an allowed non-closed workflow status.
+invalid-status: "<red>Invalid status. Use OPEN, CLAIMED, WAITING_PLAYER, or WAITING_STAFF.</red>"
+
+# Sent when /case assign targets a player who is not currently online.
+assignee-online-required: "<red>Assignee must be online.</red>"
+
+# Sent after /case reload completes.
+reload-complete: "<green>CoreCaseX configuration reloaded.</green>"
+
+# Root usage text for /case.
+usage-case-root: "<yellow>Usage: /case [list|view|board|open|claim|assign|priority|status|archive|reload|debug]</yellow>"
+
+# Usage text for /case view.
+usage-case-view: "<yellow>Usage: /case view <id></yellow>"
+
+# Usage text for /case open.
+usage-case-open: "<yellow>Usage: /case open <id></yellow>"
+
+# Usage text for /case claim.
+usage-case-claim: "<yellow>Usage: /case claim <id></yellow>"
+
+# Usage text for /case assign. The assignee must be online.
+usage-case-assign: "<yellow>Usage: /case assign <id> <online-staff></yellow>"
+
+# Usage text for /case priority.
+usage-case-priority: "<yellow>Usage: /case priority <id> <LOW|NORMAL|HIGH|URGENT> [reason]</yellow>"
+
+# Usage text for /case status. Closed statuses use resolve/reject/archive actions instead.
+usage-case-status: "<yellow>Usage: /case status <id> <OPEN|CLAIMED|WAITING_PLAYER|WAITING_STAFF> [reason]</yellow>"
+
+# Usage text for /case archive.
+usage-case-archive: "<yellow>Usage: /case archive <id></yellow>"
+
+# In-game notification sent to staff when a new case is created.
+staff-new-case: "<gold>New Case #{id}</gold> <gray>-</gray> <white>{type}</white> by <white>{reporter}</white>"
+
+# In-game notification sent to staff when a reporter replies.
+staff-player-replied: "<gold>Case #{id}</gold> <gray>-</gray> <yellow>{reporter}</yellow> replied."
+
+# In-game notification sent to a staff member when a case is assigned to them.
+staff-assigned-to-you: "<gold>Case #{id}</gold> <gray>-</gray> assigned to you."
+
+# Sent to a reporter after they add a reply.
+player-reply-added: "<green>Your reply was added to Case #{id}.</green>"
+
+# Sent to an online reporter when staff adds a player-visible reply.
+staff-reply-received: "<yellow>Staff replied to Case #{id}.</yellow>"
+
+# Sent to an online reporter when staff requests more information.
+info-requested: "<yellow>Staff requested more information for Case #{id}.</yellow>"
+
+# Sent to an online reporter when their case is resolved.
+resolved-notice: "<green>Your Case #{id} has been resolved.</green>"
+
+# Sent to an online reporter when their case is rejected.
+rejected-notice: "<red>Your Case #{id} has been rejected.</red>"
+
+# Inventory GUI text used by the primary in-game UI. Dialogs remain for typed input.
+menus:
+  # Inventory window title templates.
+  titles:
+    # Main /case inventory title.
+    main: "<gold>CoreCaseX</gold>"
+    # Case type selection inventory title.
+    case-types: "<gold>Create Case</gold>"
+    # Player case list inventory title.
+    my-cases: "<gold>My Cases</gold>"
+    # Player case detail inventory title.
+    case-detail: "<gold>Case Detail</gold>"
+    # Staff board filter inventory title.
+    staff-board: "<aqua>Staff Case Board</aqua>"
+    # Staff case list inventory title.
+    staff-case-list: "<aqua>Staff Cases</aqua>"
+    # Staff case detail inventory title.
+    staff-case-detail: "<gold>Staff Case Detail</gold>"
+    # Staff action inventory title.
+    staff-actions: "<gold>Staff Actions</gold>"
+    # Staff assign/reassign inventory title.
+    assign: "<gold>Assign / Reassign</gold>"
+    # Priority selection inventory title.
+    priority: "<gold>Change Priority</gold>"
+    # Status selection inventory title.
+    status: "<gold>Change Status</gold>"
+  # Configurable inventory items. Lore uses \n for multiple lines.
+  items:
+    # Main menu create case item.
+    create-case:
+      material: WRITABLE_BOOK
+      name: "<green>Create Case</green>"
+      lore: "<gray>Open a new staff support case.</gray>\n<yellow>Click to choose a case type.</yellow>"
+    # Main menu player cases item.
+    my-cases:
+      material: BOOK
+      name: "<yellow>My Cases</yellow>"
+      lore: "<gray>View your submitted cases.</gray>"
+    # Main menu staff board item.
+    staff-board:
+      material: COMPASS
+      name: "<aqua>Staff Board</aqua>"
+      lore: "<gray>Browse and triage staff cases.</gray>"
+    # Main menu direct staff lookup item.
+    open-by-id:
+      material: NAME_TAG
+      name: "<aqua>Open by ID</aqua>"
+      lore: "<gray>Open a case by numeric ID.</gray>"
+    # Generic back navigation item.
+    back:
+      material: ARROW
+      name: "<gray>Back</gray>"
+      lore: "<gray>Return to the previous menu.</gray>"
+    # Generic close inventory item.
+    close:
+      material: BARRIER
+      name: "<red>Close</red>"
+      lore: "<gray>Close this menu.</gray>"
+  # Reserved for future shared lore fragments.
+  lore: {}
+  # Reserved for future navigation labels.
+  navigation: {}
+  # Reserved for future status/priority text overrides.
+  status: {}
+
+# Paper Dialog input text. Dialogs are now used for typed input and compact forms, not as the primary navigation UI.
+dialogs:
+  # Dialog title templates.
+  titles:
+    # Title for the main CoreCaseX menu.
+    corecasex: "<gold>CoreCaseX</gold>"
+    # Title for the case type selection menu.
+    open-a-case: "<gold>Open a Case</gold>"
+    # Title for staff tools.
+    staff-tools: "<aqua>Staff Tools</aqua>"
+    # Title for the support request form.
+    support-request: "<gold>Support Request</gold>"
+    # Title for the player report form.
+    report-a-player: "<gold>Report a Player</gold>"
+    # Title for the bug report form.
+    bug-report: "<gold>Bug Report</gold>"
+    # Title for the lost item/death issue form.
+    lost-items-death-issue: "<gold>Lost Items / Death Issue</gold>"
+    # Title for the grief/theft form.
+    grief-theft: "<gold>Grief / Theft</gold>"
+    # Title for review-before-submit dialogs.
+    confirm-case-submission: "<gold>Confirm Case Submission</gold>"
+    # Title for the player case list.
+    your-cases: "<gold>Your Cases</gold>"
+    # Title for player case details.
+    case-detail: "<gold>Case <white>#{case_id}</white></gold>"
+    # Title for the staff board filter menu.
+    staff-case-board: "<aqua>Staff Case Board</aqua>"
+    # Title for a staff board opened with one filter.
+    staff-board-filter: "<aqua>Staff Case Board</aqua> <gray>-</gray> <white>{filter}</white>"
+    # Title for staff case details.
+    staff-case-detail: "<gold>Case <white>#{case_id}</white></gold> <gray>-</gray> <aqua>Staff</aqua>"
+    # Title for the staff actions dialog.
+    staff-case-actions: "<gold>Case <white>#{case_id}</white></gold> <gray>-</gray> <yellow>Actions</yellow>"
+    # Title for the assign/reassign case input.
+    assign-case: "<gold>Assign / Reassign Case</gold>"
+    # Title for the priority change input.
+    change-priority: "<gold>Change Priority</gold>"
+    # Title for the status change input.
+    change-status: "<gold>Change Status</gold>"
+    # Title for the player reply input.
+    reply-to-case-case: "<gold>Reply to Case <white>#{case_id}</white></gold>"
+    # Title for the staff reply input.
+    reply-to-player: "<gold>Reply to Player</gold>"
+    # Title for the request-info input.
+    request-info: "<gold>Request Info</gold>"
+    # Title for the internal note input.
+    internal-note: "<gold>Internal Note</gold>"
+    # Title for the resolve case dialog.
+    resolve-case: "<green>Resolve Case</green>"
+    # Title for the reject case dialog.
+    reject-case: "<red>Reject Case</red>"
+    # Title for categorized case information sections.
+    case-info-section: "<gold>Case <white>#{case_id}</white></gold> <gray>-</gray> <aqua>{section}</aqua>"
+
+  # Short body text used in dialogs.
+  body:
+    # Main menu instruction.
+    main: "<gray>Select a workflow.</gray>"
+    # Case type menu instruction.
+    case-type-menu: "<gray>Choose the type that best matches the issue.</gray>"
+    # Staff tools instruction.
+    staff-tools: "<gray>Open a board or use a direct case lookup.</gray>"
+    # Support request form instruction.
+    support-request: "<gray>Describe the issue. Attach location only when it helps staff understand the problem.</gray>"
+    # Player report reason summary.
+    player-report-reasons: "<dark_gray>Reasons:</dark_gray> <white>{reasons}</white>"
+    # Bug report category summary.
+    bug-report-categories: "<dark_gray>Categories:</dark_gray> <white>{categories}</white>"
+    # Latest death summary in the lost item form.
+    lost-items-death-summary: "<gray>{death_summary}</gray>"
+    # Grief/theft form instruction.
+    grief-theft: "<gray>Attach your current location or write a manual location, then describe what happened.</gray>"
+    # Empty player case list text.
+    your-cases-empty: "<gray>You have not opened any cases yet.</gray>"
+    # Player case list instruction.
+    your-cases-select: "<gray>Select a case to inspect.</gray>"
+    # Staff board filter menu instruction.
+    staff-board-filter-select: "<gray>Choose a staff board filter.</gray>"
+    # Empty staff board text.
+    staff-board-empty: "<gray>No cases match this filter.</gray>"
+    # Staff board case selection instruction.
+    staff-board-select-case: "<gray>Select a case to inspect.</gray>"
+
+  # Input labels and default values used by Dialog forms.
+  inputs:
+    # Generic description input.
+    description:
+      # Label shown above the description text input.
+      label: "Description"
+      # Default text for the description input.
+      default: ""
+    # Boolean input for attaching current location.
+    attach-location:
+      # Label shown for the attach-location control.
+      label: "Attach current location"
+      # Default text placeholder for attach-location.
+      default: ""
+    # Boolean input for attaching latest death evidence.
+    attach-death:
+      # Label shown for the attach-death control.
+      label: "Attach latest death"
+      # Default text placeholder for attach-death.
+      default: ""
+    # Label/default text for yes values in boolean controls.
+    bool-yes:
+      # Text shown for the yes option.
+      label: "yes"
+      # Default yes text.
+      default: "yes"
+    # Label/default text for no values in boolean controls.
+    bool-no:
+      # Text shown for the no option.
+      label: "no"
+      # Default no text.
+      default: "no"
+    # Target player input for player reports.
+    target-player:
+      # Label shown above the target player input.
+      label: "Target player"
+      # Default text for the target player input.
+      default: ""
+    # Legacy player report reason input text. The primary reason choice is now an inventory menu.
+    reason:
+      # Label shown if a Dialog reason input is used by a legacy/custom flow.
+      label: "Reason"
+      # Default selected reason. {default} is filled from case-types.yml.
+      default: "{default}"
+    # Legacy bug report category input text. The primary category choice is now an inventory menu.
+    category:
+      # Label shown if a Dialog category input is used by a legacy/custom flow.
+      label: "Category"
+      # Default selected category. {default} is filled from case-types.yml.
+      default: "{default}"
+    # Manual location text input for grief/theft cases.
+    manual-location:
+      # Label shown above the manual location input.
+      label: "Manual location if needed"
+      # Default text for the manual location input.
+      default: ""
+    # Claimed lost item text input.
+    claimed-lost-items:
+      # Label shown above the claimed items input.
+      label: "Claimed lost items"
+      # Default text for the claimed items input.
+      default: ""
+    # Staff priority selector.
+    priority:
+      # Label shown for the priority selector.
+      label: "Priority"
+      # Default selected priority. {default} is filled by the dialog.
+      default: "{default}"
+    # Staff status selector.
+    status:
+      # Label shown for the status selector.
+      label: "Status"
+      # Default selected status. {default} is filled by the dialog.
+      default: "{default}"
+    # Resolve outcome input.
+    outcome:
+      # Label shown above the resolve outcome input.
+      label: "Outcome"
+      # Default resolve outcome. {default} is filled by the dialog.
+      default: "{default}"
+    # Reject reason input.
+    close-reason:
+      # Label shown above the close/reject reason input.
+      label: "Reason"
+      # Default close/reject reason. {default} is filled by the dialog.
+      default: "{default}"
+    # Final message sent when resolving or rejecting.
+    final-message:
+      # Label shown above the final message input.
+      label: "Final message"
+      # Default final message text.
+      default: ""
+    # Player or staff reply input.
+    reply:
+      # Label shown above the reply input.
+      label: "Reply"
+      # Default reply text.
+      default: ""
+    # Online staff player name input for assignment.
+    staff-player-name:
+      # Label shown above the staff player name input.
+      label: "Staff player name"
+      # Default staff player name text.
+      default: ""
+    # Request-info question input.
+    question:
+      # Label shown above the question input.
+      label: "Question"
+      # Default question text.
+      default: ""
+    # Internal staff note input.
+    note:
+      # Label shown above the note input.
+      label: "Note"
+      # Default note text.
+      default: ""
+
+  # Plain detail rows used in confirmation screens and case detail sections.
+  detail-lines:
+    # Case type row in submit confirmation.
+    confirm-type: "Type: {type}"
+    # Target player row in player report confirmation.
+    confirm-target: "Target: {target}"
+    # Reason row in player report confirmation.
+    confirm-reason: "Reason: {reason}"
+    # Category row in bug report confirmation.
+    confirm-category: "Category: {category}"
+    # Description row in submit confirmation.
+    confirm-description: "Description: {description}"
+    # Location row in submit confirmation.
+    confirm-location: "Location: {location}"
+    # Claimed item row in lost items confirmation.
+    confirm-items: "Claimed items: {items}"
+    # Latest death row in lost items confirmation.
+    confirm-last-death: "Last death: {last_death}"
+    # Manual location row in grief/theft confirmation.
+    confirm-manual-location: "Manual location: {manual_location}"
+    # Player detail summary status/priority row.
+    player-summary-status: "<dark_gray>Status</dark_gray> <green>{status}</green> <dark_gray>| Priority</dark_gray> <yellow>{priority}</yellow>"
+    # Player detail summary case type row.
+    player-summary-type: "<dark_gray>Type</dark_gray> <white>{type}</white>"
+    # Player detail summary updated time row.
+    player-summary-updated: "<dark_gray>Updated</dark_gray> <dark_aqua>{updated}</dark_aqua>"
+    # Player detail summary description row.
+    player-summary-description: "<dark_gray>Summary</dark_gray> <white>{description}</white>"
+    # Player detail helper row.
+    player-summary-help: "<gray>Use the action rows below to inspect each section.</gray>"
+    # Staff detail summary status/priority row.
+    staff-summary-status: "<dark_gray>Status</dark_gray> <green>{status}</green> <dark_gray>| Priority</dark_gray> <yellow>{priority}</yellow>"
+    # Staff detail reporter row.
+    staff-summary-reporter: "<dark_gray>Reporter</dark_gray> <yellow>{reporter}</yellow>"
+    # Staff detail assignee row.
+    staff-summary-assigned: "<dark_gray>Assigned</dark_gray> <yellow>{assigned}</yellow>"
+    # Staff detail updated time row.
+    staff-summary-updated: "<dark_gray>Updated</dark_gray> <dark_aqua>{updated}</dark_aqua>"
+    # Staff detail counts row.
+    staff-summary-counts: "<dark_gray>Replies</dark_gray> <white>{reply_count}</white> <dark_gray>| Notes</dark_gray> <white>{note_count}</white> <dark_gray>| Evidence</dark_gray> <white>{evidence_count}</white>"
+    # Compact staff detail reporter/assignee row.
+    staff-summary-people: "<dark_gray>Reporter</dark_gray> <yellow>{reporter}</yellow> <dark_gray>| Assigned</dark_gray> <yellow>{assigned}</yellow>"
+    # Compact staff detail activity/counts row.
+    staff-summary-activity: "<dark_gray>Updated</dark_gray> <dark_aqua>{updated}</dark_aqua> <dark_gray>| Replies</dark_gray> <white>{reply_count}</white> <dark_gray>| Notes</dark_gray> <white>{note_count}</white> <dark_gray>| Evidence</dark_gray> <white>{evidence_count}</white>"
+    # Staff action menu status row.
+    action-status: "<dark_gray>Status</dark_gray> <green>{status}</green>"
+    # Staff action menu priority row.
+    action-priority: "<dark_gray>Priority</dark_gray> <yellow>{priority}</yellow>"
+    # Staff action menu assignee row.
+    action-assigned: "<dark_gray>Assigned</dark_gray> <yellow>{assigned}</yellow>"
+    # Compact staff action menu summary row.
+    action-summary: "<dark_gray>Status</dark_gray> <green>{status}</green> <dark_gray>| Priority</dark_gray> <yellow>{priority}</yellow> <dark_gray>| Assigned</dark_gray> <yellow>{assigned}</yellow>"
+    # Overview section type row.
+    overview-type: "Type: {type}"
+    # Overview section status row.
+    overview-status: "Status: {status}"
+    # Overview section priority row.
+    overview-priority: "Priority: {priority}"
+    # Overview section reporter row.
+    overview-reporter: "Reporter: {reporter}"
+    # Overview section assignee row.
+    overview-assigned: "Assigned: {assigned}"
+    # Overview section created time row.
+    overview-created: "Created: {created}"
+    # Overview section updated time row.
+    overview-updated: "Updated: {updated}"
+    # Overview section location row.
+    overview-location: "Location: {location}"
+    # Description section text row.
+    description-text: "Description: {description}"
+    # Description section location row.
+    description-location: "Location: {location}"
+    # Evidence section empty text.
+    evidence-empty: "No visible evidence."
+    # Evidence section category header.
+    evidence-category: "[{category}]"
+    # Evidence section entry row.
+    evidence-entry: "{key}: {value}"
+    # Conversation section empty text.
+    conversation-empty: "No replies yet."
+    # Conversation section header.
+    conversation-header: "Replies:"
+    # Conversation reply metadata row.
+    conversation-reply-meta: "{author_type} - {author} - {created}"
+    # Conversation reply message row.
+    conversation-message: "Message: {message}"
+    # Staff-only internal note count row.
+    conversation-note-count: "Internal notes: {note_count}"
+    # Staff-only internal note metadata row.
+    conversation-note-meta: "Note - {author} - {created}"
+    # Staff-only internal note message row.
+    conversation-note-message: "Message: {message}"
+    # Resolution section empty text.
+    resolution-empty: "No resolution yet."
+    # Resolution section outcome row.
+    resolution-outcome: "Outcome: {resolution_outcome}"
+    # Resolution section final message row.
+    resolution-message: "Final message: {resolution_message}"
+    # Resolution section closed time row.
+    resolution-closed: "Closed: {closed}"
+
+  # Dialog validation and error text.
+  validation:
+    # Legacy helper text for direct ID lookup.
+    open-by-id-help: "<yellow>Use /case open ID to open a case directly.</yellow>"
+    # Sent when a required description is missing.
+    description-required: "<red>Description is required.</red>"
+    # Sent when a player report target is missing.
+    target-required: "<red>Target player is required.</red>"
+    # Sent when a player report reason is missing.
+    reason-required: "<red>Reason is required.</red>"
+    # Sent when a bug report category is missing.
+    category-required: "<red>Category is required.</red>"
+    # Sent when claimed lost items text is missing.
+    items-required: "<red>Claimed lost items are required.</red>"
+    # Sent when a Dialog priority selection cannot be parsed.
+    invalid-priority: "<red>Invalid priority.</red>"
+    # Sent when staff tries to set a closed status through the generic status flow.
+    closed-status-command: "<red>Use Resolve, Reject, or Archive for closed statuses.</red>"
+    # Sent when a Dialog status selection cannot be parsed.
+    invalid-status: "<red>Invalid status.</red>"
+    # Sent when staff tries to teleport to a case without location data.
+    no-location: "<red>No location is attached.</red>"
+    # Sent when a case location points to a world that is not loaded.
+    world-not-loaded: "<red>World is not loaded.</red>"
+    # Sent when a required text input is blank.
+    text-required: "<red>Text is required.</red>"
+    # Sent when a clickable Dialog action token has expired or no longer exists.
+    expired-action: "<red>This dialog action expired. Reopen the dialog.</red>"
+    # Sent when a player tries to use another player's Dialog action token.
+    wrong-player-action: "<red>This dialog action belongs to another player.</red>"
+    # Sent when a Dialog assignment target is not online.
+    assignee-online-required: "<red>Assignee must be online.</red>"
+
+  # Clickable Dialog row labels and hover text.
+  buttons:
+    # Main menu action for opening the case type menu.
+    open-a-case:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <yellow>Open a Case</yellow>"
+      # Hover text for the row.
+      hover: "<gold><bold>OPEN A CASE</bold></gold>\n<gray>Start a new player-facing case workflow.</gray>"
+    # Main menu action for viewing player-owned cases.
+    your-cases:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <white>Your Cases</white>"
+      # Hover text for the row.
+      hover: "<gold><bold>YOUR CASES</bold></gold>\n<gray>View the cases you created.</gray>"
+    # Main menu action for staff tools.
+    staff-tools:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <aqua>Staff Tools</aqua>"
+      # Hover text for the row.
+      hover: "<aqua><bold>STAFF TOOLS</bold></aqua>\n<gray>Open staff case management.</gray>"
+    # Case type row for player reports.
+    report-a-player:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <yellow>Report a Player</yellow>"
+      # Hover text for the row.
+      hover: "<gold><bold>PLAYER REPORT</bold></gold>\n<gray>Report another player with a target, reason and description.</gray>"
+    # Case type row for bug reports.
+    report-a-bug:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <yellow>Report a Bug</yellow>"
+      # Hover text for the row.
+      hover: "<gold><bold>BUG REPORT</bold></gold>\n<gray>Report a broken feature or technical issue.</gray>"
+    # Case type row for lost items.
+    lost-items:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <yellow>Lost Items</yellow>"
+      # Hover text for the row.
+      hover: "<gold><bold>LOST ITEMS</bold></gold>\n<gray>Report missing items, optionally attaching your latest death.</gray>"
+    # Case type row for grief/theft.
+    grief-theft:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <yellow>Grief / Theft</yellow>"
+      # Hover text for the row.
+      hover: "<gold><bold>GRIEF / THEFT</bold></gold>\n<gray>Report grief, theft or suspicious changes at a location.</gray>"
+    # Case type row for support requests.
+    support-request:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <yellow>Support Request</yellow>"
+      # Hover text for the row.
+      hover: "<gold><bold>SUPPORT REQUEST</bold></gold>\n<gray>Open a general request for staff help.</gray>"
+    # Staff tools row for the staff board.
+    case-board:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <aqua>Case Board</aqua>"
+      # Hover text for the row.
+      hover: "<aqua><bold>CASE BOARD</bold></aqua>\n<gray>Browse cases by filter.</gray>"
+    # Staff tools row for Dialog direct lookup by case ID.
+    open-by-id:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <aqua>Open by ID</aqua>"
+      # Hover text for the row.
+      hover: "<aqua><bold>DIRECT LOOKUP</bold></aqua>\n<gray>Use <white>/case open ID</white> for direct lookup.</gray>"
+    # Form button for reviewing a submission before creating it.
+    review:
+      # Visible button label.
+      label: "<green><bold>Review</bold></green>"
+      # Hover text for the button.
+      hover: "<dark_green>Review before submitting.</dark_green>"
+    # Final button for creating a case.
+    submit-case:
+      # Visible button label.
+      label: "<green><bold>Submit Case</bold></green>"
+      # Hover text for the button.
+      hover: "<dark_green>Create this case.</dark_green>"
+    # Generic text submit button.
+    submit:
+      # Visible button label.
+      label: "<green><bold>Submit</bold></green>"
+      # Hover text for the button.
+      hover: "<dark_green>Submit this text.</dark_green>"
+    # Generic change/apply button.
+    change:
+      # Visible button label.
+      label: "<green><bold>Change</bold></green>"
+      # Hover text for the button.
+      hover: "<dark_green>Apply this change.</dark_green>"
+    # Player reply submit button.
+    add-reply:
+      # Visible button label.
+      label: "<green><bold>Add Reply</bold></green>"
+      # Hover text for the button.
+      hover: "<dark_green>Add this reply to Case <white>#{case_id}</white>.</dark_green>"
+    # Generic back button.
+    back:
+      # Visible button label.
+      label: "<dark_gray><italic>«</italic></dark_gray> <gray>Back</gray>"
+      # Hover text for the button.
+      hover: "<dark_gray>Return to the previous screen.</dark_gray>"
+    # Confirmation screen button for returning to edit.
+    go-back:
+      # Visible button label.
+      label: "<dark_gray><italic>«</italic></dark_gray> <gray>Go Back</gray>"
+      # Hover text for the button.
+      hover: "<dark_gray>Edit the case.</dark_gray>"
+    # Back button returning to case type selection.
+    case-types:
+      # Visible button label.
+      label: "<dark_gray><italic>«</italic></dark_gray> <gray>Case Types</gray>"
+      # Hover text for the button.
+      hover: "<dark_gray>Choose another case type.</dark_gray>"
+    # Empty player case list action for opening a support request.
+    open-support-request:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <yellow>Open Support Request</yellow>"
+      # Hover text for the row.
+      hover: "<gold><bold>SUPPORT REQUEST</bold></gold>\n<gray>Create a new support request.</gray>"
+    # Row template for one player-owned case.
+    player-case-list-item:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <white>#{case_id}</white> <dark_gray>|</dark_gray> <green>{status}</green> <dark_gray>|</dark_gray> <yellow>{priority}</yellow>"
+      # Hover text for the row.
+      hover: "<gold><bold>YOUR CASE #{case_id}</bold></gold>\n<gray>Type:</gray> <white>{type}</white>\n<gray>Status:</gray> <green>{status}</green>\n<gray>Priority:</gray> <yellow>{priority}</yellow>\n<gray>Updated:</gray> <dark_aqua>{updated}</dark_aqua>"
+    # Staff board filter row template.
+    staff-board-filter:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <aqua>{filter_label}</aqua>"
+      # Hover text for the row.
+      hover: "<aqua><bold>{filter}</bold></aqua>\n<gray>Open matching staff cases.</gray>"
+    # Staff board case row template.
+    staff-board-case-item:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <white>#{case_id}</white> <dark_gray>|</dark_gray> <yellow>{priority}</yellow> <dark_gray>|</dark_gray> <green>{status}</green>"
+      # Hover text for the row.
+      hover: "<gold><bold>STAFF CASE #{case_id}</bold></gold>\n<gray>Type:</gray> <white>{type}</white>\n<gray>Status:</gray> <green>{status}</green>\n<gray>Reporter:</gray> <yellow>{reporter}</yellow>\n<gray>Assigned:</gray> <yellow>{assigned}</yellow>\n<gray>Updated:</gray> <dark_aqua>{updated}</dark_aqua>"
+    # Case info button for overview.
+    overview:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <aqua>Overview</aqua>"
+      # Hover text for the row.
+      hover: "<aqua><bold>OVERVIEW</bold></aqua>\n<gray>Type:</gray> <white>{type}</white>\n<gray>Status:</gray> <green>{status}</green>\n<gray>Priority:</gray> <yellow>{priority}</yellow>\n<gray>Reporter:</gray> <yellow>{reporter}</yellow>\n<gray>Assigned:</gray> <yellow>{assigned}</yellow>\n<gray>Created:</gray> <dark_aqua>{created}</dark_aqua>\n<gray>Updated:</gray> <dark_aqua>{updated}</dark_aqua>\n<gray>Location:</gray> <light_purple>{location}</light_purple>"
+    # Case info button for description.
+    description:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <aqua>Description</aqua>"
+      # Hover text for the row.
+      hover: "<aqua><bold>DESCRIPTION</bold></aqua>\n<gray>Summary:</gray> <white>{description}</white>\n<gray>Location:</gray> <light_purple>{location}</light_purple>"
+    # Case info button for evidence.
+    evidence:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <aqua>Evidence</aqua>"
+      # Hover text for the row.
+      hover: "<aqua><bold>EVIDENCE</bold></aqua>\n<gray>Visible entries:</gray> <white>{evidence_count}</white>\n<dark_gray>Open for the full evidence list.</dark_gray>"
+    # Case info button for conversation.
+    conversation:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <aqua>Conversation</aqua>"
+      # Hover text for the row.
+      hover: "<aqua><bold>CONVERSATION</bold></aqua>\n<gray>Replies:</gray> <white>{reply_count}</white>\n<gray>Internal notes:</gray> <white>{note_count}</white>\n<dark_gray>Open for messages and notes.</dark_gray>"
+    # Case info button for resolution.
+    resolution:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <aqua>Resolution</aqua>"
+      # Hover text for the row.
+      hover: "<aqua><bold>RESOLUTION</bold></aqua>\n<gray>Outcome:</gray> <green>{resolution_outcome}</green>\n<gray>Message:</gray> <white>{resolution_message}</white>\n<gray>Closed:</gray> <dark_aqua>{closed}</dark_aqua>"
+    # Staff-only case action menu button.
+    actions:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <gold><bold>Actions</bold></gold>"
+      # Hover text for the row.
+      hover: "<gold><bold>STAFF ACTIONS #{case_id}</bold></gold>\n<gray>Status:</gray> <green>{status}</green>\n<gray>Priority:</gray> <yellow>{priority}</yellow>"
+    # Player-facing reply button.
+    player-reply:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <green><bold>Reply</bold></green>"
+      # Hover text for the row.
+      hover: "<dark_green>Add more information to Case <white>#{case_id}</white>.</dark_green>"
+    # Staff player-visible reply button.
+    staff-reply:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <green><bold>Reply</bold></green>"
+      # Hover text for the row.
+      hover: "<dark_green>Send a player-visible reply to Case <white>#{case_id}</white>.</dark_green>"
+    # Staff request-info button.
+    request-info:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <aqua>Request Info</aqua>"
+      # Hover text for the row.
+      hover: "<dark_aqua>Ask the player for more information on Case <white>#{case_id}</white>.</dark_aqua>"
+    # Staff internal note button.
+    internal-note:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <aqua>Internal Note</aqua>"
+      # Hover text for the row.
+      hover: "<dark_aqua>Add a staff-only note to Case <white>#{case_id}</white>.</dark_aqua>"
+    # Staff claim button.
+    claim:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <gold><bold>Claim</bold></gold>"
+      # Hover text for the row.
+      hover: "<yellow>Assign Case <white>#{case_id}</white> to yourself.</yellow>"
+    # Staff assign/reassign button.
+    assign:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <green><bold>Assign / Reassign</bold></green>"
+      # Hover text for the row.
+      hover: "<dark_green>Assign or reassign Case <white>#{case_id}</white> to an online staff member.</dark_green>"
+    # Staff priority change button.
+    priority:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <aqua>Priority</aqua>"
+      # Hover text for the row.
+      hover: "<dark_aqua>Change priority for Case <white>#{case_id}</white>.</dark_aqua>\n<gray>Current:</gray> <yellow>{priority}</yellow>"
+    # Staff status change button.
+    status:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <aqua>Status</aqua>"
+      # Hover text for the row.
+      hover: "<dark_aqua>Change status for Case <white>#{case_id}</white>.</dark_aqua>\n<gray>Current:</gray> <green>{status}</green>"
+    # Staff teleport button.
+    teleport:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <aqua>Teleport</aqua>"
+      # Hover text for the row.
+      hover: "<dark_aqua>Teleport to case location.</dark_aqua>\n<gray>Location:</gray> <light_purple>{location}</light_purple>"
+    # Staff resolve button.
+    resolve:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <gold><bold>Resolve</bold></gold>"
+      # Hover text for the row.
+      hover: "<yellow>Resolve Case <white>#{case_id}</white>.</yellow>"
+    # Staff reject button.
+    reject:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <red><bold>Reject</bold></red>"
+      # Hover text for the row.
+      hover: "<dark_red>Reject Case <white>#{case_id}</white>.</dark_red>"
+    # Staff archive button.
+    archive:
+      # Visible row label.
+      label: "<dark_gray><italic>»</italic></dark_gray> <red><bold>Archive</bold></red>"
+      # Hover text for the row.
+      hover: "<dark_red>Move Case <white>#{case_id}</white> to the archive.</dark_red>"

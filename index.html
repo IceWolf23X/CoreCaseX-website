@@ -1,407 +1,44 @@
-<!DOCTYPE html>
-
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="light">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="CoreCaseX is a structured staff case management plugin for Paper Minecraft servers." name="description"/>
-<title>CoreCaseX - Structured Case Management for Paper Servers</title>
-<link href="./assets/corecasex-logo.svg" rel="icon" type="image/svg+xml"/>
-<link href="./assets/corecasex-logo.svg" rel="shortcut icon" type="image/svg+xml"/>
-<meta content="#2F3235" name="theme-color"/>
-<link href="./assets/vendor/framebasecss/framebase.min.css" rel="stylesheet"/><link href="./assets/vendor/framebasecss/framebase-highlight.min.css" rel="stylesheet"/><link href="./assets/styles.css" rel="stylesheet"/></head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="CoreX plugin documentation and configuration reference.">
+<meta name="theme-color" content="#fcfcfb">
+<title>CoreX plugin documentation</title>
+<link id="site-favicon" rel="icon" type="image/png" href="data:,">
+<script src="assets/js/data/site-config.js"></script>
+<script src="assets/js/boot.js"></script>
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/landing.css">
+<link rel="stylesheet" href="assets/css/docs.css">
+<link rel="stylesheet" href="assets/css/syntax-highlight.css">
+<link rel="stylesheet" href="assets/css/releases.css">
+<link rel="stylesheet" href="assets/css/ultrawide.css">
+<script src="assets/js/data/ui-text.js" defer></script>
+<script src="assets/js/data/landing-content.js" defer></script>
+<script src="assets/js/data/docs-content.js" defer></script>
+<script src="assets/js/generated/docs-bodies.js" defer></script>
+<script src="assets/js/generated/config-files.js" defer></script>
+<script src="assets/js/generated/releases.js" defer></script>
+<script src="assets/js/utils.js" defer></script>
+<script src="assets/vendor/highlightjs/highlight.min.js" defer></script>
+<script src="assets/vendor/highlightjs/languages/properties.min.js" defer></script>
+<script src="assets/js/core/syntax-highlight.js" defer></script>
+<script src="assets/js/core/renderer.js" defer></script>
+<script src="assets/js/core/config-renderer.js" defer></script>
+<script src="assets/js/core/releases-core.js" defer></script>
+<script src="assets/js/core/github-releases.js" defer></script>
+<script src="assets/js/core/releases-renderer.js" defer></script>
+<script src="assets/js/docs.js" defer></script>
+<script src="assets/js/search.js" defer></script>
+<script src="assets/js/core/preview-gallery.js" defer></script>
+<script src="assets/js/app.js" defer></script>
+<link rel="stylesheet" href="assets/css/gallery.css">
+</head>
 <body>
-<a class="fb-skip-link" href="#main">Skip to content</a>
-<header class="fb-site-header fb-site-header--sticky">
-<div class="fb-container fb-container--wide fb-navbar">
-<a aria-label="CoreCaseX home" class="fb-brand corex-brand" href="./index.html">
-<img alt="" height="36" src="./assets/corecasex-logo.svg" width="36"/><span>CoreCaseX</span>
-</a>
-<button aria-controls="site-navigation" aria-expanded="false" class="fb-button fb-button--ghost fb-nav-toggle" data-nav-toggle="" type="button">Menu</button>
-<nav aria-label="Main navigation" class="fb-nav-panel fb-nav-region" data-nav-panel="" data-open="false" id="site-navigation">
-<ul class="fb-nav"><li><a aria-current="page" href="./index.html">Overview</a></li><li><a href="./features.html">Features</a></li><li><a href="./installation.html">Setup</a></li><li><a href="./docs.html">Documentation</a></li><li><a href="./faq.html">FAQ</a></li><li><a href="https://github.com/IceWolf23X/CoreCaseX-issues" rel="noopener noreferrer" target="_blank">GitHub</a></li><li><a href="https://modrinth.com/plugin/corecasex" rel="noopener noreferrer" target="_blank">Download</a></li></ul>
-</nav>
-</div>
-</header>
-<main class="fb-main" id="main">
-<section class="fb-hero-section">
-<div class="fb-container fb-container--wide fb-hero corex-hero">
-<div class="fb-hero-copy">
-<p class="fb-eyebrow">One case system, not scattered reports</p>
-<h1 class="fb-display">Structured case management for Paper servers.</h1>
-<p class="fb-lead">
-              CoreCaseX gives players a guided way to report issues, ask for help, provide evidence,
-              and reply to staff while your team manages every case from a focused in-game board.
-            </p>
-<div class="fb-cluster">
-<a class="fb-button" href="./installation.html">Get Started</a>
-<a class="fb-button fb-button--secondary" href="#features">Explore Features</a>
-</div>
-<ul aria-label="CoreCaseX platform facts" class="fb-cluster corex-facts">
-<li>Paper 1.21.11+</li>
-<li>Java 21</li>
-<li>SQLite storage</li>
-<li>Discord webhooks</li>
-</ul>
-</div>
-</div>
-</section>
-<section class="fb-section">
-<div aria-label="CoreCaseX summary" class="fb-container fb-container--wide fb-card-grid">
-<article class="fb-card fb-flow">
-<strong>5</strong>
-<span>built-in case types</span>
-</article>
-<article class="fb-card fb-flow">
-<strong>Paper Dialog</strong>
-<span>guided in-game UI</span>
-</article>
-<article class="fb-card fb-flow">
-<strong>SQLite</strong>
-<span>local persistence</span>
-</article>
-<article class="fb-card fb-flow">
-<strong>Discord</strong>
-<span>optional webhooks</span>
-</article>
-</div>
-</section>
-<section class="fb-section" id="features">
-<div class="fb-container fb-container--wide">
-<div class="fb-section-header">
-<p class="fb-eyebrow">Core feature set</p>
-<h2>Everything staff need to handle player issues in one workflow.</h2>
-<p>
-              CoreCaseX keeps submissions, triage, evidence, player replies, internal notes,
-              status changes, and final outcomes connected inside one Paper plugin.
-            </p>
-</div>
-<div class="fb-card-grid">
-<article class="fb-card fb-flow">
-<h3>Guided Player Submissions</h3>
-<p>
-                Players use the `/case` Dialog flow to create support requests, reports, bug reports,
-                lost item or death issue cases, and grief or theft cases without learning a large command tree.
-              </p>
-</article>
-<article class="fb-card fb-flow">
-<h3>Staff Board Filters</h3>
-<p>
-                Staff can review all open cases, unassigned cases, cases assigned to them, high and urgent cases,
-                waiting-player cases, waiting-staff cases, recent closed cases, and archived cases.
-              </p>
-</article>
-<article class="fb-card fb-flow">
-<h3>Claim, Assign / Reassign, and Act</h3>
-<p>
-                Staff can claim cases, assign or reassign online staff, change priority, change status,
-                add notes, reply to players, request more information, resolve, reject, teleport, and archive.
-              </p>
-</article>
-<article class="fb-card fb-flow">
-<h3>Evidence Visibility</h3>
-<p>
-                Evidence can include reporter context, locations, target player snapshots when available,
-                death details, manual location text, and case-specific options with player-visible,
-                staff-only, or sensitive access levels.
-              </p>
-</article>
-<article class="fb-card fb-flow">
-<h3>Timeline History</h3>
-<p>
-                Case creation, claims, assignment changes, status changes, priority changes, replies, notes,
-                information requests, resolutions, rejections, and archive actions become an audit trail.
-              </p>
-</article>
-</div>
-<div>
-<div class="fb-card-grid" id="secondary-features">
-<article class="fb-card fb-flow">
-<h3>Player Case List</h3>
-<p>Players can view their own cases, inspect status and priority, read staff replies, and add replies while the case is still open.</p>
-</article>
-<article class="fb-card fb-flow">
-<h3>Internal Staff Notes</h3>
-<p>Staff-only notes keep moderation context, observations, handoff details, and evidence interpretation away from player-visible conversation.</p>
-</article>
-<article class="fb-card fb-flow">
-<h3>Discord Webhooks</h3>
-<p>Optional Discord output can route events by priority, case type, or default webhook, with safe JSON escaping and disabled allowed mentions.</p>
-</article>
-<article class="fb-card fb-flow">
-<h3>SQLite Persistence</h3>
-<p>Cases, timeline events, replies, internal notes, resolutions, evidence, migrations, and common query indexes are stored locally.</p>
-</article>
-<article class="fb-card fb-flow">
-<h3>Safe Dialog Actions</h3>
-<p>Clickable Dialog rows use short owner-bound tokens with permission checks, one-use successful callbacks, expiration checks, and stale cleanup.</p>
-</article>
-<article class="fb-card fb-flow">
-<h3>Granular Permissions</h3>
-<p>Player, staff, and admin permissions let server owners decide who can view, claim, assign, archive, teleport, or inspect sensitive evidence.</p>
-</article>
-</div>
-</div>
-</div>
-</section>
-<section class="fb-section fb-section--muted" id="workflow">
-<div class="fb-container fb-container--wide">
-<div class="fb-section-header">
-<p class="fb-eyebrow">Why CoreCaseX</p>
-<h2>Support work should be visible, owned, and traceable.</h2>
-<p>
-              CoreCaseX is built for servers where staff need more than chat messages, screenshots,
-              and scattered reminders. Each case has state, ownership, evidence, conversation, and history.
-            </p>
-</div>
-<div class="fb-stack">
-<article class="fb-card">
-<span>01</span>
-<h3>Players Submit a Guided Case</h3>
-<p>
-                The Dialog UI collects the right information for the chosen case type, including descriptions,
-                configured options, optional location context, and case-specific evidence.
-              </p>
-</article>
-<article class="fb-card">
-<span>02</span>
-<h3>Staff Triage from the Board</h3>
-<p>
-                Staff use board filters, claim and assign/reassign flows, priorities, statuses, notes,
-                replies, and information requests to decide what needs attention next.
-              </p>
-</article>
-<article class="fb-card">
-<span>03</span>
-<h3>Cases Close with a Clear Outcome</h3>
-<p>
-                Resolved and rejected cases keep their final message and full timeline, then can be archived
-                when staff are ready to move them out of active work.
-              </p>
-</article>
-</div>
-</div>
-</section>
-<section class="fb-section" id="setup">
-<div class="fb-container fb-container--wide">
-<div class="fb-section-header corex-center">
-<p class="fb-eyebrow">Setup and compatibility</p>
-<h2>A focused Paper MVP with practical server-owner controls.</h2>
-<p>
-              CoreCaseX targets Paper servers today. The configuration files are commented, reloadable where safe,
-              and designed around real staff workflows rather than a generic form builder.
-            </p>
-</div>
-<div class="fb-card-grid">
-<article class="fb-card fb-flow">
-<div>Runtime</div>
-<h3>Paper 1.21.11+ and Java 21</h3>
-<p>
-                CoreCaseX uses modern Paper Dialog APIs and disables itself gracefully when the required runtime
-                support is not available.
-              </p>
-<ul>
-<li>Native Paper Dialog menus and forms</li>
-<li>Commands for players, staff, and admins</li>
-<li>Maven Wrapper build workflow</li>
-</ul>
-</article>
-<article class="fb-card fb-flow">
-<div>Configuration</div>
-<h3>Commented YAML Files</h3>
-<p>
-                Server owners can adjust global limits, case type defaults, Discord event routing,
-                visible text, and the SQLite file path.
-              </p>
-<ul>
-<li><code>config.yml</code> for limits and staff notifications</li>
-<li><code>case-types.yml</code> for enabled flows and priorities</li>
-<li><code>messages.yml</code> for commands and Dialog text</li>
-</ul>
-</article>
-</div>
-<div aria-label="Supported runtime model" class="fb-cluster">
-<span>Paper only</span>
-<span>Java 21</span>
-<span>SQLite included</span>
-<span>Discord optional</span>
-</div>
-</div>
-</section>
-<section class="fb-section" id="docs">
-<div class="fb-container fb-container--wide">
-<div class="fb-section-header">
-<p class="fb-eyebrow">Resources</p>
-<h2>Docs for owners who want exact behavior, not guesses.</h2>
-</div>
-<div class="fb-card-grid">
-<a class="fb-card fb-card--interactive corex-link-card" href="./docs.html">
-<span>Hub</span>
-<h3>Documentation Hub</h3>
-<p>Start from the structured documentation hub for overview, setup, configuration, FAQ, and operations.</p>
-</a>
-<a class="fb-card fb-card--interactive corex-link-card" href="./features.html">
-<span>Product</span>
-<h3>Product Overview</h3>
-<p>Review CoreCaseX features, workflows, case types, staff tools, storage, notifications, and verified state.</p>
-</a>
-<a class="fb-card fb-card--interactive corex-link-card" href="./configuration.html">
-<span>Config</span>
-<h3>Configuration Reference</h3>
-<p>Read the owner-facing guide for config files, reload rules, permissions, commands, and troubleshooting.</p>
-</a>
-</div>
-</div>
-</section>
-<section class="fb-section" id="faq">
-<div class="fb-container fb-container--wide">
-<div class="fb-section-header">
-<p class="fb-eyebrow">FAQ preview</p>
-<h2>Short answers before installation.</h2>
-<p>
-              These answers summarize the current MVP. Use the configuration reference when you need exact
-              keys, permission nodes, command formats, and operational notes.
-            </p>
-</div>
-<div class="fb-stack corex-faq" data-animated-details="">
-<details open=""><summary>What is CoreCaseX?</summary><div class="fb-details-body">
-<p>CoreCaseX is a structured staff case management plugin for Paper servers. It helps players submit issues and helps staff triage, discuss, resolve, reject, and archive those cases in-game.</p>
-</div></details>
-<details><summary>What case types are included?</summary><div class="fb-details-body">
-<p>Support request, player report, bug report, lost items or death issue, and grief or theft are included in the current MVP.</p>
-</div></details>
-<details><summary>Does it require an external database?</summary><div class="fb-details-body">
-<p>No. CoreCaseX stores its current MVP data in a local SQLite database under the plugin data folder.</p>
-</div></details>
-<details><summary>Can Discord notifications be disabled?</summary><div class="fb-details-body">
-<p>Yes. Discord webhook output is disabled by default and only runs when the server owner configures it.</p>
-</div></details>
-<details><summary>Can staff permissions be separated?</summary><div class="fb-details-body">
-<p>Yes. CoreCaseX has separate permissions for board access, view, claim, assign/reassign, notes, replies, information requests, priority, status, resolution, archive, teleport, and evidence access.</p>
-</div></details>
-</div>
-</div>
-</section>
-<section class="fb-section" aria-labelledby="usage-heading">
-<div class="fb-container fb-container--wide">
-<div class="fb-section-header">
-<p class="fb-eyebrow">Usage statistics</p>
-<h2 id="usage-heading">Live bStats data for Paper and Purpur.</h2>
-</div>
-<div class="fb-stack">
-<div class="fb-grid corex-metrics">
-<article class="fb-card">
-<h3>Paper / Purpur</h3>
-<div class="corex-metric-badges">
-<img src="https://icewolf23x.github.io/CoreX-Badges/corecasex/paper-servers.svg" alt="Current Paper and Purpur server count" loading="lazy">
-<img src="https://icewolf23x.github.io/CoreX-Badges/corecasex/paper-players.svg" alt="Current Paper and Purpur player count" loading="lazy">
-<img src="https://icewolf23x.github.io/CoreX-Badges/corecasex/paper-record-servers.svg" alt="Paper and Purpur server record" loading="lazy">
-<img src="https://icewolf23x.github.io/CoreX-Badges/corecasex/paper-record-players.svg" alt="Paper and Purpur player record" loading="lazy">
-</div>
-<img class="corex-metric-chart" src="https://icewolf23x.github.io/CoreX-Badges/corecasex/paper-chart.svg" alt="Paper and Purpur bStats usage chart" loading="lazy">
-</article>
-</div>
-<p class="fb-callout fb-callout--info">View the source dashboard on <a href="https://bstats.org/plugin/bukkit/CoreCaseX" target="_blank" rel="noopener noreferrer">CoreCaseX bStats</a>.</p>
-</div>
-</div>
-</section><section class="fb-section fb-section--muted" id="also-try">
-<div class="fb-container fb-container--wide">
-<div class="fb-section-header">
-<p class="fb-eyebrow">Also try</p>
-<h2>More CoreX plugins for the same server stack.</h2>
-<p>Each project stays focused, so you can add only the systems your Paper server actually needs.</p>
-</div>
-<div class="fb-card-grid">
-<a aria-label="Open CoreArmorX website" class="fb-card fb-card--interactive corex-link-card" href="https://icewolf23x.github.io/CoreArmorX-website/" rel="noopener noreferrer" target="_blank">
-<div>
-<div aria-hidden="true">
-<img alt="" height="56" loading="lazy" src="https://icewolf23x.github.io/CoreArmorX-website/assets/corearmorx-logo.svg" width="56"/>
-</div>
-<span>Armor</span>
-</div>
-<h3>CoreArmorX</h3>
-<p>Vanilla+ armor upgrade paths, netherite skins, metadata-safe conversions, and YAML control.</p>
-<div>Open site <span aria-hidden="true">-&gt;</span></div>
-</a>
-<a aria-label="Open CoreToolsX website" class="fb-card fb-card--interactive corex-link-card" href="https://icewolf23x.github.io/CoreToolsX-website/" rel="noopener noreferrer" target="_blank">
-<div>
-<div aria-hidden="true">
-<img alt="" height="56" loading="lazy" src="https://icewolf23x.github.io/CoreToolsX-website/assets/coretoolsx-logo.svg" width="56"/>
-</div>
-<span>Tools</span>
-</div>
-<h3>CoreToolsX</h3>
-<p>Vanilla+ tool upgrade paths, material skins, protected crafting, and admin-controlled recipes.</p>
-<div>Open site <span aria-hidden="true">-&gt;</span></div>
-</a>
-<a aria-label="Open CoreChatX website" class="fb-card fb-card--interactive corex-link-card" href="https://icewolf23x.github.io/CoreChatX-website/" rel="noopener noreferrer" target="_blank">
-<div>
-<div aria-hidden="true">
-<img alt="" height="56" loading="lazy" src="https://icewolf23x.github.io/CoreChatX-website/assets/corechatx-logo.svg" width="56"/>
-</div>
-<span>Chat</span>
-</div>
-<h3>CoreChatX</h3>
-<p>Channels, private messages, pings, ChatItems, moderation, bridges, locales, and Velocity support.</p>
-<div>Open site <span aria-hidden="true">-&gt;</span></div>
-</a>
-<a aria-label="Open CoreExtractionX website" class="fb-card fb-card--interactive corex-link-card" href="https://icewolf23x.github.io/CoreExtractionX-website/" rel="noopener noreferrer" target="_blank">
-<div>
-<div aria-hidden="true">
-<img alt="" height="56" loading="lazy" src="https://icewolf23x.github.io/CoreExtractionX-website/assets/coreextractionx-logo.svg" width="56"/>
-</div>
-<span>Extraction</span>
-</div>
-<h3>CoreExtractionX</h3>
-<p>YAML-driven block extraction, block replacement, natural drops, and configurable extra item drops.</p>
-<div>Open site <span aria-hidden="true">-&gt;</span></div>
-</a>
-<a aria-label="Open CoreStructuresX website" class="fb-card fb-card--interactive corex-link-card" href="https://icewolf23x.github.io/CoreStructuresX-website/" rel="noopener noreferrer" target="_blank">
-<div>
-<div aria-hidden="true">
-<img alt="" height="56" loading="lazy" src="https://icewolf23x.github.io/CoreStructuresX-website/assets/corestructuresx-logo.svg" width="56"/>
-</div>
-<span>Structures</span>
-</div>
-<h3>CoreStructuresX</h3>
-<p>Validated WorldEdit/FAWE schematic packs, persistent instances, and controlled modular expansion.</p>
-<div>Open site <span aria-hidden="true">-&gt;</span></div>
-</a>
-</div>
-</div>
-</section>
-<section class="fb-section">
-<div class="fb-container fb-container--wide">
-<p class="fb-eyebrow">Ready to organize server support?</p>
-<h2>One case workflow for players, staff, evidence, and outcomes.</h2>
-<p>
-            Replace scattered follow-up with a focused Paper workflow that keeps every support case visible,
-            assigned, documented, and ready for a final decision.
-          </p>
-<div class="fb-cluster">
-<a class="fb-button" href="./installation.html">Open Installation Guide</a>
-<a class="fb-button fb-button--secondary" href="./docs.html">Open Documentation</a>
-</div>
-</div>
-</section>
-</main>
-<footer class="fb-site-footer">
-<div class="fb-container fb-container--wide fb-stack">
-<div class="fb-grid fb-grid--2">
-<div class="fb-flow">
-<a class="fb-brand corex-brand" href="./index.html">
-<img alt="" height="36" src="./assets/corecasex-logo.svg" width="36"/><span>CoreCaseX</span>
-</a>
-<p>Structured staff case management for Paper servers.</p>
-</div>
-<nav aria-label="Footer navigation" class="fb-cluster"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./configuration.html">Configuration</a><a href="./docs.html">Documentation</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreCaseX-issues" rel="noopener noreferrer" target="_blank">GitHub</a><a href="https://modrinth.com/plugin/corecasex" rel="noopener noreferrer" target="_blank">Download</a></nav>
-</div>
-<div class="fb-cluster corex-footer-meta">
-<span>Copyright 2026 CoreCaseX.</span>
-<span>Version 2026.1.1 · Java 21+ · Paper 1.21.11+ · SQLite</span>
-<a href="https://github.com/IceWolf23X/FrameBaseCSS" rel="noopener noreferrer" target="_blank">Powered by FrameBaseCSS</a>
-</div>
-</div>
-</footer>
-<script src="./assets/vendor/highlightjs/highlight.min.js"></script><script src="./assets/vendor/highlightjs/languages/properties.min.js"></script><script src="./assets/site.js"></script></body>
+<svg aria-hidden="true" height="0" style="position:absolute;overflow:hidden" width="0" xmlns="http://www.w3.org/2000/svg"><defs><symbol id="i-arrow" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></symbol><symbol id="i-arrow-left" viewbox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"></path></symbol><symbol id="i-chevron" viewbox="0 0 24 24"><path d="m9 5 7 7-7 7"></path></symbol><symbol id="i-external" viewbox="0 0 24 24"><path d="M14 3h7v7m0-7L10 14"></path><path d="M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5"></path></symbol><symbol id="i-download" viewbox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"></path></symbol><symbol id="i-moon" viewbox="0 0 24 24"><path d="M20.3 15.6A9 9 0 0 1 8.4 3.7a9 9 0 1 0 11.9 11.9Z"></path></symbol><symbol id="i-sun" viewbox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"></path></symbol><symbol id="i-menu" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></symbol><symbol id="i-close" viewbox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></symbol><symbol id="i-search" viewbox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 4 4"></path></symbol><symbol id="i-book" viewbox="0 0 24 24"><path d="M12 5c-3-2-6-2-10-1v15c4-1 7-1 10 1m0-15c3-2 6-2 10-1v15c-4-1-7-1-10 1V5Z"></path></symbol><symbol id="i-layers" viewbox="0 0 24 24"><path d="m12 3 10 5-10 5L2 8l10-5Zm-10 9 10 5 10-5M2 16l10 5 10-5"></path></symbol><symbol id="i-compass" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"></path></symbol><symbol id="i-server" viewbox="0 0 24 24"><rect height="7" rx="2" width="18" x="3" y="3"></rect><rect height="7" rx="2" width="18" x="3" y="14"></rect><path d="M7 6.5h.01M7 17.5h.01M11 6.5h6M11 17.5h6"></path></symbol><symbol id="i-network" viewbox="0 0 24 24"><rect height="6" rx="1" width="6" x="9" y="2"></rect><rect height="6" rx="1" width="6" x="2" y="16"></rect><rect height="6" rx="1" width="6" x="16" y="16"></rect><path d="M12 8v4m-7 4v-4h14v4"></path></symbol><symbol id="i-database" viewbox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14c0 4 18 4 18 0V5M3 12c0 4 18 4 18 0"></path></symbol><symbol id="i-file" viewbox="0 0 24 24"><path d="M14 2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9l-7-7Z"></path><path d="M14 2v7h7M7 13h10M7 17h7"></path></symbol><symbol id="i-code" viewbox="0 0 24 24"><path d="m8 6-6 6 6 6m8-12 6 6-6 6M14 3l-4 18"></path></symbol><symbol id="i-message" viewbox="0 0 24 24"><path d="M21 14a3 3 0 0 1-3 3H8l-5 4V5a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v9Z"></path><path d="M7 7h10M7 11h6"></path></symbol><symbol id="i-mail" viewbox="0 0 24 24"><rect height="16" rx="2" width="20" x="2" y="4"></rect><path d="m2 6 10 7L22 6"></path></symbol><symbol id="i-bell" viewbox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"></path></symbol><symbol id="i-box" viewbox="0 0 24 24"><path d="m12 2 10 5v10l-10 5-10-5V7l10-5ZM2 7l10 5 10-5M12 12v10M7 4.5l10 5"></path></symbol><symbol id="i-shield" viewbox="0 0 24 24"><path d="m12 2 9 4v6c0 6-9 10-9 10S3 18 3 12V6l9-4Z"></path><path d="m8 12 3 3 5-6"></path></symbol><symbol id="i-sliders" viewbox="0 0 24 24"><path d="M4 21v-7m0-4V3M12 21v-3m0-4V3M20 21v-9m0-4V3M1 10h6m2 8h6m2-10h6"></path></symbol><symbol id="i-hash" viewbox="0 0 24 24"><path d="M5 8h16M3 16h16M11 3 7 21M17 3l-4 18"></path></symbol><symbol id="i-user" viewbox="0 0 24 24"><circle cx="12" cy="7" r="4"></circle><path d="M4 21v-2a8 8 0 0 1 16 0v2"></path></symbol><symbol id="i-users" viewbox="0 0 24 24"><path d="M16 21v-2a6 6 0 0 0-12 0v2m16-1v-2a5 5 0 0 0-3-4"></path><circle cx="10" cy="6" r="4"></circle><path d="M17 2a4 4 0 0 1 0 8"></path></symbol><symbol id="i-globe" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><ellipse cx="12" cy="12" rx="4" ry="10"></ellipse><path d="M2 12h20"></path></symbol><symbol id="i-bridge" viewbox="0 0 24 24"><path d="M3 7v14m18-14v14M3 12c6 5 12 5 18 0M6 14v5m4-3v3m4-3v3m4-5v5M1 19h22"></path><path d="M3 7a3 3 0 0 1 3-3h1m14 3a3 3 0 0 0-3-3h-1"></path></symbol><symbol id="i-discord" viewbox="0 0 24 24"><path d="M8 5 4 6 2 17l5 3 1-2m8-13 4 1 2 11-5 3-1-2M8 5l1-2m7 2-1-2M7 17c3 2 7 2 10 0M6 7c4-2 8-2 12 0"></path><circle cx="8" cy="12" r="1"></circle><circle cx="16" cy="12" r="1"></circle></symbol><symbol id="i-send" viewbox="0 0 24 24"><path d="m22 2-7 20-4-9L2 9 22 2ZM22 2 11 13"></path></symbol><symbol id="i-cursor" viewbox="0 0 24 24"><path d="m4 3 16 9-7 2-3 7L4 3Z"></path></symbol><symbol id="i-lock" viewbox="0 0 24 24"><rect height="12" rx="2" width="16" x="4" y="10"></rect><path d="M8 10V6a4 4 0 0 1 8 0v4M12 15v3"></path></symbol><symbol id="i-key" viewbox="0 0 24 24"><circle cx="8" cy="8" r="5"></circle><path d="m11.5 11.5 9 9M17 17l3-3m-6 0 3-3"></path></symbol><symbol id="i-check" viewbox="0 0 24 24"><path d="m5 12 4 4L19 6"></path></symbol><symbol id="i-help" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9 8a3 3 0 1 1 5 2c-1 1-2 1-2 4m0 3h.01"></path></symbol><symbol id="i-info" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 11v6m0-10h.01"></path></symbol><symbol id="i-terminal" viewbox="0 0 24 24"><rect height="18" rx="2" width="20" x="2" y="3"></rect><path d="m6 8 4 4-4 4m7 0h5"></path></symbol><symbol id="i-image" viewbox="0 0 24 24"><rect height="18" rx="3" width="18" x="3" y="3"></rect><circle cx="8" cy="8" r="1.5"></circle><path d="m3 17 5-5 4 4 4-6 5 7"></path></symbol><symbol id="i-copy" viewbox="0 0 24 24"><rect height="13" rx="2" width="13" x="8" y="8"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></symbol><symbol id="i-list" viewbox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path></symbol><symbol id="i-print" viewbox="0 0 24 24"><path d="M6 9V2h12v7M6 17H3V9h18v8h-3M6 14h12v8H6zM17 11h.01"></path></symbol><symbol id="i-github" viewbox="0 0 24 24"><path d="M9 19c-4 1-4-2-6-2m15 4v-4a4 4 0 0 0-1-3c3-1 5-2 5-6a5 5 0 0 0-1-3 5 5 0 0 0 0-3s-1 0-4 2a14 14 0 0 0-8 0C6 2 5 2 5 2a5 5 0 0 0 0 3 5 5 0 0 0-1 3c0 4 2 5 5 6a4 4 0 0 0-1 3v4"></path></symbol></defs></svg>
+<div id="app-root"></div>
+</body>
 </html>

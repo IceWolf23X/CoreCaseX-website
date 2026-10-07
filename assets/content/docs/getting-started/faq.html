@@ -1,0 +1,14 @@
+<h2 id="platform">Platform and storage</h2>
+<details><summary>Does CoreCaseX need a proxy or MySQL?</summary><p>No. Version 2026.1.1 is a standalone Paper plugin using local SQLite.</p></details>
+<details><summary>Does it support Spigot?</summary><p>No. Startup requires Paper 1.21.11+ and Paper Dialog APIs.</p></details>
+<details><summary>Where is the database?</summary><p>The bundled default is <code>plugins/CoreCaseX/data/corecasex.db</code>. A safe relative path can be configured, but changing it requires restart.</p></details>
+<h2 id="interface">Interface and workflow</h2>
+<details><summary>Why does <code>/case</code> open an inventory?</summary><p>That is the current design. Inventories handle navigation and choices; Paper Dialogs handle typed fields.</p></details>
+<details><summary>Can staff reassign a case?</summary><p>Yes. Assign/reassign requires an online target and rejects resolved, rejected or archived cases. The inventory chooser lists online case-view staff.</p></details>
+<details><summary>Can a player open another player's case by ID?</summary><p>No. Player detail access checks the stored reporter UUID. Staff use the separately permissioned staff open action.</p></details>
+<details><summary>Can a closed case receive replies or notes?</summary><p>No. Normal replies, notes and workflow changes require an open case. Archive is available only after resolution or rejection.</p></details>
+<h2 id="configuration">Configuration and integrations</h2>
+<details><summary>Does <code>case-id-format</code> change displayed IDs?</summary><p>Not in the current 2026.1.1 source. The key is bundled but not read; configured messages contain their own ID formatting.</p></details>
+<details><summary>Can every case type control location collection?</summary><p>Not uniformly. Support, bug and grief/theft use location choices/defaults. Player reports always attach current reporter location, while lost-item cases use the latest-death choice. See <a href="#/docs/paper/case-types-yml~location-behavior">the exact key behavior</a>.</p></details>
+<details><summary>Can Discord failure lose a case?</summary><p>No. Discord is best-effort after case state is committed. Failures and non-2xx responses are logged.</p></details>
+<details><summary>How do I report a problem?</summary><p>Use the <a href="https://github.com/IceWolf23X/CoreCaseX-issues/issues" rel="noopener noreferrer" target="_blank">public CoreCaseX Issues tracker</a> and include the plugin, Paper and Java versions, relevant settings, storage context and reproduction steps.</p></details>

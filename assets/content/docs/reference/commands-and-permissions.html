@@ -1,0 +1,25 @@
+<h2 id="commands">Player and staff commands</h2>
+<div class="table-scroll" role="region" tabindex="0"><table><thead><tr><th>Command</th><th>Permission</th><th>Behavior</th></tr></thead><tbody>
+<tr><td><code>/case</code></td><td><code>corecasex.use</code></td><td>Open the inventory main menu.</td></tr>
+<tr><td><code>/case list</code></td><td><code>corecasex.case.list</code></td><td>Open the reporter's case list.</td></tr>
+<tr><td><code>/case view &lt;id&gt;</code></td><td><code>corecasex.case.view-own</code></td><td>Open an owned case; ownership is rechecked.</td></tr>
+<tr><td><code>/case board</code></td><td><code>corecasex.staff.board</code></td><td>Open staff board filters.</td></tr>
+<tr><td><code>/case open &lt;id&gt;</code></td><td><code>corecasex.staff.view</code></td><td>Open a case as staff.</td></tr>
+<tr><td><code>/case claim &lt;id&gt;</code></td><td><code>corecasex.staff.claim</code></td><td>Atomically claim an open, unassigned case.</td></tr>
+<tr><td><code>/case assign &lt;id&gt; &lt;online-player&gt;</code></td><td><code>corecasex.staff.assign</code></td><td>Assign or reassign an open case to an exact online player name.</td></tr>
+<tr><td><code>/case priority &lt;id&gt; &lt;LOW|NORMAL|HIGH|URGENT&gt; [reason]</code></td><td><code>corecasex.staff.priority</code></td><td>Change priority on an open case.</td></tr>
+<tr><td><code>/case status &lt;id&gt; &lt;OPEN|CLAIMED|WAITING_PLAYER|WAITING_STAFF&gt; [reason]</code></td><td><code>corecasex.staff.status</code></td><td>Change to a non-closed workflow state.</td></tr>
+<tr><td><code>/case archive &lt;id&gt;</code></td><td><code>corecasex.staff.archive</code></td><td>Archive a resolved or rejected case.</td></tr>
+<tr><td><code>/case reload</code></td><td><code>corecasex.admin.reload</code></td><td>Reload five YAML files and validation warnings; does not reopen SQLite.</td></tr>
+<tr><td><code>/case debug</code></td><td><code>corecasex.admin.debug</code></td><td>List the known configuration files.</td></tr>
+</tbody></table></div>
+<p><code>/case ui &lt;token&gt;</code> is an internal generated Dialog callback. Players do not need to type or automate it.</p>
+<h2 id="permissions">Permission reference</h2>
+<h3 id="player-permissions">Player permissions, default <code>true</code></h3>
+<p><code>corecasex.use</code>, <code>corecasex.case.create</code>, <code>corecasex.case.list</code>, <code>corecasex.case.view-own</code>.</p>
+<h3 id="staff-permissions">Staff permissions, default <code>op</code></h3>
+<p><code>corecasex.staff.board</code>, <code>corecasex.staff.view</code>, <code>corecasex.staff.claim</code>, <code>corecasex.staff.assign</code>, <code>corecasex.staff.note</code>, <code>corecasex.staff.reply</code>, <code>corecasex.staff.request-info</code>, <code>corecasex.staff.priority</code>, <code>corecasex.staff.status</code>, <code>corecasex.staff.resolve</code>, <code>corecasex.staff.reject</code>, <code>corecasex.staff.archive</code>, <code>corecasex.staff.teleport</code>, <code>corecasex.staff.view-evidence</code>, <code>corecasex.staff.view-sensitive-evidence</code>.</p>
+<h3 id="admin-permissions">Administrator permissions, default <code>op</code></h3>
+<p><code>corecasex.admin.reload</code>, <code>corecasex.admin.debug</code>.</p>
+<h2 id="recommended-split">Recommended responsibility split</h2>
+<p>Give normal players only the four player permissions. Helpers may receive board/view/reply/request-info. Add claim, notes, priority, status, resolve and reject according to moderation responsibility. Restrict archive, teleport and sensitive evidence to trusted roles.</p>

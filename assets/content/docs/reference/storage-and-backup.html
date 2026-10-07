@@ -1,0 +1,17 @@
+<h2 id="storage-model">Storage model</h2>
+<p>SQLite is authoritative. A dedicated single-thread executor serializes asynchronous storage work. Each operation opens a connection, enables foreign keys and closes it after use.</p>
+<p>Tables cover cases, timeline, replies, internal notes, one resolution per case, evidence and schema migration markers. Indexes support reporter history, board status/priority, assignments and chronological detail queries.</p>
+<h2 id="transaction-boundaries">Transaction boundaries</h2>
+<p>Creation writes the case, CREATED event and initial evidence in one transaction. Claim, assignment, priority, status, replies, notes, request-info, closure and archive likewise keep the state mutation and its timeline/reply/note/resolution record together. Startup waits for migrations before registering the working command surface.</p>
+<h2 id="backup-procedure">Offline backup procedure</h2>
+<ol>
+<li>Stop the Paper server.</li>
+<li>Copy the entire <code>plugins/CoreCaseX/</code> folder to a protected location.</li>
+<li>Verify the backup contains all five YAML files and <code>data/corecasex.db</code>.</li>
+<li>Start the server and perform one read-only case check.</li>
+</ol>
+<p>There is no online backup or restore command. Do not copy a live database and call it verified without testing that copy separately.</p>
+<h2 id="path-change">Changing the database path</h2>
+<p>Stop the server, back up the folder, move/copy the database to a safe relative path, update <code>storage.yml</code>, then restart. A reload alone does not move data or reopen SQLite.</p>
+<h2 id="data-removal">Intentional removal</h2>
+<p>Deleting <code>data/corecasex.db</code> deletes every case, evidence record, reply, note, resolution and timeline entry. Regenerating YAML never requires deleting the database.</p>

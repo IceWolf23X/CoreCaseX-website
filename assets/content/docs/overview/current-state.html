@@ -1,0 +1,15 @@
+<h2 id="platform">Platform and Java</h2>
+<ul>
+<li>Java 21.</li>
+<li>Paper 1.21.11 or newer with the Paper Dialog API and <code>Player.showDialog</code>.</li>
+<li>Standalone Paper deployment. There is no Velocity, Bungee, Spigot or client module.</li>
+<li>Modrinth also labels the project for Purpur; a Paper fork must expose the required Paper APIs.</li>
+</ul>
+<h2 id="runtime-guard">Runtime guard</h2>
+<p>Startup checks the reported Minecraft version and required Dialog classes/method. If any check fails, CoreCaseX logs a clear error and disables itself before opening storage or registering the workflow.</p>
+<h2 id="dependencies">Dependencies and integrations</h2>
+<p>Paper API is provided by the server. SQLite JDBC is shaded into the JAR, so no database service is required. Vault, PlaceholderAPI and a Discord bot are not required. Discord webhook output is optional and anonymous bStats reporting uses project ID <code>33073</code>; server owners control metrics globally in <code>plugins/bStats/config.yml</code>.</p>
+<h2 id="release-maturity">Release maturity</h2>
+<p>The current source and newest Modrinth file are both <code>2026.1.1</code>. Modrinth classifies that file as <strong>beta</strong>. This documentation therefore calls it the current build rather than presenting it as a stable production release.</p>
+<h2 id="not-in-this-version">Not in this version</h2>
+<p>There is no MySQL/MariaDB backend, proxy module, web dashboard, Discord bot command system, Discord ticket-channel creator or online-backup service.</p>

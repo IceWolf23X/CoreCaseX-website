@@ -1,0 +1,17 @@
+<h2 id="reload-vs-restart">Use <code>/case reload</code> for YAML changes</h2>
+<p>Reload reads <code>config.yml</code>, <code>case-types.yml</code>, <code>messages.yml</code>, <code>storage.yml</code> and <code>discord.yml</code>, then logs validation warnings. Missing bundled YAML files are recreated during this load, so reload can regenerate a deleted default.</p>
+<h2 id="restart-required">Restart for runtime identity</h2>
+<ul>
+<li>Replacing the plugin JAR.</li>
+<li>Changing Paper or Minecraft version.</li>
+<li>Changing <code>storage.yml -&gt; sqlite.path</code>. Reload reads the new text but does not close and reopen the initialized SQLite backend.</li>
+<li>Taking the safest complete backup of the SQLite file.</li>
+</ul>
+<h2 id="regenerating-defaults">Regenerate one default safely</h2>
+<ol>
+<li>Stop the server and back up <code>plugins/CoreCaseX/</code>.</li>
+<li>Delete only the YAML file that must be regenerated.</li>
+<li>Start the server, or use <code>/case reload</code> if the server is already running and the missing file is not the database.</li>
+<li>Reapply intended settings from the backup.</li>
+</ol>
+<p>Never delete <code>data/corecasex.db</code> unless removing every case and its history is intentional.</p>

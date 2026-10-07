@@ -1,0 +1,4 @@
+# SQLite storage settings. SQLite is the active storage backend for the MVP.
+sqlite:
+  # Database path relative to plugins/CoreCaseX/. Changing this after startup requires a restart.
+  path: "data/corecasex.db"

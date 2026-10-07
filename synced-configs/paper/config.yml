@@ -1,0 +1,25 @@
+# Language tag reserved for future locale support. The current MVP reads visible text from messages.yml.
+language: en
+
+# Display format for case IDs in messages. Supported placeholder: {id}.
+case-id-format: "#{id}"
+
+# Maximum number of non-closed cases one player can have at the same time.
+max-open-cases-per-player: 5
+
+# Seconds a player must wait between creating new cases. Use 0 to disable.
+submission-cooldown-seconds: 60
+
+# In-game staff notification settings.
+staff-notifications:
+  # Notify online staff with corecasex.staff.view when a new case is created.
+  new-case: true
+
+  # Notify staff when a reporter replies to a case.
+  player-replied: true
+
+  # Notify an online staff member when another staff member assigns them a case.
+  assigned-to-you: true
+
+  # Recipient policy for player replies. Accepted: assigned-only, assigned-and-staff, all-staff.
+  player-replied-scope: assigned-only

@@ -1,0 +1,21 @@
+<h2 id="purpose">Purpose</h2>
+<p><code>config.yml</code> controls submission limits and in-game staff notification policy. It also contains two future-facing identity keys that are not active in 2026.1.1.</p>
+<h2 id="current-bundled-default">Current bundled default</h2>
+<div class="config-file-mount" data-config-file="paper/config.yml"></div>
+<h2 id="keys">Key reference</h2>
+<div class="table-scroll" role="region" tabindex="0"><table><thead><tr><th>Path</th><th>Semantics</th></tr></thead><tbody>
+<tr><td><code>language</code></td><td>Reserved for future locale support. Current visible text is read from <code>messages.yml</code>; current Java source does not read this key.</td></tr>
+<tr><td><code>case-id-format</code></td><td>Bundled future-facing setting. Current Java source does not read it, so changing it does not change IDs in 2026.1.1.</td></tr>
+<tr><td><code>max-open-cases-per-player</code></td><td>Maximum non-closed cases per reporter. Default 5; values below 1 clamp to 1 and warn.</td></tr>
+<tr><td><code>submission-cooldown-seconds</code></td><td>In-memory delay between successful new cases. Default 60; 0 disables; negative values clamp to 0 and warn. State resets on restart.</td></tr>
+<tr><td><code>staff-notifications.new-case</code></td><td>Notify online staff with case-view permission when a case is created.</td></tr>
+<tr><td><code>staff-notifications.player-replied</code></td><td>Enable in-game staff notifications when the reporter replies.</td></tr>
+<tr><td><code>staff-notifications.assigned-to-you</code></td><td>Notify the online player who receives an assignment.</td></tr>
+<tr><td><code>staff-notifications.player-replied-scope</code></td><td><code>assigned-only</code>, <code>assigned-and-staff</code> or <code>all-staff</code>. Invalid text warns and falls back to assigned-only.</td></tr>
+</tbody></table></div>
+<h2 id="notification-scopes">Player-reply notification scopes</h2>
+<ul>
+<li><code>assigned-only</code>: use the assigned online staff member; if unavailable, fall back to online staff with case-view permission.</li>
+<li><code>assigned-and-staff</code>: include the assigned staff member and other eligible staff viewers.</li>
+<li><code>all-staff</code>: notify every online player with <code>corecasex.staff.view</code>.</li>
+</ul>

@@ -1,0 +1,16 @@
+<h2 id="startup">Plugin does not enable</h2>
+<ul><li>Confirm Java 21 and Paper 1.21.11+.</li><li>Confirm the Paper Dialog API is present.</li><li>Inspect the log for runtime-guard or SQLite initialization errors.</li></ul>
+<h2 id="case-does-not-open"><code>/case</code> does not open</h2>
+<ul><li>Confirm the sender is a player with <code>corecasex.use</code>.</li><li>Confirm the plugin enabled.</li><li>Expect an inventory main menu, not a Dialog.</li></ul>
+<h2 id="creation-fails">A player cannot create a case</h2>
+<ul><li>Check <code>corecasex.case.create</code>.</li><li>Check the type's <code>enabled</code> key.</li><li>Check the open-case limit and in-memory cooldown.</li><li>Check required text fields and case-specific options.</li></ul>
+<h2 id="assignment-fails">Assignment fails</h2>
+<p>The target must be online and the case must be open. The inventory picker lists online players with staff-view permission; the direct command resolves an exact online name.</p>
+<h2 id="claim-or-archive-fails">Claim or archive fails</h2>
+<p>Claim rejects already assigned or closed cases. Archive accepts only RESOLVED or REJECTED cases and rejects OPEN, CLAIMED, WAITING_PLAYER and WAITING_STAFF.</p>
+<h2 id="evidence-is-missing">Evidence is missing</h2>
+<p>Check whether the flow collected that evidence and whether the viewer has <code>corecasex.staff.view-evidence</code> or <code>corecasex.staff.view-sensitive-evidence</code>. Last-death evidence exists only for deaths observed since the current plugin start.</p>
+<h2 id="discord-does-not-send">Discord does not send</h2>
+<ul><li>Confirm <code>enabled: true</code>.</li><li>Check priority, type, default and legacy route order.</li><li>Check the relevant event switch.</li><li>Inspect warnings for invalid URL, request failure or non-2xx response.</li></ul>
+<h2 id="config-change-does-not-apply">A config change does not apply</h2>
+<p>Run <code>/case reload</code> and read validation warnings. Restart after changing the JAR, Paper version or SQLite path. Remember that <code>language</code> and <code>case-id-format</code> are not active in 2026.1.1.</p>

@@ -1,0 +1,17 @@
+<h2 id="case-types">Five case types</h2>
+<ul>
+<li><strong>Support request:</strong> description, optional current location and reporter snapshot.</li>
+<li><strong>Player report:</strong> online/offline target name, configured reason, description, reporter location and an online target snapshot when available.</li>
+<li><strong>Bug report:</strong> configured category, description and optional current location.</li>
+<li><strong>Lost items / death issue:</strong> description, claimed items and optional latest death context observed since plugin startup.</li>
+<li><strong>Grief / theft:</strong> description, optional current location, manual location text and HIGH priority by default.</li>
+</ul>
+<p>Every type can be enabled or disabled and has a configurable default priority. The exact limits of <code>collect-location</code> are documented under <a href="#/docs/paper/case-types-yml~location-behavior">case-types.yml</a>.</p>
+<h2 id="staff-board">Staff board and actions</h2>
+<p>Filters cover all open, unassigned, assigned-to-me, high/urgent, waiting-player, waiting-staff, recent-closed and archived cases. Permission-controlled actions include claim, assign/reassign, priority, status, internal note, player-visible reply, request info, teleport to an attached location, resolve, reject and archive.</p>
+<h2 id="evidence">Evidence and visibility</h2>
+<p>Evidence entries are <code>PLAYER_VISIBLE</code>, <code>STAFF_ONLY</code> or <code>SENSITIVE</code>. The latter two require separate staff permissions. Player-facing case access also verifies that the viewer is the original reporter.</p>
+<h2 id="notifications">Notifications</h2>
+<p>In-game notifications cover new cases, reporter replies and assignment. Optional Discord webhooks can mirror eleven event families and route by priority, then case type, then default/legacy fallback.</p>
+<h2 id="storage">Persistent history</h2>
+<p>SQLite stores cases, evidence, replies, notes, resolutions and timeline events. State-changing storage operations use transactions so the case mutation and its history remain together.</p>

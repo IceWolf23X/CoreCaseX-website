@@ -1,0 +1,36 @@
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Paper 1.21.11 or newer with Paper Dialog support.</li>
+<li>Java 21.</li>
+<li>The current <code>CoreCaseX-2026.1.1.jar</code> from <a href="https://modrinth.com/plugin/corecasex" rel="noopener noreferrer" target="_blank">Modrinth</a>.</li>
+</ul>
+<h2 id="install">Installation</h2>
+<ol>
+<li>Stop the Paper server.</li>
+<li>Back up an existing <code>plugins/CoreCaseX/</code> folder before replacing a build.</li>
+<li>Place the JAR in the server <code>plugins/</code> directory.</li>
+<li>Start the server and confirm <code>CoreCaseX enabled.</code> appears without runtime-guard or SQLite initialization errors.</li>
+<li>Join with a permitted player and run <code>/case</code>. The inventory main menu should open.</li>
+</ol>
+<h2 id="generated-files">Generated files</h2>
+<p>The plugin data folder contains five bundled administrator defaults:</p>
+<pre><code class="language-text">plugins/CoreCaseX/
+  config.yml
+  case-types.yml
+  messages.yml
+  storage.yml
+  discord.yml
+  data/corecasex.db</code></pre>
+<p>The SQLite file is runtime data, not a bundled default. Do not delete it when regenerating YAML.</p>
+<h2 id="starter-checklist">First test</h2>
+<ol>
+<li>Create one support request as a normal player.</li>
+<li>Open the staff board and confirm that the case appears.</li>
+<li>Claim it, send a reply, request information and reply as the reporter.</li>
+<li>Resolve it and archive it.</li>
+<li>Enable Discord only after the in-game path is proven.</li>
+</ol>
+<h2 id="first-10-minutes">What to configure first</h2>
+<p>Start with the case limit and cooldown, enabled case types, staff permissions and notification scope. Keep the default SQLite path for the first validation. Review text and Discord routes after the workflow succeeds.</p>
+<h2 id="what-to-configure-first">Safe rollout order</h2>
+<p>Use a staging server or a controlled staff test. A successful build or startup does not prove every inventory click and Paper Dialog path on your exact Paper release.</p>

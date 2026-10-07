@@ -1,0 +1,19 @@
+<h2 id="inventory-first-dialog-input">Inventory-first navigation and Dialog input</h2>
+<p><code>/case</code> opens an inventory main menu. Inventory GUIs own normal navigation, case-type choices, lists, board filters, details, staff actions, online assignee selection, priorities, statuses and boolean choices. Paper Dialogs are used only when text or a compact typed form is required, including descriptions, names, replies, notes, questions, case IDs and closure text.</p>
+<p>Inventory windows are bound to the player who opened them and recheck the action permission. Internal Dialog callback tokens are random, owner-bound, permission-checked, one-use after successful resolution and expire after five minutes.</p>
+<h2 id="workflow-rules">Case states</h2>
+<p>The states are <code>OPEN</code>, <code>CLAIMED</code>, <code>WAITING_PLAYER</code>, <code>WAITING_STAFF</code>, <code>RESOLVED</code>, <code>REJECTED</code> and <code>ARCHIVED</code>. Direct status changes accept only the first four workflow states. Resolution, rejection and archive are dedicated operations.</p>
+<ul>
+<li>Claim succeeds only for an open, unassigned case and assigns the acting staff member.</li>
+<li>Assign/reassign rejects closed cases. An OPEN case becomes CLAIMED.</li>
+<li>Request Info stores a staff reply and moves the case to WAITING_PLAYER.</li>
+<li>A reporter reply rechecks case ownership and moves the case to WAITING_STAFF.</li>
+<li>Replies, internal notes and normal workflow changes reject closed cases.</li>
+<li>Only RESOLVED or REJECTED cases can be archived.</li>
+</ul>
+<h2 id="evidence-visibility">Evidence visibility</h2>
+<p>Players see player-visible evidence on their own cases. <code>corecasex.staff.view-evidence</code> exposes staff-only evidence and <code>corecasex.staff.view-sensitive-evidence</code> exposes sensitive evidence. Grant teleport and sensitive evidence access only to trusted staff groups.</p>
+<h2 id="assignment-detail">Assignment detail</h2>
+<p>The inventory assignee list contains online players with <code>corecasex.staff.view</code>. The direct command currently accepts any exact online player name and does not additionally require that permission on the assignee.</p>
+<h2 id="submission-controls">Submission controls</h2>
+<p>Open-case limits are enforced from SQLite. Concurrent submissions by the same reporter are serialized in memory before the limit is checked. The submission cooldown is also in memory and resets after a plugin/server restart.</p>

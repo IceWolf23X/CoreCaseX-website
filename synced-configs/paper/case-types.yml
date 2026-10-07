@@ -1,0 +1,75 @@
+# General support request flow for help that does not fit another case type.
+support-request:
+  # If false, this case type is hidden from the inventory case type menu.
+  enabled: true
+
+  # Priority assigned to new support requests. Accepted: LOW, NORMAL, HIGH, URGENT.
+  default-priority: LOW
+
+  # Default location collection behavior for this case type.
+  collect-location: true
+
+# Structured report flow for reporting another player.
+player-report:
+  # If false, this case type is hidden from the inventory case type menu.
+  enabled: true
+
+  # Priority assigned to new player reports. Accepted: LOW, NORMAL, HIGH, URGENT.
+  default-priority: NORMAL
+
+  # Default location collection behavior for this case type.
+  collect-location: true
+
+  # Reason options used by the player report flow. Inventory menus are preferred for choices; Dialogs remain for typed input.
+  reasons:
+    - Insults
+    - Spam
+    - Harassment
+    - Threats
+    - Scam
+    - Cheating
+    - Exploit abuse
+    - Other
+
+# Structured flow for technical or gameplay bugs.
+bug-report:
+  # If false, this case type is hidden from the inventory case type menu.
+  enabled: true
+
+  # Priority assigned to new bug reports. Accepted: LOW, NORMAL, HIGH, URGENT.
+  default-priority: NORMAL
+
+  # Default location collection behavior for this case type.
+  collect-location: true
+
+  # Category options used by the bug report flow. Inventory menus are preferred for choices; Dialogs remain for typed input.
+  categories:
+    - Command
+    - GUI / Menu
+    - Item
+    - Portal
+    - Reward
+    - Gameplay
+    - Other
+
+# Flow for missing items, death-related issues, and recovery requests.
+lost-items:
+  # If false, this case type is hidden from the inventory case type menu.
+  enabled: true
+
+  # Priority assigned to new lost item cases. Accepted: LOW, NORMAL, HIGH, URGENT.
+  default-priority: NORMAL
+
+  # Default location collection behavior for this case type.
+  collect-location: true
+
+# Flow for griefing, theft, suspicious edits, and location-based incidents.
+grief-theft:
+  # If false, this case type is hidden from the inventory case type menu.
+  enabled: true
+
+  # Priority assigned to new grief/theft cases. Accepted: LOW, NORMAL, HIGH, URGENT.
+  default-priority: HIGH
+
+  # Default location collection behavior for this case type.
+  collect-location: true

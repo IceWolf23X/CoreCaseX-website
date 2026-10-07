@@ -1,0 +1,12 @@
+<h2 id="scope">Documentation scope</h2>
+<p>This reference was rebuilt from the clean <code>CoreCaseX/plugin</code> checkout at commit <code>33e3ff105b490b0ab0d19c930c9e47f2699997af</code>, version <code>2026.1.1</code>. It covers project-owned source, tests, build metadata, canonical plugin docs and bundled defaults. It does not inspect server data or archived plugin ZIPs.</p>
+<h2 id="public-links">Public links</h2>
+<ul>
+<li><a href="https://modrinth.com/plugin/corecasex" rel="noopener noreferrer" target="_blank">Modrinth download</a></li>
+<li><a href="https://github.com/IceWolf23X/CoreCaseX-issues/issues" rel="noopener noreferrer" target="_blank">GitHub Issues</a></li>
+<li><a href="https://wiki-corecasex.icewolf23x.dev/" rel="noopener noreferrer" target="_blank">Canonical wiki</a></li>
+</ul>
+<h2 id="known-ineffective-settings">Known ineffective settings in 2026.1.1</h2>
+<ul><li><code>config.yml -&gt; language</code> is reserved and not read.</li><li><code>config.yml -&gt; case-id-format</code> is not read.</li><li><code>player-report.collect-location</code> and <code>lost-items.collect-location</code> are not consulted by the current inventory-first creation path.</li></ul>
+<h2 id="verification-limits">Verification limits</h2>
+<p>Source inspection and automated tests describe the intended contracts. A server owner must still validate inventory, Dialog, permission, SQLite and webhook behavior on the exact Paper build and plugin combination used in production.</p>

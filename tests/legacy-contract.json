@@ -1,0 +1,68 @@
+{
+  "configuration.html": [
+    "site-navigation",
+    "main",
+    "before-you-configure",
+    "starter-checklist",
+    "first-10-minutes",
+    "what-to-configure-first",
+    "folder-layout",
+    "reload-vs-restart",
+    "runtime-guard",
+    "config-yml",
+    "case-types-yml",
+    "discord-yml",
+    "storage-yml",
+    "messages-yml",
+    "workflow-rules",
+    "evidence-visibility",
+    "dialog-ui-configuration",
+    "commands",
+    "permissions",
+    "validation",
+    "regenerating-defaults",
+    "troubleshooting-quick-reference",
+    "production-validation-checklist",
+    "quick-setup-examples",
+    "summary"
+  ],
+  "docs.html": [
+    "site-navigation",
+    "main"
+  ],
+  "faq.html": [
+    "site-navigation",
+    "main"
+  ],
+  "features.html": [
+    "site-navigation",
+    "main",
+    "case-types",
+    "dialog-ui",
+    "staff-board",
+    "workflow",
+    "evidence",
+    "notifications",
+    "storage",
+    "admin"
+  ],
+  "installation.html": [
+    "site-navigation",
+    "main",
+    "requirements",
+    "install",
+    "generated-files",
+    "reload",
+    "validation"
+  ],
+  "support-policy.html": [
+    "site-navigation",
+    "main",
+    "release-channels",
+    "supporter-preview-builds",
+    "critical-fix-policy",
+    "paid-memberships",
+    "discord-authentication",
+    "disclaimer"
+  ]
+}

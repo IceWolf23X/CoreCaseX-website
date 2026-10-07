@@ -1,0 +1,21 @@
+<h2 id="purpose">Purpose</h2>
+<p><code>discord.yml</code> controls optional best-effort webhook notifications. Discord is disabled by default and never owns case state.</p>
+<h2 id="current-bundled-default">Current bundled default</h2>
+<div class="config-file-mount" data-config-file="paper/discord.yml"></div>
+<h2 id="routing">Enablement and routing</h2>
+<ul>
+<li><code>enabled</code>: master switch.</li>
+<li><code>webhook-url</code>: legacy fallback.</li>
+<li><code>webhooks.default</code>: preferred fallback; wins over the legacy key.</li>
+<li><code>webhooks.types.{support-request,player-report,bug-report,lost-items,grief-theft}</code>.</li>
+<li><code>webhooks.priorities.{low,normal,high,urgent}</code>.</li>
+<li><code>server-name</code>: prefix used in the webhook username.</li>
+</ul>
+<p>Route order is priority, case type, default, then legacy fallback.</p>
+<h2 id="events">Event switches</h2>
+<p><code>events.{case-created,urgent-created,case-claimed,case-assigned,status-changed,priority-changed,player-replied,info-requested,staff-replied,case-resolved,case-rejected}</code>.</p>
+<h2 id="embed-colors">Embed colors</h2>
+<p>Decimal RGB integers under <code>embed-colors.{created,urgent,claimed,assigned,status,priority,reply,info,staff-reply,resolved,rejected}</code>.</p>
+<h2 id="webhook-safety">Failure and payload behavior</h2>
+<p>Blank or malformed URLs are skipped. The validator accepts HTTP or HTTPS with a host; it does not restrict the host to Discord. Connection timeout is five seconds and request timeout is ten seconds. Non-2xx responses and asynchronous failures are logged.</p>
+<p>Case operations are already committed before webhook publication. Payload text is JSON-escaped and truncated to Discord field limits, and <code>allowed_mentions.parse</code> is empty to prevent generated pings.</p>
