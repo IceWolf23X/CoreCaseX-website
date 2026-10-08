@@ -3,6 +3,45 @@ window.COREX_RELEASES = {
   "schemaVersion": 2,
   "provider": "github",
   "repository": "IceWolf23X/CoreCaseX-website",
-  "generatedAt": "2026-10-07T21:45:57.424Z",
-  "releases": []
+  "generatedAt": "2026-10-08T00:38:55.860Z",
+  "releases": [
+    {
+      "tag_name": "v2026.1.1",
+      "name": "CoreCaseX 2026.1.1 (Beta)",
+      "body": "# CoreCaseX 2026.1.1\n\n## Added\n\n- Added inventory-first navigation for case creation, player case lists, staff board filters, case details, pagination, and staff actions; Paper Dialogs remain available for typed descriptions, replies, notes, and resolution text.\n- Added configurable inventory titles, materials, names, and lore under `messages.yml` so server owners can adapt the primary in-game interface.\n- Added anonymous bStats reporting for Paper/Purpur.\n\n## Safety\n\n- CoreCaseX now disables itself with a clear console error when Paper `1.21.11+` or the required Paper Dialog API is unavailable.\n- Configuration validation now warns about invalid priorities, webhook URLs, reply notification scopes, case limits, cooldowns, and unsafe SQLite paths before they cause runtime failures.\n\n## Compatibility\n\n- Metrics use the server-wide bStats setting in `plugins/bStats/config.yml`; no CoreCaseX metrics key or data migration is required.\n",
+      "html_url": "https://github.com/IceWolf23X/CoreCaseX-website/releases/tag/v2026.1.1",
+      "draft": false,
+      "prerelease": true,
+      "published_at": "2026-10-08T00:38:48Z",
+      "assets": [
+        {
+          "name": "CoreCaseX-2026.1.1.jar",
+          "state": "uploaded",
+          "size": 14423269,
+          "digest": "sha256:439188a01b965c02f366522eaba2c74f9a2fb73dc8ad86e7fd579de04a7c180a",
+          "browser_download_url": "https://github.com/IceWolf23X/CoreCaseX-website/releases/download/v2026.1.1/CoreCaseX-2026.1.1.jar",
+          "download_count": 0
+        }
+      ]
+    },
+    {
+      "tag_name": "v0.1.0-SNAPSHOT",
+      "name": "CoreCaseX 0.1.0-SNAPSHOT",
+      "body": "# CoreCaseX 0.1.0-SNAPSHOT\n\n## Added\n- Added player support and moderation cases with configurable case types and Paper Dialog forms.\n- Added staff assignment, replies, notes, evidence and case resolution workflows.\n- Added SQLite persistence, configurable messages and optional Discord webhook notifications.\n",
+      "html_url": "https://github.com/IceWolf23X/CoreCaseX-website/releases/tag/v0.1.0-SNAPSHOT",
+      "draft": false,
+      "prerelease": false,
+      "published_at": "2026-10-08T00:38:45Z",
+      "assets": [
+        {
+          "name": "CoreCaseX-2026.1.0.jar",
+          "state": "uploaded",
+          "size": 14398460,
+          "digest": "sha256:46dc01dcd2bf3d215a90c7a6f5fd2b156151336c158b7ba85d754408458c478a",
+          "browser_download_url": "https://github.com/IceWolf23X/CoreCaseX-website/releases/download/v0.1.0-SNAPSHOT/CoreCaseX-2026.1.0.jar",
+          "download_count": 0
+        }
+      ]
+    }
+  ]
 };
