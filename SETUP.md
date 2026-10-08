@@ -52,3 +52,7 @@ The synchronization workflow reads `tools/config-sync-map.mjs`. Manual and dispa
 ## Downloads and releases
 
 The primary product download is Modrinth. The release tab reads public GitHub Releases from `IceWolf23X/CoreCaseX-website`; zero releases is a valid current state. Publishing, enabling Pages, creating releases and pushing commits are separate authorized operations.
+
+## Privacy and sitemap
+
+See [Privacy and crawl-discovery maintenance](docs/PRIVACY_AND_SEO.md) for editable notice content, controller/contact, canonical page inventory and required generation checks.

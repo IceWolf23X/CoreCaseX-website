@@ -33,3 +33,7 @@ The sync command copies only the five allow-listed defaults from `../plugin/src/
 The primary Download action uses Modrinth. The GitHub Releases view reads public releases from `IceWolf23X/CoreCaseX-website` and may accurately show an empty catalog. No token is exposed to the browser.
 
 Do not publish or link the private plugin descriptor, server data, credentials or private repository content. Optional private-source automation remains disabled until a repository-scoped read token is configured by the repository owner.
+
+## Privacy and sitemap
+
+See [Privacy and crawl-discovery maintenance](docs/PRIVACY_AND_SEO.md) for editable notice content, controller/contact, canonical page inventory and required generation checks.
