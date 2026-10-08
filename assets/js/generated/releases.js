@@ -3,7 +3,7 @@ window.COREX_RELEASES = {
   "schemaVersion": 2,
   "provider": "github",
   "repository": "IceWolf23X/CoreCaseX-website",
-  "generatedAt": "2026-10-08T00:38:55.860Z",
+  "generatedAt": "2026-10-08T10:36:38.995Z",
   "releases": [
     {
       "tag_name": "v2026.1.1",
@@ -20,7 +20,7 @@ window.COREX_RELEASES = {
           "size": 14423269,
           "digest": "sha256:439188a01b965c02f366522eaba2c74f9a2fb73dc8ad86e7fd579de04a7c180a",
           "browser_download_url": "https://github.com/IceWolf23X/CoreCaseX-website/releases/download/v2026.1.1/CoreCaseX-2026.1.1.jar",
-          "download_count": 0
+          "download_count": 1
         }
       ]
     },
@@ -39,7 +39,7 @@ window.COREX_RELEASES = {
           "size": 14398460,
           "digest": "sha256:46dc01dcd2bf3d215a90c7a6f5fd2b156151336c158b7ba85d754408458c478a",
           "browser_download_url": "https://github.com/IceWolf23X/CoreCaseX-website/releases/download/v0.1.0-SNAPSHOT/CoreCaseX-2026.1.0.jar",
-          "download_count": 0
+          "download_count": 1
         }
       ]
     }
